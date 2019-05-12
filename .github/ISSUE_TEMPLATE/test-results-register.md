@@ -7,15 +7,15 @@ assignees: ''
 
 ---
 
-Every time a feature is tested the results of that test must be recorded here in a test results register.
+Every time a feature is tested the results of that test must be recorded here in a test results register. Dont forget to place post refactor notes as comments on this issue.
 ## Details
-Feature ID: 
-Test Number: 
+   Feature ID: 
+         Name:
+         Type: 
+  Test Number: 
 Testing Phase:
-Type: 
-Name:
-Date Tested:
-Tested By: 
+  Date Tested:
+ 
 
 Testing Method  from testing plan | Passed
 ----------------- | --------------------------------------------------------------------------
@@ -27,4 +27,3 @@ Testing Method  from testing plan | Passed
 button wouldn't click 
 
 ### Post refactor notes:
-e.g. We hit it with a hammer and it clicks now
