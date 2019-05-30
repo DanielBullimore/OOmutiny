@@ -25,7 +25,7 @@
   //#
 //################################################################################################################################################
 /*<<JS CLASS>>*/
-function OO()
+function OO() 
 /*
 *Overview:
 	This is the super object for OOmutiny framework. Its sole purpose is to contain and control all
@@ -86,9 +86,9 @@ function OO()
     //# PROPERTIES #
     //###############
     //Define the defualt properties 
-    this.intId;
-    this.strType;  
-    this.strName;
+    var intId;
+    var strType;  
+    var strName;
 
     //###################
     //# DERIVED VALUES #
@@ -120,9 +120,9 @@ function OO()
         window.rayOOi = Array();
     }
 	{
-		this.intId = 0;
-		this.strType = "oomutiny";
-		this.strName = "";
+		var intId = 0;
+		var strType = "oomutiny";
+		var strName = "";
 	}
     
     this.Destroy = function()
@@ -239,4 +239,68 @@ this.funGetByName = function(strType,strFindName)
             }
         }
     };
+this.Test = function ()
+    /*
+    Description: This function is an internal testing method used to test the class functions as designed
+
+    Parameters: -
+
+    Returns: -
+    */
+	{
+	/* 3.1.2 */
+		document.write("<hr><h2>3.1.2</h2><br>");
+		try
+		{
+		/* 3.1.2.1 */
+
+			strTypeOfTestObject = typeof(this);
+			if (strTypeOfTestObject == "object")
+			{
+				strResult = "pass";
+			}
+			else strResult = "fail";
+	
+			document.write("<p>* 3.1.2.1 Testing instance decleration:<br>...Typeof is: "+strTypeOfTestObject+"<br>..."+strResult+"</p>");	
+		/* 3.1.2.2 */		
+			var strPropertyTestType = typeof(strType)
+			if (strPropertyTestType == "string")
+			{
+				strResult = "pass";
+			}
+			else strResult = "fail";
+			document.write("<p>* 3.1.2.2 Testing strType Exists:<br>...Typeof is: "+strPropertyTestType+"<br>..."+strResult+"</p>");
+		/* 3.1.2.3 */
+			var strPropertyTestId = typeof(intId)
+			if (strPropertyTestId == "number")
+			{
+				strResult = "pass";
+			}
+			else strResult = "fail";
+			document.write("<p>* 3.1.2.3 Testing intId Exists:<br>...Typeof is: "+strPropertyTestId+"<br>..."+strResult+"</p>");
+		/* 3.1.2.4 */
+			var strPropertyTestName = typeof(strName)
+			if (strPropertyTestName == "string")
+			{
+				strResult = "pass";
+			}
+			else strResult = "fail";
+			document.write("<p>* 3.1.2.4 Testing intName Exists:<br>...Typeof is: "+strPropertyTestName+"<br>..."+strResult+"</p>");
+		/* 3.1.2.5 */
+			var strPropertyTestIndex = typeof(window.rayOO);
+			var strPropertyTestIndexNumber = typeof(window.rayOOi);
+			if (strPropertyTestIndex == "object" && strPropertyTestIndexNumber == "object")
+			{
+				strResult = "pass";
+			}
+			else strResult = "fail";
+	
+			document.write("<p>* 3.1.2.5 Testing rayOO and rayOOi Exists:<br>...Typeof is: "+strPropertyTestIndex+" "+strPropertyTestIndexNumber+"<br>..."+strResult+"</p>");
+		}
+		catch (strError)
+		{
+			document.write("Unexpected error prevented the test from executing:<br>"+strError);
+		}
+	}
+
 }
