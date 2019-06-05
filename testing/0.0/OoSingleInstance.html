@@ -1,12 +1,35 @@
 <html>
   <head>
-    <script type="text\javascript" src="../OO.class.js"></script>
-    
+	  <script type="text/javascript" src="file:///C:/Users/kenneth/Desktop/00mutiny/OO.class.js"></script>
   </head>
   <body>
+    <h1  id="oomutiny0" class=pass> Test </h1>
     <script>
-      objClassExists = OO.typof()
-      print("Checking for class in namespace:"+objClassExists)
+/* 1.1.1 3.1.1 */
+	document.write("<hr><h2>1.1.1 & 3.1.1</h2><br>");
+	try {
+		strClassExists = typeof(OO);
+		strResult = "";
+		if (strClassExists == "function")
+		{
+			strResult = "Pass";
+		}
+		else
+		{
+			strResult = "Fail";	
+		}
+		document.write("Checking for class in namespace:...<br> typeof if is "+strClassExists+"<br>"+strResult+"<br>")
+		var ooTest = new OO();
+		ooTest.Test()	
+	/* 3.2.4 */ 
+		document.write('<hr><h2>3.2.4</h2><br>Testing Destroy() method');
+		ooTest.Destroy();	
+		console.log(ooTest);
+	}
+	catch (strError)
+	{
+		document.write("Unexpected error prevented the test from executing:<br>"+strError);
+	}
     </script>
   </body>
 <html>
