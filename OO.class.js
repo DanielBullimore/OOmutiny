@@ -10,8 +10,8 @@
 	  //# Written         :28/5/2019
 	  //# ----------------------------------------------------------------------------------------------------------------------------------------------
 	    //# !If you modify this file add your name to this list then update the last modified field
-	     //# Modifications By:
-	      //# Last Modified   :
+	     //# Modifications By: Daniel Bullimore
+	      //# Last Modified   : 6/9/2019
 	      //################################################################################################################################################
 	      //# DESCRIPTION /
 	      //#____________/
@@ -28,13 +28,21 @@
 function OO() 
 /*
 *Overview:
-	This is the super object for OOmutiny framework. Its sole purpose is to contain and control all
+	This is the Master Class for OOmutiny framework. Its sole purpose is to contain and control all
 	objects that inherit its form.
 	
 	Methods:
 		funInitialise - This function adds a new object to the rayOO multi-dimensional array. This is the minimum constructor for all subclasses of _OO.
 		
-		funGetByName - This function searches the global multi-dimensional rayOO array for a object using its type and name.
+		funGetByObjectName - This function searches the global multi-dimensional rayOO array for a object using its type and name.
+		
+		funSetNameOnce - This function allows an instance to be named so long as its name is currently unset or null.
+		
+		funGetName - This function returns the name given to an instance.
+		
+		funGetType - Returns an instance class name.
+		
+		funGetId - returns an instances unique id used to index it rayOO[strType][numID]
 
 		Destroy - Removes a OO object from rayOO multi-dimensional array.
 
@@ -42,6 +50,14 @@ function OO()
 		strOO() - returns a string reference to an instance's rayOO entry.
 		objOO() - returns an instance's rayOO entry.
 		domOO() - returns the DOM node of an instance's HTML element.
+		
+	Properties 
+		numId - protected number
+		strType - protected string
+		strName - protected string
+		rayOO - public array 
+		rayOOi - public array
+		
 
 *Parameters: -
 
@@ -54,10 +70,10 @@ function OO()
         Now you have 2 global arrays available: rayOO[] - Multidimensional which stores all objects that inherit this classes form. 
                                                 rayOOi[] - which tracks the initial id number for new objects.
                                                 
-        all subclasses are required to have these 2 properties: intId, and strType, strName is optional but helpful;
-        intId is used to give the object a unique identity like so rayOO[<type>][<intId>]
-        a subclasses strType should really be the name of the class and intId is automatically assigned on construct (using funInitialise()).
-        This all means that after a  object has rendered you can access objects using rayOO[<type>][<intId] then access their properties or methods
+        all subclasses are required to have these 2 properties: numId, and strType, strName is optional but helpful;
+        numId is used to give the object a unique identity like so rayOO[<type>][<numId>]
+        a subclasses strType should really be the name of the class and numId is automatically assigned on construct (using funInitialise()).
+        This all means that after a  object has rendered you can access objects using rayOO[<type>][<numId] then access their properties or methods
         like this rayOO['List'][1].funRender() and var x = rayOO['List'][1].strName or rayOO['List'][1].strName ="dsfsd";
         
         Initialising Subclasses
@@ -69,7 +85,7 @@ function OO()
 
             this.strType = "NewOOSubclass"   //required to overide the super class type property
             
-            this.funInitalise(); //indexes the object in rayOO[][] and sets this instances intId
+            this.funInitalise(); //indexes the object in rayOO[][] and sets this instances numId
         }
 
         NewOOSubClass now exists in rayOO['NewOOSubClass'][0] and has all the methods that OO has such as funInitialise() which was used to index the new instance above.
@@ -86,7 +102,7 @@ function OO()
     //# PROPERTIES #
     //###############
     //Define the defualt properties 
-    var intId;
+    var numId;
     var strType;  
     var strName;
 
@@ -97,17 +113,17 @@ function OO()
     this.strOO = function()
     {
         //used by html events
-        return "rayOO['"+this.strType+"']['"+this.intId+"']";
+        return "rayOO['"+this.strType+"']['"+this.numId+"']";
     };
     this.objOO = function()
     {
         //used in javascript
-        return rayOO[this.strType][this.intId];
+        return rayOO[this.strType][this.numId];
     };
     this.domOO = function()
     {
         //short cut for javascript DOM operations
-	return document.getElementById(this.strType+this.intId);
+	return document.getElementById(this.strType+this.numId);
     }
     //#########################
     //# CONSTRUCT DESTRUCT #
@@ -120,7 +136,7 @@ function OO()
         window.rayOOi = Array();
     }
 	{
-		var intId = 0;
+		var numId = 0;
 		var strType = "oomutiny";
 		var strName = "";
 	}
@@ -154,14 +170,14 @@ function OO()
     */
 		var rayNewArray = Array();
 		var strType = this.strType;
-		var intIdent = this.intId;
+		var numIdent = this.numId;
 	/*Go through the global array of OO objects
 	* add all the objects in the array to a new array except the object whos calling this function 
 	*/
 		for (var x=0; x < rayOO[this.strType].length; x++ )
 		{
 		    var objTemp = rayOO[this.strType][x];
-		    if (typeof(objTemp) === "object" && objTemp.intId !== intIdent) //*** Failed test 1 -3.2.11
+		    if (typeof(objTemp) === "object" && objTemp.numId !== numIdent) //*** Failed test 1 -3.2.11
 		    {
 			rayNewArray[x] = objTemp;
 		    }
@@ -206,20 +222,20 @@ function OO()
         {
             //Because this type of  Object array is undefined, define it
             rayOO[this.strType] = Array();
-            //this is used to keep track of the next intId of object being added to this types rayOO[]
+            //this is used to keep track of the next numId of object being added to this types rayOO[]
             rayOOi[this.strType] = 0;
         }
 	//Auto generate an id number for new object
-        this.intId = rayOOi[this.strType];
+        this.numId = rayOOi[this.strType];
 
 	//add the object to the objectas array
-        rayOO[this.strType][this.intId] = this;
+        rayOO[this.strType][this.numId] = this;
 
 	//and increase the value of this types next gui index
         rayOOi[this.strType]++;
       
     };
-this.funGetByName = function(strType,strFindName)
+this.funGetByObjectName = function(strType,strFindName)
     /*
     Description: This function searches the global multidimensional GuiObjects array for a object using its type and name
 
@@ -239,6 +255,53 @@ this.funGetByName = function(strType,strFindName)
             }
         }
     };
+this.funSetNameOnce(strNewName)
+    /*
+    Description: Provides write access to protect property strName provided is value is unset or null.
+
+    Parameters: strNewName - string, name to give instance.
+
+    Returns:  void
+    */
+	{
+		if (strName == "")
+		{
+			strName = strNewName;
+		}
+	}
+this.funGetName()
+    /*
+    Description: Allows read only access to property strName
+
+    Parameters: -
+
+    Returns:  string
+    */
+	{
+		return strName;
+	}
+this.funGetType() 
+    /*
+    Description: Allows read only access to property strType
+
+    Parameters: -
+
+    Returns:  string
+    */
+	{
+		return strType;
+	}
+this.funGetId() 
+    /*
+    Description: Allows read only access to property numId
+
+    Parameters: -
+
+    Returns:  number
+    */
+	{
+		return numId
+	}
 this.Test = function ()
     /*
     Description: This function is an internal testing method used to test the class functions as designed
@@ -271,13 +334,13 @@ this.Test = function ()
 			else strResult = "fail";
 			document.write("<p>* 3.1.2.2 Testing strType Exists:<br>...Typeof is: "+strPropertyTestType+"<br>..."+strResult+"</p>");
 		/* 3.1.2.3 */
-			var strPropertyTestId = typeof(intId)
+			var strPropertyTestId = typeof(numId)
 			if (strPropertyTestId == "number")
 			{
 				strResult = "pass";
 			}
 			else strResult = "fail";
-			document.write("<p>* 3.1.2.3 Testing intId Exists:<br>...Typeof is: "+strPropertyTestId+"<br>..."+strResult+"</p>");
+			document.write("<p>* 3.1.2.3 Testing numId Exists:<br>...Typeof is: "+strPropertyTestId+"<br>..."+strResult+"</p>");
 		/* 3.1.2.4 */
 			var strPropertyTestName = typeof(strName)
 			if (strPropertyTestName == "string")
@@ -285,7 +348,7 @@ this.Test = function ()
 				strResult = "pass";
 			}
 			else strResult = "fail";
-			document.write("<p>* 3.1.2.4 Testing intName Exists:<br>...Typeof is: "+strPropertyTestName+"<br>..."+strResult+"</p>");
+			document.write("<p>* 3.1.2.4 Testing numName Exists:<br>...Typeof is: "+strPropertyTestName+"<br>..."+strResult+"</p>");
 		/* 3.1.2.5 */
 			var strPropertyTestIndex = typeof(window.rayOO);
 			var strPropertyTestIndexNumber = typeof(window.rayOOi);
