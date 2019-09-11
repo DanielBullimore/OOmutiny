@@ -1,0 +1,84 @@
+Test 
+
+1.1.1 & 3.1.1
+
+Checking for class in namespace:...
+typeof OO is function
+Pass
+
+3.1.2
+
+* 3.1.2.1 Testing instance decleration:
+...Typeof is: object
+...pass
+* 3.1.2.2 Testing strType Exists:
+...Typeof is: string
+...pass
+* 3.1.2.3 Testing numId Exists:
+...Typeof is: number
+...pass
+* 3.1.2.4 Testing numName Exists:
+...Typeof is: string
+...pass
+* 3.1.2.5 Testing rayOO and rayOOi Exists:
+...Typeof is: object object
+...pass
+* 3.1.2.6 Testing required methods exist:
+...
+Destroy():function
+Initialise():function
+funGetObjectByName():function
+funSetNameOnce():function
+funGetId():function
+funGetName():function
+funGetType():function
+
+...Pass
+
+3.2.1
+
+* 3.2.1.1 Testing type and value of numId
+...numId is: number
+...numId value: 0
+...Pass
+* 3.2.1.2 Testing type and value of strType
+...strType is: string
+...strType value: oomutiny
+...Pass
+* 3.2.1.3 Testing type and value of strName
+...strName is: string
+...strName value: 
+...Pass
+* 3.2.1.4 Testing type and value of rayOO['oomutiny]
+...Type is: object
+...value: [object Object]
+...Pass
+* 3.2.1.5 Testing derived string strOO():
+...Retured value is: rayOO['oomutiny']['0']
+...Pass
+* 3.2.1.6 Testing derived object objOO():
+...Retured value is: [object Object]
+...Test object and returned object are equal
+...Pass
+* 3.2.1.7 Testing derived DOM node strOO():
+...Class names are equal
+...Pass
+
+3.2.2
+
+* Testing funGetObjectByName() returns this instance:
+!..Fail
+
+3.2.4
+
+Testing Destroy() method
+... Typeof test instance: undefined;
+...Pass
+
+Testing global index has been removed:
+...Typeof rayOO and rayOOi is undefined:undefined
+...Pass
+
+Checking for class in namespace:...
+typeof OO is function
+...Pass
