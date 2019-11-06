@@ -12,4 +12,4 @@ I've assigned 5 hours per week at one hour per day out side my normal 50 hour wo
 
 6/5/19 - Added Captains Log to wiki to save the read me for importaint news only. https://github.com/DanielBullimore/OOmutiny/wiki/Captans-Log
 
-
+06/11/2019 - Stage One=[ CORE Feature high level design]-( https://github.com/DanielBullimore/OOmutiny/projects/1 ) finally complete, developemt enters Test Planing stage. 
