@@ -54,7 +54,9 @@ try {
         if (objSolveInstance.numExecutions == 0)
         {
           clearInterval(myVar)
+          dw("<hr>Testing Post States...<p>")
           objActInstance.funAct()
+          funSolveState();
         }
     }
   
@@ -71,8 +73,9 @@ try {
         dw("funAct is: "+typeof(objSolveInstance.funAct)+"<br>");
         dw("funSolve is: "+typeof(objSolveInstance.funSolve)+"<hr><p>");
     //Act Interrupt
-    dw("Testing act interupt method...")
+    dw("Testing act interupt method...<p>")
     window.setTimeout(objActInstance.funAct()   ,objActInstance.numCycles);
+    dw("<hr>");
     
     //Solve Interrupt
     window.myVar = setInterval(objSolveInstance.funSolve ,objSolveInstance.numCycles);

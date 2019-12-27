@@ -88,6 +88,10 @@ Example: ...
     *this.funAct = function() {  };
     *this.funSolve = function () {  };
   */
-  this.funAct = null;
-  this.funSolve = null;
+  /* Failed test #3
+  *this.funAct = null;
+  *this.funSolve = null;
+  */
+  this.funAct;
+  this.funSolve;
 }
