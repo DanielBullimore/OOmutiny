@@ -54,11 +54,19 @@ Example: ...
   //###############
   //# PROPERTIES #
   //###############
-  var numCycles;
-  var booActOrSolve;
-  var booRepeat;
-  var numCycleCount;
-  var numExecutions;
+  
+  /* Failed Test #1 https://github.com/DanielBullimore/OOmutiny/issues/31
+    *var numCycles;
+    *var booActOrSolve;
+    *var booRepeat;
+    *var numCycleCount;
+    *var numExecutions;
+  */
+  this.numCycles;
+  this.booActOrSolve;
+  this.booRepeat;
+  this.numCycleCount;
+  this.numExecutions;
   //###################
   //# DERIVED VALUES #
   //###################
@@ -67,15 +75,19 @@ Example: ...
   //# CONSTRUCT DESTRUCT #
   //#########################
   {
-    numCycles = 0;
-    booActOrSolve = true;
-    booRepeat = false;
-    numCycleCount = 0;
-    numExecutions = 0;
+    this.numCycles = 0;
+    this.booActOrSolve = true;
+    this.booRepeat = false;
+    this.numCycleCount = 0;
+    this.numExecutions = 0;
   }
   //##############
   //# FUNCTIONS #
   //##############
-  funAct = function() { /*framework implementation developer to define per instance*/ };
-  funSolve = function () { /*framework implementation developer to define per instance*/ };
+  /* Failed Test #2 https://github.com/DanielBullimore/OOmutiny/issues/32
+    *this.funAct = function() {  };
+    *this.funSolve = function () {  };
+  */
+  this.funAct = null;
+  this.funSolve = null;
 }

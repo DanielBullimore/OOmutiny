@@ -1,0 +1,31 @@
+From: <Saved by Blink>
+Snapshot-Content-Location: http://localhost:7700/oomutiny/testing/1.1/1.1.Interrupt_Test.html
+Subject: OoMutiny.1.1.Interupt
+Date: Fri, 27 Dec 2019 10:57:45 -0000
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----MultipartBoundary--Vxsj9lNfw98hszJRIFWuYwz0l8AU2ETQqIB0JIujix----"
+
+
+------MultipartBoundary--Vxsj9lNfw98hszJRIFWuYwz0l8AU2ETQqIB0JIujix----
+Content-Type: text/html
+Content-ID: <frame-725DC048BF5DCF90C4B4A4DFB7AB6DDC@mhtml.blink>
+Content-Transfer-Encoding: binary
+Content-Location: http://localhost:7700/oomutiny/testing/1.1/1.1.Interrupt_Test.html
+
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OoMutiny.1.1.Interupt</title>
+    
+</head>
+
+<body>
+<h1> Testing Deliverable 1.1.Interrupt</h1>
+<div id="content">Testing JS namespace for Class..<br>Pass<p></p>Output act instance pretest state...<br>act instance state:<br><table border="1"><tbody><tr><td>property</td><td>type</td><td>value</td></tr><tr><td>numCycles</td><td>number</td><td>2000</td></tr><tr><td> booActOrSolve </td><td>boolean</td><td>true</td></tr><tr><td> booRepeat </td><td>boolean</td><td>false</td></tr><tr><td> numCycleCount </td><td>number</td><td>0</td></tr><tr><td> numExecutions </td><td>number</td><td>0</td></tr></tbody></table><p></p>funAct is: function<br>funSolve is: function<hr><p></p>Output solve instance pretest state...<br>Solve instance state:<br><table border="1"><tbody><tr><td>property</td><td>type</td><td>value</td></tr><tr><td>numCycles</td><td>number</td><td>1000</td></tr><tr><td> booActOrSolve </td><td>boolean</td><td>false</td></tr><tr><td> booRepeat </td><td>boolean</td><td>true</td></tr><tr><td> numCycleCount </td><td>number</td><td>0</td></tr><tr><td> numExecutions </td><td>number</td><td>5</td></tr></tbody></table><p></p>funAct is: function<br>funSolve is: function<hr><p></p>Testing act interupt method...act instance state:<br><table border="1"><tbody><tr><td>property</td><td>type</td><td>value</td></tr><tr><td>numCycles</td><td>number</td><td>2000</td></tr><tr><td> booActOrSolve </td><td>boolean</td><td>true</td></tr><tr><td> booRepeat </td><td>boolean</td><td>false</td></tr><tr><td> numCycleCount </td><td>number</td><td>1</td></tr><tr><td> numExecutions </td><td>number</td><td>0</td></tr></tbody></table><p></p>Solve instance state:<br><table border="1"><tbody><tr><td>property</td><td>type</td><td>value</td></tr><tr><td>numCycles</td><td>number</td><td>1000</td></tr><tr><td> booActOrSolve </td><td>boolean</td><td>false</td></tr><tr><td> booRepeat </td><td>boolean</td><td>true</td></tr><tr><td> numCycleCount </td><td>number</td><td>0</td></tr><tr><td> numExecutions </td><td>number</td><td>5</td></tr></tbody></table><p></p>Solve instance state:<br><table border="1"><tbody><tr><td>property</td><td>type</td><td>value</td></tr><tr><td>numCycles</td><td>number</td><td>1000</td></tr><tr><td> booActOrSolve </td><td>boolean</td><td>false</td></tr><tr><td> booRepeat </td><td>boolean</td><td>true</td></tr><tr><td> numCycleCount </td><td>number</td><td>0</td></tr><tr><td> numExecutions </td><td>number</td><td>4</td></tr></tbody></table><p></p>Solve instance state:<br><table border="1"><tbody><tr><td>property</td><td>type</td><td>value</td></tr><tr><td>numCycles</td><td>number</td><td>1000</td></tr><tr><td> booActOrSolve </td><td>boolean</td><td>false</td></tr><tr><td> booRepeat </td><td>boolean</td><td>true</td></tr><tr><td> numCycleCount </td><td>number</td><td>0</td></tr><tr><td> numExecutions </td><td>number</td><td>3</td></tr></tbody></table><p></p>Solve instance state:<br><table border="1"><tbody><tr><td>property</td><td>type</td><td>value</td></tr><tr><td>numCycles</td><td>number</td><td>1000</td></tr><tr><td> booActOrSolve </td><td>boolean</td><td>false</td></tr><tr><td> booRepeat </td><td>boolean</td><td>true</td></tr><tr><td> numCycleCount </td><td>number</td><td>0</td></tr><tr><td> numExecutions </td><td>number</td><td>2</td></tr></tbody></table><p></p>Solve instance state:<br><table border="1"><tbody><tr><td>property</td><td>type</td><td>value</td></tr><tr><td>numCycles</td><td>number</td><td>1000</td></tr><tr><td> booActOrSolve </td><td>boolean</td><td>false</td></tr><tr><td> booRepeat </td><td>boolean</td><td>true</td></tr><tr><td> numCycleCount </td><td>number</td><td>0</td></tr><tr><td> numExecutions </td><td>number</td><td>1</td></tr></tbody></table><p></p>act instance state:<br><table border="1"><tbody><tr><td>property</td><td>type</td><td>value</td></tr><tr><td>numCycles</td><td>number</td><td>2000</td></tr><tr><td> booActOrSolve </td><td>boolean</td><td>true</td></tr><tr><td> booRepeat </td><td>boolean</td><td>false</td></tr><tr><td> numCycleCount </td><td>number</td><td>2</td></tr><tr><td> numExecutions </td><td>number</td><td>0</td></tr></tbody></table><p></p></div>
+
+
+
+</body></html>
+------MultipartBoundary--Vxsj9lNfw98hszJRIFWuYwz0l8AU2ETQqIB0JIujix------
