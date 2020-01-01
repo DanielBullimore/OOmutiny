@@ -27,7 +27,7 @@
 //# OoMutiny is licensed under the BSD 3-Clause "New" or "Revised" License
 //# To view a copy of this license visit https://github.com/DanielBullimore/OOmutiny/blob/master/LICENSE
 //******************************************************************************************************
-function o()
+function o() {
 /*
 Overview:
   associates a function with a time or interval for it to be executed.
@@ -50,37 +50,27 @@ Parameters: -
 Example: ...
 
 */
-{
+
   //###############
-  //# PROPERTIES #
+  //# PROPERTIES  #
   //###############
   
-  /* Failed Test #1 https://github.com/DanielBullimore/OOmutiny/issues/31
-    *var numCycles;
-    *var booActOrSolve;
-    *var booRepeat;
-    *var numCycleCount;
-    *var numExecutions;
-  */
-  this.numCycles;
-  this.booActOrSolve;
-  this.booRepeat;
-  this.numCycleCount;
-  this.numExecutions;
+
+    this.numCycles = '0';
+    this.booActOrSolve= 'true';
+    this.booRepeat = 'false';
+    this.numCycleCount ='0';
+    this.numExecutions ='0';
+
   //###################
-  //# DERIVED VALUES #
+  //# DERIVED VALUES  #
   //###################
   //-
   //#########################
-  //# CONSTRUCT DESTRUCT #
+  //# CONSTRUCT DESTRUCT    #
   //#########################
-  {
-    this.numCycles = 0;
-    this.booActOrSolve = true;
-    this.booRepeat = false;
-    this.numCycleCount = 0;
-    this.numExecutions = 0;
-  }
+  
+  
   //##############
   //# FUNCTIONS #
   //##############
@@ -92,6 +82,6 @@ Example: ...
   *this.funAct = null;
   *this.funSolve = null;
   */
-  this.funAct;
-  this.funSolve;
+ this.funAct;
+ this.funSolve;
 }
