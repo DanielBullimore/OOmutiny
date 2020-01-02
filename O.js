@@ -137,7 +137,7 @@ function funStartLoop() {
     threads.venus.numExeT = new Date();
     threads.earth.numExeT = new Date();
     threads.mars.numExeT = new Date();
-    console.log("kicking the tyres")
+    //console.log("kicking the tyres");
   }
   /* If this machine has been benchmarked and the loop isnt puased
    * zero = no benchmark do not loop
@@ -152,7 +152,7 @@ function funStartLoop() {
     //iterate through the list of planet-threads stored on mars array
     for (var numPlanet in threads)
     {
-      console.log("Inspecting Planet Thread Array:");
+      //console.log("Inspecting Planet Thread Array:");
       /* by subtracting the date in ms when each thread last executed
        * from the date now in ms we can derive how many ms have passed since.
        * When ms passed is the same or higher than a threads 'day/iteration'
@@ -162,9 +162,9 @@ function funStartLoop() {
       var neg = threads[numPlanet].numExeT.valueOf() - datNow.valueOf()
       var test = neg - (neg + neg);
 
-      if (test >= numBenchmarkSolarYear / threads[numPlanet].fractal && numPlanet !=="")
+      if (test >= numBenchmarkSolarYear / threads[numPlanet].fractal && numPlanet !=="undefined")
       { 
-        console.log("This Planet Is Due")
+        //console.log("This Planet Is Due");
         /* store the time in milliseconds to calculate when
          * to execute this planet thread next
          */
@@ -178,10 +178,10 @@ function funStartLoop() {
 
 
         while (jobs > 0) {
-          console.log("Auditing Work Due...")
+          //console.log("Auditing Work Due...");
           //Grab the next interrupt
-          var oJob = threads[numPlanet].work.shift();
-
+          var oJob = threads[numPlanet].work[jobs -1];
+          //alert(oJob.numCycleCount+">="+oJob.numCycles+">="+oJob.numExecutions+">="+oJob.booRepeat);
           //No execution yet and this interrupt was found due.
           if (booInterrupted === false && oJob.numCycleCount >= oJob.numCycles) {
             
@@ -200,7 +200,7 @@ function funStartLoop() {
             //reset cycle count for interrupt as it just executed
             oJob.numCycleCount = 0;
             booInterrupted = true;
-            console.log("Delt to first interruption on planet")
+            //console.log("Delt to first interruption on planet");
           }
 /* ### POST EXECUTION ##>>>
 * Check the state of this interupt
@@ -224,6 +224,7 @@ function funStartLoop() {
 //### Interrupted Infinite Repeater >>>
             {
               //already cycle zero ^^^up there around line 199, just refresh
+              threads[numPlanet].work.shift()
               threads[numPlanet].work.push(oJob);
             }
 //### Interruped Finite Repeater >>>
@@ -231,14 +232,21 @@ function funStartLoop() {
             {
               // refresh and plus cycle 
               oJob.numCycleCount++;
+              threads[numPlanet].work.shift()
               threads[numPlanet].work.push(oJob);
              
             }
+            else if ((booInterrupted === false)&&( oJob.numExecutions == 1))
+            {
+              //oJob.numCycleCount++;
+              
+            }
+            else { threads[numPlanet].work.shift(); }
 //### Any Other Interrupts Else Dies >>
             //just dont push oJob back on the planet array and it will die
             //do the next job
             jobs--;
-            console.log("Cleaning for")
+            //console.log("Cleaning for");
         }
       }
 /*#### Plants interrupts Updated ^^^
@@ -256,7 +264,7 @@ function funStartLoop() {
           if (threads[numPlanet].numExeT.valueOf() == threads[strPlanet].numExeT.valueOf())
           {
             collisions++;
-            console.log("accounting collisions");
+            //console.log("accounting collisions");
           }
         }
       }
@@ -267,10 +275,10 @@ function funStartLoop() {
    * inverse the benchmark to unpuase
    */
   else if (numBenchmarkSolarYear < 0) {
-    numBenchmarkSolarYear -= numBenchmarkSolarYear + numBenchmarkSolarYear
+    numBenchmarkSolarYear -= numBenchmarkSolarYear + numBenchmarkSolarYear;
   }
   window.setTimeout(funStartLoop , 1);
-  console.log("LOOP!")
+  //console.log("LOOP!");
 }
 
 function funStopLoop()
@@ -298,7 +306,7 @@ function funBenchmark() {
   */
   //if (executions < 10000) {
   //Beanch Mark 
-  if(confirm("I will now benchmark your browser."))
+  //if(confirm("I will now benchmark your browser."))
   {
     if (numBenchmarkSolarYear === 0)
     {
@@ -309,15 +317,15 @@ function funBenchmark() {
       document.getElementById("bencher").height=1000;
       //color 1000/1000 px grid one px at a time ether black or white based on random 1|0
       //what size is the screen
-      for (x = 0; x<100; x+=10)
+      for (x = 0; x<1; x++)
       {
-        for(y = 0; y<10; y+=1)
+        for(y = 0; y<1; y++)
         {
           var oLineThread = new o();
           oLineThread.numCycles = 1;
           oLineThread.booActOrSolve = true;
           oLineThread.booRepeat = false;
-          oLineThread.numExecutions = 1;
+          oLineThread.numExecutions = 0;
           oLineThread.x = x;
           oLineThread.y = y;
           oLineThread.funAct = function()
@@ -337,8 +345,8 @@ function funBenchmark() {
             bencher.lineTo(1000-this.x, 100*this.y^3);//widthOFScreen-x, (widthOfScreen/10)*y^3
             bencher.stroke();
           };
-          console.log("oLine:("+x+","+y+")");
-          threads.mercury.work.push(oLineThread);
+          //console.log("oLine:("+x+","+y+")");
+          threads.earth.work.push(oLineThread);
           
         }
       }
@@ -347,9 +355,9 @@ function funBenchmark() {
       var c = (b - a);
       //document.getElementById("bencher").width = 0;
       //document.getElementById("bencher").height = 0;
-      numBenchmarkSolarYear = 1000; //c.valueOf();
+      numBenchmarkSolarYear = 10 //c.valueOf();
       funStartLoop();
-      console.log("Be Starting UP The Loop");
+      //console.log("Be Starting UP The Loop");
     }  
   }
 }
