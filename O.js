@@ -91,26 +91,26 @@ Methods:
 //# PROPERTIES #
 //###############
 
-var numBenchmarkSolar;
+var numBenchmarkSolarYear = 0;
 var threads = {
   "mars": {
     "work": new Array(),
-    "numExeT": new Date(),
+    "numExeT": new Date(0),
     "fractal": 3
   },
   "earth": {
     "work": new Array(),
-    "numExeT": new Date(4),
+    "numExeT": new Date(0),
     "fractal": 4
   },
   "venus": {
     "work": new Array(),
-    "numExeT": new Date(7),
+    "numExeT": new Date(0),
     "fractal": 7
   },
   "mercury": {
     "work": new Array(),
-    "numExeT": new Date(11),
+    "numExeT": new Date(0),
     "fractal": 11
   },
 };
@@ -131,31 +131,43 @@ function funStartLoop() {
   -
   Returns: -
   */
+  if (threads.mercury.numExeT === 0)
+  {//Light the fires and kick the tyres
+    threads.mercury.numExeT = new Date();
+    threads.venus.numExeT = new Date();
+    threads.earth.numExeT = new Date();
+    threads.mars.numExeT = new Date();
+    console.log("kicking the tyres")
+  }
   /* If this machine has been benchmarked and the loop isnt puased
    * zero = no benchmark do not loop
    * positive number = benchmarked
    * negative number = puase
    */
-  document.getElementById('coor').inerHTML = ":";
+
   if (numBenchmarkSolarYear > 0)
   {
     //save the exact date in milliseconds
-
+    var datNow = new Date();
     //iterate through the list of planet-threads stored on mars array
     for (var numPlanet in threads)
     {
-
+      console.log("Inspecting Planet Thread Array:");
       /* by subtracting the date in ms when each thread last executed
        * from the date now in ms we can derive how many ms have passed since.
        * When ms passed is the same or higher than a threads 'day/iteration'
        * aka solar year divied by planet day length, execute that thread.]
        */
-      var datNow = new Date();
+      
       var neg = threads[numPlanet].numExeT.valueOf() - datNow.valueOf()
       var test = neg - (neg + neg);
 
-      if (test >= numBenchmarkSolarYear / threads[numPlanet].fractal)
-      { //degub document.getElementById('coor').innerHTML += test+":"+numBenchmarkSolarYear/threads[numPlanet].fractal+"<br>";
+      if (test >= numBenchmarkSolarYear / threads[numPlanet].fractal && numPlanet !=="")
+      { 
+        console.log("This Planet Is Due")
+        /* store the time in milliseconds to calculate when
+         * to execute this planet thread next
+         */
         threads[numPlanet].numExeT = datNow;
         /* When a planet thread has completed its day
          * iterate through that planets work Array starting
@@ -166,95 +178,99 @@ function funStartLoop() {
 
 
         while (jobs > 0) {
-
+          console.log("Auditing Work Due...")
           //Grab the next interrupt
-          var oJob = threads[numPlanet].work[jobs - 1];
+          var oJob = threads[numPlanet].work.shift();
 
           //No execution yet and this interrupt was found due.
-          if (booInterrupted === false && oJob.numCycles <= oJob.numCycleCount) {
-            //alert(oJob.numCycles+":"+oJob.numCycleCount);
+          if (booInterrupted === false && oJob.numCycleCount >= oJob.numCycles) {
+            
             //is this interrupt an Act Or Solve job?
             if (oJob.booActOrSolve) {
               //execute the Act function stored in interrupt
-              //alert(oJob.funAct[0]);
+              
               this.t = oJob.funAct;
               this.t();
             }
             else {
               //execute the solve function stored in interrupt 
-
               this.t = oJob.funSolve;
               this.t();
             }
-
+            //reset cycle count for interrupt as it just executed
+            oJob.numCycleCount = 0;
             booInterrupted = true;
-
-            /* ### POST EXECUTION ##>>>
-              * Check the state of this interupt
-              * Infinite repeating interrupts require state reset and put to back of queu
-              * Interrupts set to repeat finite # times require state update
-              or require deletion if complete.
-              * All other executed interrupts require deletion
-              */
-            if (oJob.booRepeat && oJob.numExecutions === 0)
-            {
-              //reset cycle count for infinite repeating interrupt
-              oJob.numCycleCount = 0;
-              //put to back of queu
-              delete threads[numPlanet].work[jobs];
-              this[numPlanet].work.unshift(oJob);
-            }
-            else if (oJob.booRepeat && oJob.numExecutions > 1)
-            {
-              //delete this finite repeating interrupt
-              oJob.numExecutions--;
-            }
-            else
-            {
-              //delete this executed interrupt
-              delete threads[numPlanet].work[jobs];
-            }
+            console.log("Delt to first interruption on planet")
           }
-          else
-          {
-            /* This interrupt isnt due, increase numCycleCount
-             * to show another cycle has passed it with out execution
-             */
-            oJob.numCycleCount++;
-          }
-
-          jobs--;
-
+/* ### POST EXECUTION ##>>>
+* Check the state of this interupt
+* Infinite repeating interrupts require state reset and put to back of queu
+* Interrupts set to repeat finite # times require state update
+  or require deletion if complete.
+* All other executed interrupts require deletion
+*/
+              
+//### Repeater not interrupted >>>
+            if ((oJob.booRepeat) && (booInterrupted === false) ||
+//### Non Repeater Not interrupted >>>
+            (oJob.booRepeat === false) && (booInterrupted === false))
+            {
+              /* This interrupt isnt due, increase numCycleCount
+               * to show another cycle has passed it with out execution
+               */
+              oJob.numCycleCount++;
+            }
+            else if ((booInterrupted === true)&&( oJob.numExecutions === 0))
+//### Interrupted Infinite Repeater >>>
+            {
+              //already cycle zero ^^^up there around line 199, just refresh
+              threads[numPlanet].work.push(oJob);
+            }
+//### Interruped Finite Repeater >>>
+            else if ((booInterrupted === true)&&( oJob.numExecutions > 1))
+            {
+              // refresh and plus cycle 
+              oJob.numCycleCount++;
+              threads[numPlanet].work.push(oJob);
+             
+            }
+//### Any Other Interrupts Else Dies >>
+            //just dont push oJob back on the planet array and it will die
+            //do the next job
+            jobs--;
+            console.log("Cleaning for")
         }
       }
-      //after checking exet for a thread
-      /* store the time in milliseconds to calculate when
-       * to execute this planet thread next
-       */
-      if (booInterrupted === true) {
-        //funCollisionDetect(numPlanet);
-                for (strPlanet in threads)
-                {
-                  if (strPlanet !== numPlanet && threads[numPlanet].numExeT.valueOf() == threads[strPlanet].numExeT.valueOf())
-                  {
-                    collisions++;
-                  }
-                }
-        //threads[numPlanet].numExeT = new Date();
-        //break;
+/*#### Plants interrupts Updated ^^^
+ >>>Now do some accounting. Machines measure timing in a frequency
+ of electon pulses in hz (Ghz,Mhz,Hz). This software measures
+ time in milliseconds. It is posible that a fast cpu could execute 
+ more than one interupt per millisecond.
+* Determine if another thread executed this millisecond
+* add another collision.
+*/
+      if (booInterrupted === true)
+      {
+        for (var strPlanet in threads)
+        {
+          if (threads[numPlanet].numExeT.valueOf() == threads[strPlanet].numExeT.valueOf())
+          {
+            collisions++;
+            console.log("accounting collisions");
+          }
+        }
       }
     }
-    //after going through the palnets array
-
+//### Benched + Plants arrays done >>>
   }
   /* This method has been called while loop was on pause
    * inverse the benchmark to unpuase
    */
   else if (numBenchmarkSolarYear < 0) {
-    alert("k");
     numBenchmarkSolarYear -= numBenchmarkSolarYear + numBenchmarkSolarYear
   }
-window.setTimeout(funStartLoop , 1);
+  window.setTimeout(funStartLoop , 1);
+  console.log("LOOP!")
 }
 
 function funStopLoop()
@@ -274,11 +290,66 @@ function funStopLoop()
 
 function funBenchmark() {
   /* Description: 
-      calculate how intense a loop the cliet machine can run well 
+      calculate how intense a loop the cliet machine can run well
+      measure how long it takes to plot a 1000 value vector matrix
   * Parameters: - 
   
   * Returns: -
   */
-  numBenchmarkSolarYear = 1000;
-
+  //if (executions < 10000) {
+  //Beanch Mark 
+  if(confirm("I will now benchmark your browser."))
+  {
+    if (numBenchmarkSolarYear === 0)
+    {
+      
+      var a = new Date();
+      //dom in a transperent canvas
+      document.getElementById("bencher").width=1000;
+      document.getElementById("bencher").height=1000;
+      //color 1000/1000 px grid one px at a time ether black or white based on random 1|0
+      //what size is the screen
+      for (x = 0; x<100; x+=10)
+      {
+        for(y = 0; y<10; y+=1)
+        {
+          var oLineThread = new o();
+          oLineThread.numCycles = 1;
+          oLineThread.booActOrSolve = true;
+          oLineThread.booRepeat = false;
+          oLineThread.numExecutions = 1;
+          oLineThread.x = x;
+          oLineThread.y = y;
+          oLineThread.funAct = function()
+          {
+            var elbencher = document.getElementById("bencher");
+            var bencher = elbencher.getContext("2d");
+            if (Math.random() === 1)
+            {
+              bencher.strokeStyle = "#ffffff";
+            }
+            else
+            {
+              bencher.strokeStyle = "#000000";
+            }
+            //paint line at A=(x,y)B=(x,y)
+            bencher.moveTo(this.x, this.y);
+            bencher.lineTo(1000-this.x, 100*this.y^3);//widthOFScreen-x, (widthOfScreen/10)*y^3
+            bencher.stroke();
+          };
+          console.log("oLine:("+x+","+y+")");
+          threads.mercury.work.push(oLineThread);
+          
+        }
+      }
+      //alert (threads.mercury.work.join());
+      var b = new Date();
+      var c = (b - a);
+      //document.getElementById("bencher").width = 0;
+      //document.getElementById("bencher").height = 0;
+      numBenchmarkSolarYear = 1000; //c.valueOf();
+      funStartLoop();
+      console.log("Be Starting UP The Loop");
+    }  
+  }
 }

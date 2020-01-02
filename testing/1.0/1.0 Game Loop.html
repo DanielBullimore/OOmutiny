@@ -96,6 +96,7 @@ function Draw()
   <tr><td>exe/sec</td><td id="tmercury">0</td><td id="tvenus">0</td><td id="tearth">0</td><td id="tmars">0</td></tr>
   <tr><td>Total of</td><td id=total></td><td>executions</td><td id=exe></td><td id=coor>HW opt</td></tr>
 </table>
+<canvas id="bencher" style="width:1000px:height:0px"></canvas>
 <canvas id=main width=1000 height=1000></canvas>
 <script>
 //###Space>>
@@ -104,8 +105,8 @@ function Draw()
       funBenchmark();
 //###Home-Planet>>>      
       var oinDrawEarth = new o();
-        oinDrawEarth.boolRepeat = true;
-        oinDrawEarth.numCycles = 1;
+        oinDrawEarth.booRepeat = true;
+        oinDrawEarth.numCycles = 4;
         oinDrawEarth.booActOrSolve = true;
         //Earth Planet as object
         objEarth.color = "green";
@@ -129,8 +130,8 @@ function Draw()
         };
 //###Mars>>
       var oinDrawMars = new o();
-        oinDrawMars.boolRepeat = true;
-        oinDrawMars.numCycles = 1;
+        oinDrawMars.booRepeat = true;
+        oinDrawMars.numCycles = 3;
         oinDrawMars.booActOrSolve = true;
         //Mars Planet as object
         objMars.color = "Red";
@@ -150,24 +151,17 @@ function Draw()
           window.document.getElementById("cmars").innerHTML = ((x/executions)*100).toPrecision(8)+"%";
           z = 1000/(numBenchmarkSolarYear/3);
           window.document.getElementById("tmars").innerHTML = z.toPrecision(8);
-          document.getElementById("exe").innerHTML = (1+(executions/collisions)*.001).toFixed(6)+"exe/ms";
+          document.getElementById("exe").innerHTML = (1+executions/collisions*.001).toFixed(6)+"exe/ms";
           document.getElementById("total").innerHTML = executions;
-          if (executions < 10000) { 
-            //Beanch Mark 
-            if ((numBenchmarkSolarYear > 10) && ((collisions/executions)*100 < 1)) 
-            { numBenchmarkSolarYear-=10 }
-            //needlessly intensive loop
-            else if ((numBenchmarkSolarYear > 1) &&(numBenchmarkSolarYear <= 10) && ((collisions/executions)*100 < 1))
-            { numBenchmarkSolarYear-=.25 }
-          }
+
           document.getElementById("year").innerHTML=numBenchmarkSolarYear;
           Draw() //planets leave trails with out a reframe       
           objMars.render("main");
       };
 //###Mercury>>
       var oinDrawMercury = new o();
-        oinDrawMercury.boolRepeat = true;
-        oinDrawMercury.numCycles = 1;
+        oinDrawMercury.booRepeat = true;
+        oinDrawMercury.numCycles = 11;
         oinDrawMercury.booActOrSolve = true;
         //Mercury Planet as object
         objMercury.color = "brown";
@@ -191,8 +185,8 @@ function Draw()
       };
 //###Venus>>
       var oinDrawVenus = new o();
-        oinDrawVenus.boolRepeat = true;
-        oinDrawVenus.numCycles = 1;
+        oinDrawVenus.booRepeat = true;
+        oinDrawVenus.numCycles = 7;
         oinDrawVenus.booActOrSolve = true;
         //Venus Planet as object
         objVenus.color = "purple";
@@ -216,17 +210,17 @@ function Draw()
       };
 //###ADD JOBS>>>      
 /*these should be one function*/
-      threads.mercury.numExeT = new Date();
+      //threads.mercury.numExeT = new Date();
       threads.mercury.work.push(oinDrawMercury);
-      threads.venus.numExeT = new Date();
+      //threads.venus.numExeT = new Date();
       threads.venus.work.push(oinDrawVenus);
-      threads.earth.numExeT = new Date();
+      //threads.earth.numExeT = new Date();
       threads.earth.work.push(oinDrawEarth);
-      threads.mars.numExeT = new Date();
+      //threads.mars.numExeT = new Date();
       threads.mars.work.push(oinDrawMars);
 //###BOOM!>>>
 /* interval should be part of the loop function*/
-      funStartLoop();
+      //funStartLoop();
       
 </script>
 Copyright 2020 Daniel Bullimore
