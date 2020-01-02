@@ -101,7 +101,7 @@ var threads = {
   "earth": {
     "work": new Array(),
     "numExeT": new Date(4),
-    "fractal": 11
+    "fractal": 4
   },
   "venus": {
     "work": new Array(),
@@ -231,8 +231,15 @@ function funStartLoop() {
       /* store the time in milliseconds to calculate when
        * to execute this planet thread next
        */
-      if (booInterrupted === false) {
-        funCollisionDetect(numPlanet);
+      if (booInterrupted === true) {
+        //funCollisionDetect(numPlanet);
+                for (strPlanet in threads)
+                {
+                  if (strPlanet !== numPlanet && threads[numPlanet].numExeT.valueOf() == threads[strPlanet].numExeT.valueOf())
+                  {
+                    collisions++;
+                  }
+                }
         //threads[numPlanet].numExeT = new Date();
         //break;
       }
@@ -247,7 +254,7 @@ function funStartLoop() {
     alert("k");
     numBenchmarkSolarYear -= numBenchmarkSolarYear + numBenchmarkSolarYear
   }
-
+window.setTimeout(funStartLoop , 1);
 }
 
 function funStopLoop()

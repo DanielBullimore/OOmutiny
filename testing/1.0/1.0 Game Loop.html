@@ -94,7 +94,7 @@ function Draw()
   <tr><td>executions</td><td id="mercury">0</td><td id="venus">0</td><td id="earth">0</td><td id="mars">0</td></tr>
   <tr><td>rate</td><td id="cmercury">0</td><td id="cvenus">0</td><td id="cearth">0</td><td id="cmars">0</td></tr>
   <tr><td>exe/sec</td><td id="tmercury">0</td><td id="tvenus">0</td><td id="tearth">0</td><td id="tmars">0</td></tr>
-  <tr><td>Total of</td><td id=total></td><td>executions</td><td id=exe></td><td id=coor>colision</td></tr>
+  <tr><td>Total of</td><td id=total></td><td>executions</td><td id=exe></td><td id=coor>HW opt</td></tr>
 </table>
 <canvas id=main width=1000 height=1000></canvas>
 <script>
@@ -150,7 +150,7 @@ function Draw()
           window.document.getElementById("cmars").innerHTML = ((x/executions)*100).toPrecision(8)+"%";
           z = 1000/(numBenchmarkSolarYear/3);
           window.document.getElementById("tmars").innerHTML = z.toPrecision(8);
-          document.getElementById("exe").innerHTML = ((collisions/executions)*100).toPrecision(6)+"%";
+          document.getElementById("exe").innerHTML = (1+(executions/collisions)*.001).toFixed(6)+"exe/ms";
           document.getElementById("total").innerHTML = executions;
           if (executions < 10000) { 
             //Beanch Mark 
@@ -227,7 +227,7 @@ function Draw()
 //###BOOM!>>>
 /* interval should be part of the loop function*/
       funStartLoop();
-      window.setInterval(funStartLoop , 1);
+      
 </script>
 Copyright 2020 Daniel Bullimore
 //# OOmutiny is licensed under the BSD 3-Clause "New" or "Revised" License
