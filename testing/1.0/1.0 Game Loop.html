@@ -127,7 +127,7 @@ function Draw()
           window.document.getElementById("cearth").innerHTML = ((x/executions)*100).toPrecision(6)+"%";
           z = 1000/(numBenchmarkSolarYear/4);
           window.document.getElementById("tearth").innerHTML = z.toPrecision(8);
-          objEarth.render("main");
+          //objEarth.render("main");
         };
 //###Mars>>
       var oinDrawMars = new o();
@@ -158,7 +158,7 @@ function Draw()
 
           document.getElementById("year").innerHTML=numBenchmarkSolarYear;
           Draw() //planets leave trails with out a reframe       
-          objMars.render("main");
+          //objMars.render("main");
       };
 //###Mercury>>
       var oinDrawMercury = new o();
@@ -184,7 +184,7 @@ function Draw()
         window.document.getElementById("cmercury").innerHTML = ((x/executions)*100).toPrecision(6)+"%";
         z = 1000/(numBenchmarkSolarYear/11);
         window.document.getElementById("tmercury").innerHTML = z.toPrecision(8);
-        objMercury.render("main");
+        //objMercury.render("main");
       };
 //###Venus>>
       var oinDrawVenus = new o();
@@ -210,7 +210,7 @@ function Draw()
         window.document.getElementById("cvenus").innerHTML = ((x/executions)*100).toPrecision(6)+"%";
         z = 1000/(numBenchmarkSolarYear/7);
         window.document.getElementById("tvenus").innerHTML = z.toPrecision(8);
-        objVenus.render("main");
+        //objVenus.render("main");
       };
 //###ADD JOBS>>>      
 /*these should be one function*/

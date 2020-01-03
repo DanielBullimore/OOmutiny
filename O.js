@@ -150,130 +150,93 @@ function funStartLoop() {
     //save the exact date in milliseconds
     var datNow = new Date();
     //iterate through the list of planet-threads stored on mars array
-    for (var numPlanet in threads)
-    {
-      //console.log("Inspecting Planet Thread Array:");
-      /* by subtracting the date in ms when each thread last executed
-       * from the date now in ms we can derive how many ms have passed since.
-       * When ms passed is the same or higher than a threads 'day/iteration'
-       * aka solar year divied by planet day length, execute that thread.]
-       */
-      
-      var neg = threads[numPlanet].numExeT.valueOf() - datNow.valueOf()
-      var test = neg - (neg + neg);
-
-      if (test >= numBenchmarkSolarYear / threads[numPlanet].fractal && numPlanet !=="undefined")
-      { 
-        //console.log("This Planet Is Due");
-        /* store the time in milliseconds to calculate when
-         * to execute this planet thread next
-         */
-        threads[numPlanet].numExeT = datNow;
-        /* When a planet thread has completed its day
-         * iterate through that planets work Array starting
-         * from the oldest interrupt.
-         */
-        var jobs = Object.keys(threads[numPlanet].work).length;
-        var booInterrupted = false;
-
-
-        while (jobs > 0) {
-          //console.log("Auditing Work Due...");
-          //Grab the next interrupt
-          var oJob = threads[numPlanet].work[jobs -1];
-          //alert(oJob.numCycleCount+">="+oJob.numCycles+">="+oJob.numExecutions+">="+oJob.booRepeat);
-          //No execution yet and this interrupt was found due.
-          if (booInterrupted === false && oJob.numCycleCount >= oJob.numCycles) {
-            
-            //is this interrupt an Act Or Solve job?
-            if (oJob.booActOrSolve) {
-              //execute the Act function stored in interrupt
-              
-              this.t = oJob.funAct;
-              this.t();
-            }
-            else {
-              //execute the solve function stored in interrupt 
-              this.t = oJob.funSolve;
-              this.t();
-            }
-            //reset cycle count for interrupt as it just executed
-            oJob.numCycleCount = 0;
-            booInterrupted = true;
-            //console.log("Delt to first interruption on planet");
-          }
-/* ### POST EXECUTION ##>>>
-* Check the state of this interupt
-* Infinite repeating interrupts require state reset and put to back of queu
-* Interrupts set to repeat finite # times require state update
-  or require deletion if complete.
-* All other executed interrupts require deletion
-*/
-              
-//### Repeater not interrupted >>>
-            if ((oJob.booRepeat) && (booInterrupted === false) ||
-//### Non Repeater Not interrupted >>>
-            (oJob.booRepeat === false) && (booInterrupted === false))
-            {
-              /* This interrupt isnt due, increase numCycleCount
-               * to show another cycle has passed it with out execution
-               */
-              oJob.numCycleCount++;
-            }
-            else if ((booInterrupted === true)&&( oJob.numExecutions === 0))
-//### Interrupted Infinite Repeater >>>
-            {
-              //already cycle zero ^^^up there around line 199, just refresh
-              threads[numPlanet].work.shift()
-              threads[numPlanet].work.push(oJob);
-            }
-//### Interruped Finite Repeater >>>
-            else if ((booInterrupted === true)&&( oJob.numExecutions > 1))
-            {
-              // refresh and plus cycle 
-              oJob.numCycleCount++;
-              threads[numPlanet].work.shift()
-              threads[numPlanet].work.push(oJob);
-             
-            }
-            else if ((booInterrupted === false)&&( oJob.numExecutions == 1))
-            {
-              //oJob.numCycleCount++;
-              
-            }
-            else { threads[numPlanet].work.shift(); }
-//### Any Other Interrupts Else Dies >>
-            //just dont push oJob back on the planet array and it will die
-            //do the next job
-            jobs--;
-            //console.log("Cleaning for");
-        }
-      }
-/*#### Plants interrupts Updated ^^^
- >>>Now do some accounting. Machines measure timing in a frequency
- of electon pulses in hz (Ghz,Mhz,Hz). This software measures
- time in milliseconds. It is posible that a fast cpu could execute 
- more than one interupt per millisecond.
-* Determine if another thread executed this millisecond
-* add another collision.
-*/
-      if (booInterrupted === true)
+    for (var strPlanet in threads)
       {
-        for (var strPlanet in threads)
+        if ( (datNow.getMilliseconds() - threads[strPlanet].numExeT.getMilliseconds()) >= numBenchmarkSolarYear/threads[strPlanet].fractal)
+  //### Reached Apointment Time ^^^
         {
-          if (threads[numPlanet].numExeT.valueOf() == threads[strPlanet].numExeT.valueOf())
+          var numExecutedInterrupt = -1;
+          for (var interrupt = 0; interrupt < Object.keys(threads[strPlanet].work).length*2; interrupt++)
+          //iterate through interrupts
           {
-            collisions++;
-            //console.log("accounting collisions");
+            if ( interrupt < Object.keys(threads[strPlanet].work).length)
+      //### Pre Interrupt Accounting>>>
+            {
+              threads[strPlanet].work[interrupt].numCycleCount++;
+            }
+            else 
+      //### Interrupt >>>
+            {
+              numExecutedInterrupt = interrupt - Object.keys(threads[strPlanet].work).length;
+              if ( 
+                ( numExecutedInterrupt < Object.keys(threads[strPlanet].work).length)
+                &&
+                (threads[strPlanet].work[numExecutedInterrupt].numCycleCount >= threads[strPlanet].work[numExecutedInterrupt].numCycles) 
+                )
+              {
+                //Fun Act
+                if (threads[strPlanet].work[numExecutedInterrupt].booActOrSolve === true)
+                {
+                  this.funAct = threads[strPlanet].work[numExecutedInterrupt].funAct;
+                  this.funAct();
+                }
+                //Fun Solve
+                else
+                {
+                  this.funSolve = threads[strPlanet].work[numExecutedInterrupt].funSolve;
+                  this.funSolve();
+                }
+                break;
+              }
+            }
           }
+//### Delete or Shift State? for executed interrupt only >>>
+          if (numExecutedInterrupt >= 0) 
+          /* making mods to the array after all inerations are complete 
+          * otherwise the mods affect the order of indice/keys
+          */
+          {
+          //if the executed interrupt is a repeater
+            if (threads[strPlanet].work[numExecutedInterrupt].booRepeat === true)
+            {
+              numExecutions = threads[strPlanet].work[numExecutedInterrupt].numExecutions;
+              // push infinite repeating interrupts to the end of the appointment book
+              if (numExecutions === 0 )
+              {
+                //Unlimited repeating appointment, Shift interrupt to the end of array
+                threads[strPlanet].work.push(threads[strPlanet].work[numExecutedInterrupt]);
+                threads[strPlanet].work.splice(numExecutedInterrupt,1);
+              }
+              else if (numExecutions > 1)
+              {
+                //Interrupt has more appointments booked decrease numExecutions & shift it to end of array
+                threads[strPlanet].work[numExecutedInterrupt].numExecutions--;
+                threads[strPlanet].work.push(threads[strPlanet].work[numExecutedInterrupt]);
+                threads[strPlanet].work.splice(numExecutedInterrupt, 1);
+              }
+              else if (numExecutions === 1)
+              {
+                //The last of multiple appointments executed, delete interrupt
+                threads[strPlanet].work.splice(numExecutedInterrupt, 1);
+              }
+            }
+          //for single executing interrupts
+            else
+            {
+              // Appointment complete, delete it
+              threads[strPlanet].work.splice(numExecutedInterrupt, 1);
+            }
+          }
+          threads[strPlanet].numExeT = new Date();
         }
       }
-    }
-//### Benched + Plants arrays done >>>
   }
-  /* This method has been called while loop was on pause
-   * inverse the benchmark to unpuase
-   */
+/*>>> Now do some accounting.Machines measure timing in a frequency of electon pulses in hz(Ghz, Mhz, Hz).This software measures
+  time in milliseconds.It is posible that a fast cpu could execute
+  more than one interupt per millisecond.*Determine
+  if another thread executed this millisecond
+  *add another collision.
+*/
   else if (numBenchmarkSolarYear < 0) {
     numBenchmarkSolarYear -= numBenchmarkSolarYear + numBenchmarkSolarYear;
   }
@@ -300,8 +263,7 @@ function funBenchmark() {
   /* Description: 
       calculate how intense a loop the cliet machine can run well
       measure how long it takes to plot a 1000 value vector matrix
-  * Parameters: - 
-  
+  * Parameters: -
   * Returns: -
   */
   //if (executions < 10000) {
@@ -310,25 +272,25 @@ function funBenchmark() {
   {
     if (numBenchmarkSolarYear === 0)
     {
-      
+      window.yx = new Array();
       var a = new Date();
       //dom in a transperent canvas
       document.getElementById("bencher").width=1000;
       document.getElementById("bencher").height=1000;
       //color 1000/1000 px grid one px at a time ether black or white based on random 1|0
       //what size is the screen
-      for (x = 0; x<1; x++)
+      for (x = 0; x<=1000; x+=1)
       {
-        for(y = 0; y<1; y++)
+        for(y = 0; y<=10; y++)
         {
-          var oLineThread = new o();
-          oLineThread.numCycles = 1;
-          oLineThread.booActOrSolve = true;
-          oLineThread.booRepeat = false;
-          oLineThread.numExecutions = 0;
-          oLineThread.x = x;
-          oLineThread.y = y;
-          oLineThread.funAct = function()
+          oLine = new o();
+          oLine.numCycles = 1;
+          oLine.booActOrSolve = true;
+          oLine.booRepeat = false;
+          oLine.numExecutions = 1;
+          oLine.x = x;
+          oLine.y = y;
+          oLine.funAct = function()
           {
             var elbencher = document.getElementById("bencher");
             var bencher = elbencher.getContext("2d");
@@ -345,11 +307,11 @@ function funBenchmark() {
             bencher.lineTo(1000-this.x, 100*this.y^3);//widthOFScreen-x, (widthOfScreen/10)*y^3
             bencher.stroke();
           };
-          //console.log("oLine:("+x+","+y+")");
-          threads.earth.work.push(oLineThread);
+          ///alert("oLine:("+x+","+y+")");
+          threads.earth.work.push(oLine);
           
         }
-      }
+      }alert(Object.keys(threads.earth.work).length);
       //alert (threads.mercury.work.join());
       var b = new Date();
       var c = (b - a);
