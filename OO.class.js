@@ -135,9 +135,9 @@ function OO()
         window.rayOOi = Array();
     }
 	{
-		var numId = 0;
-		var strType = "oomutiny";
-		var strName = "";
+		numId = 0;
+		strType = "oomutiny";
+		strName = "";
 	}
     
     this.Destroy = function(strInstanceName)
@@ -173,7 +173,7 @@ function OO()
 	*/
 			if (rayOO[strType]) 
 			{  
-				for (objEachObject in rayOO[strType])
+				for (var objEachObject in rayOO[strType])
 				{
 					if (typeof(objEachObject) === "object" && objEachObject.numId !== numId) //*** Failed test 1 -3.2.11
 					{
@@ -187,7 +187,7 @@ function OO()
 				   else if (objEachObject.domOO())
 					{
 						elmParent = objEachObject.domNode().parentNode;
-						for (nodX in elmParent.childNodes)
+						for (var nodX in elmParent.childNodes)
 						{
 							if (elmParent.childNodes.item(nodX).isSameNode(objEachObject.domNode()) )
 							{
@@ -201,7 +201,7 @@ function OO()
 	//Overwrite the global array with the new array which doesnt contain this instances object entry.	
 			rayOO[strType] = rayNewArray;
 		}
-		for (objEverything in this) { delete this[objEverything]; }
+		for (var objEverything in this) { delete this[objEverything]; }
 		delete window[strInstanceName];
     };
     //###########
@@ -263,7 +263,7 @@ this.funSetNameOnce = function (strNewName)
     Returns:  void
     */
 	{
-		if (strName == "")
+		if (strName === "")
 		{
 			strName = strNewName;
 		}
