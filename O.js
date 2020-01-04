@@ -94,23 +94,23 @@ Methods:
 var numBenchmarkSolarYear = 0;
 var threads = {
   "mars": {
-    "work": new Array(),
-    "numExeT": new Date(0),
+    "work": [],
+    "numExeT": 0,
     "fractal": 3
   },
   "earth": {
-    "work": new Array(),
-    "numExeT": new Date(0),
+    "work": [],
+    "numExeT": 0,
     "fractal": 4
   },
   "venus": {
-    "work": new Array(),
-    "numExeT": new Date(0),
+    "work": [],
+    "numExeT": 0,
     "fractal": 7
   },
   "mercury": {
-    "work": new Array(),
-    "numExeT": new Date(0),
+    "work": [],
+    "numExeT": 0,
     "fractal": 11
   },
 };
@@ -137,26 +137,25 @@ function funStartLoop() {
     threads.venus.numExeT = new Date();
     threads.earth.numExeT = new Date();
     threads.mars.numExeT = new Date();
-    //console.log("kicking the tyres");
+    console.log("kicking the tyres and lighting the fires");
   }
   /* If this machine has been benchmarked and the loop isnt puased
    * zero = no benchmark do not loop
    * positive number = benchmarked
    * negative number = puase
    */
-
   if (numBenchmarkSolarYear > 0)
   {
-    //save the exact date in milliseconds
-    var datNow = new Date();
     //iterate through the list of planet-threads stored on mars array
     for (var strPlanet in threads)
-      {
-        if ( (datNow.getMilliseconds() - threads[strPlanet].numExeT.getMilliseconds()) >= numBenchmarkSolarYear/threads[strPlanet].fractal)
+      {    
+        //save the exact date in milliseconds
+        var datNow = new Date();
+        if ( (datNow.valueOf() - threads[strPlanet].numExeT.valueOf()) >= numBenchmarkSolarYear/threads[strPlanet].fractal)
   //### Reached Apointment Time ^^^
         {
-          var numExecutedInterrupt = -1;
-          for (var interrupt = 0; interrupt < Object.keys(threads[strPlanet].work).length*2; interrupt++)
+          numExecutedInterrupt = -1;
+          for (var interrupt = 0; interrupt < Object.keys(threads[strPlanet].work).length+Object.keys(threads[strPlanet].work).length; interrupt++)
           //iterate through interrupts
           {
             if ( interrupt < Object.keys(threads[strPlanet].work).length)
@@ -164,7 +163,7 @@ function funStartLoop() {
             {
               threads[strPlanet].work[interrupt].numCycleCount++;
             }
-            else 
+            else //if  (numExecutedInterrupt >= 0)
       //### Interrupt >>>
             {
               numExecutedInterrupt = interrupt - Object.keys(threads[strPlanet].work).length;
@@ -179,13 +178,17 @@ function funStartLoop() {
                 {
                   this.funAct = threads[strPlanet].work[numExecutedInterrupt].funAct;
                   this.funAct();
+
                 }
                 //Fun Solve
                 else
                 {
                   this.funSolve = threads[strPlanet].work[numExecutedInterrupt].funSolve;
                   this.funSolve();
+
                 }
+                                  threads[strPlanet].work[numExecutedInterrupt].numCycleCount = 0;
+                                  threads[strPlanet].numExeT = datNow;
                 break;
               }
             }
@@ -196,6 +199,7 @@ function funStartLoop() {
           * otherwise the mods affect the order of indice/keys
           */
           {
+            
           //if the executed interrupt is a repeater
             if (threads[strPlanet].work[numExecutedInterrupt].booRepeat === true)
             {
@@ -206,6 +210,8 @@ function funStartLoop() {
                 //Unlimited repeating appointment, Shift interrupt to the end of array
                 threads[strPlanet].work.push(threads[strPlanet].work[numExecutedInterrupt]);
                 threads[strPlanet].work.splice(numExecutedInterrupt,1);
+                //console.log("repeat shift")
+                //alert(""+strPlanet);
               }
               else if (numExecutions > 1)
               {
@@ -225,20 +231,21 @@ function funStartLoop() {
             {
               // Appointment complete, delete it
               threads[strPlanet].work.splice(numExecutedInterrupt, 1);
+              //console.log("del no rep")
             }
           }
-          threads[strPlanet].numExeT = new Date();
         }
       }
-  }
-/*>>> Now do some accounting.Machines measure timing in a frequency of electon pulses in hz(Ghz, Mhz, Hz).This software measures
-  time in milliseconds.It is posible that a fast cpu could execute
-  more than one interupt per millisecond.*Determine
-  if another thread executed this millisecond
-  *add another collision.
-*/
-  else if (numBenchmarkSolarYear < 0) {
-    numBenchmarkSolarYear -= numBenchmarkSolarYear + numBenchmarkSolarYear;
+    }
+  /*>>> Now do some accounting.Machines measure timing in a frequency of electon pulses in hz(Ghz, Mhz, Hz).This software measures
+    time in milliseconds.It is posible that a fast cpu could execute
+    more than one interupt per millisecond.*Determine
+    if another thread executed this millisecond
+    *add another collision.
+  */
+  else if (numBenchmarkSolarYear < 0) 
+  {
+      numBenchmarkSolarYear -= numBenchmarkSolarYear + numBenchmarkSolarYear;
   }
   window.setTimeout(funStartLoop , 1);
   //console.log("LOOP!");
@@ -269,57 +276,46 @@ function funBenchmark() {
   //if (executions < 10000) {
   //Beanch Mark 
   //if(confirm("I will now benchmark your browser."))
+  if (numBenchmarkSolarYear === 0)
   {
-    if (numBenchmarkSolarYear === 0)
+    //dom in a transperent canvas
+    document.getElementById("bencher").width=1000;
+    document.getElementById("bencher").height=1000;
+    //color 1000/1000 px grid one px at a time ether black or white based on random 1|0
+    //todo:what size is the screen          
+    var xLine = new o();
+    xLine.numCycles = 1;
+    xLine.booActOrSolve = true;
+    xLine.booRepeat = true;
+    xLine.numExecutions = 1000;
+    xLine.x = 0;
+    xLine.y = 0;
+    xLine.a = new Date();
+    xLine.b = 0;
+    xLine.funAct = function()
     {
-      window.yx = new Array();
-      var a = new Date();
-      //dom in a transperent canvas
-      document.getElementById("bencher").width=1000;
-      document.getElementById("bencher").height=1000;
-      //color 1000/1000 px grid one px at a time ether black or white based on random 1|0
-      //what size is the screen
-      for (x = 0; x<=1000; x+=1)
+      xLine.x++;
+      xLine.y++
+      elbencher = document.getElementById("bencher");
+      bencher = elbencher.getContext("2d");
+      if (Math.random() === 1)
       {
-        for(y = 0; y<=10; y++)
-        {
-          oLine = new o();
-          oLine.numCycles = 1;
-          oLine.booActOrSolve = true;
-          oLine.booRepeat = false;
-          oLine.numExecutions = 1;
-          oLine.x = x;
-          oLine.y = y;
-          oLine.funAct = function()
-          {
-            var elbencher = document.getElementById("bencher");
-            var bencher = elbencher.getContext("2d");
-            if (Math.random() === 1)
-            {
-              bencher.strokeStyle = "#ffffff";
-            }
-            else
-            {
-              bencher.strokeStyle = "#000000";
-            }
-            //paint line at A=(x,y)B=(x,y)
-            bencher.moveTo(this.x, this.y);
-            bencher.lineTo(1000-this.x, 100*this.y^3);//widthOFScreen-x, (widthOfScreen/10)*y^3
-            bencher.stroke();
-          };
-          ///alert("oLine:("+x+","+y+")");
-          threads.earth.work.push(oLine);
-          
-        }
-      }alert(Object.keys(threads.earth.work).length);
-      //alert (threads.mercury.work.join());
-      var b = new Date();
-      var c = (b - a);
-      //document.getElementById("bencher").width = 0;
-      //document.getElementById("bencher").height = 0;
-      numBenchmarkSolarYear = 10 //c.valueOf();
-      funStartLoop();
-      //console.log("Be Starting UP The Loop");
-    }  
-  }
+        bencher.strokeStyle = "#ffffff";
+      }
+      else
+      {
+        bencher.strokeStyle = "#000000";
+      }
+      //paint line at A=(x,y)B=(x,y)
+      bencher.moveTo(xLine.x, xLine.y);
+      bencher.lineTo((xLine.x+xLine.x)+10, xLine.y^3);//widthOFScreen-x, (widthOfScreen/10)*y^3
+      bencher.stroke();
+      //console.log(xLine.x+" "+xLine.y)
+    };
+    threads.mercury.work.push(xLine);
+    //document.getElementById("bencher").width = 0;
+    //document.getElementById("bencher").height = 0;
+    numBenchmarkSolarYear = 1; //c+1;
+    funStartLoop();
+  }  
 }
