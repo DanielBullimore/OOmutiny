@@ -2,7 +2,7 @@
 OO Javascript frontend
 atempting a textbook implementation of OO and encapsulation principle 
 
- OoMutiny can theoretically stack a combined 17,179,869,180 interrupts(queued procedure calls) over its 4 threads. Which would take aprox.80 days to execute (hardware dependent). Also its an infinite stable loop with puase. Plus some interrupts can be declared infinitely repeating... Thats a lot of pre meditation power combined with an object library able to refrence 184 Quadrillion object instances.
+ OoMutiny can theoretically stack a combined 17,179,869,180 interrupts(queued procedure calls) over its 4 threads. Which would take aprox.80 days to execute (hardware dependent). Also its an infinite stable loop with puase. Plus some interrupts can be declared infinitely repeating... Thats a lot of pre meditation power combined with an object library able to refrence 184 Quadrillion object instances: Array(Array()) = 2^32-1*2^32-1.
 
 I've assigned 5 hours per week at one hour per day out side my normal 50 hour work week to develop this system.
 
