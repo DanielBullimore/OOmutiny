@@ -319,3 +319,82 @@ function funBenchmark() {
     funStartLoop();
   }  
 }
+function funOoAppointment(numInterruptPriority, objInterruptToBook)
+/* Description: 
+    queus an interrupt object on a thread 
+* Parameters: 
+    numInterruptPriority - can be 0-3 or string name of planet:
+      0 = mercury: the most intense thread, 11:1 solar year.
+      1 = venus: medium intensity, 7:1 solar year.
+      2 = earth: Normal intensity, 4:1 solar year.
+      3 = critical: interrupt put to the start of mercury thread.
+    objInterruptToBook - expects instance of o() class.
+* Returns: -
+*/
+{
+  // book the o interrupt on the matching O appointment book
+  switch (numInterruptPriority)
+  {
+    case 'earth': { threads.earth.work.push(objInterruptToBook) }
+    break;
+    case 'venus': { threads.venus.work.push(objInterruptToBook) }
+    break;
+    case 'mercury': { threads.mercury.work.push(objInterruptToBook) }
+    break;
+    case 0: { threads.mercury.work.push(objInterruptToBook) }
+    break;
+    case 1: { threads.venus.work.push(objInterruptToBook) }
+    break;
+    case 2: { threads.earth.work.push(objInterruptToBook) }
+    break;
+    //critical interrupt:
+    case 3: { threads.mercury.work.unshift(objInterruptToBook) }
+    break;
+  }
+}
+
+function funSendToMars(objMutinyObject)
+/*Description: 
+    Indexes an OoMutiny object on the mars thread.
+    all OoMutiny objects on mars will be rendered
+    as part of the next frame. Mars calls an objects
+    funRender method from it's rayOO declaration.
+     ! mars index DOES NOT POINT to rayOO handle !
+* Parameters: 
+    objMutinyObject - expects object which inherits
+                      OoMutiny's master class Oo().
+* Returns: -
+*/
+{
+  // create an array from the object parameter's rayOO keys
+  // push that array on the the mars thread
+  try
+  {
+    threads.mars.work.push(Array(objMutinyObject.strType, objMutinyObject.numId));
+  }
+  catch (error)
+  {
+    console.log("<[O.o]> funSendToMars:" + error);
+  }
+}
+
+function funReturnFromMars(objMutinyObject)
+/*Description: 
+    removes an OoMutiny object's index from the
+    mars thread. This object wont render subsequent
+    frames.
+* Parameters:
+    objMutinyObject - expects object which inherits
+                      OoMutiny 's master class Oo(). 
+* Returns: -
+*/
+{
+  try
+  {
+    threads.mars.work.shift(Array(objMutinyObject.strType, objMutinyObject.numId));
+  }
+  catch (error)
+  {
+    console.log("<[O.o]> funReturnFromMars:" + error);
+  }
+}

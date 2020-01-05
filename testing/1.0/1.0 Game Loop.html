@@ -231,15 +231,10 @@ function Draw()
         objVenus.render("main");      
       };
 //###ADD JOBS>>>      
-/*these should be one function*/
-      //threads.mercury.numExeT = new Date();
-      threads.mercury.work.push(oinDrawMercury);
-      //threads.venus.numExeT = new Date();
-      threads.venus.work.push(oinDrawVenus);
-      //threads.earth.numExeT = new Date();
-      threads.earth.work.push(oinDrawEarth);
-      //threads.mars.numExeT = new Date();
-      threads.mars.work.push(oinDrawMars);
+      funOoAppointment(0,oinDrawMercury);
+      funOoAppointment(1,oinDrawVenus);
+      funOoAppointment(2,oinDrawEarth);
+      //funOoAppointment(0,oinDrawMars);
 //###BOOM!>>>
 /* interval should be part of the loop function*/
 
