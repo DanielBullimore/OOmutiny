@@ -1,5 +1,6 @@
 //Javascript Document
-//Copyright 2019 Daniel Bullimore
+//Copyright(c) 2019, Daniel Bullimore
+//All rights reserved.
 //* File Name: O.class.js
 //* System: OOmutiny
 //* Dependencies: <Name any files this one requires to operate correctly>
@@ -96,7 +97,8 @@ var threads = {
   "mars": {
     "work": [],
     "numExeT": 0,
-    "fractal": 3
+    "fractal": 3,
+    "day": 0,
   },
   "earth": {
     "work": [],
@@ -112,7 +114,7 @@ var threads = {
     "work": [],
     "numExeT": 0,
     "fractal": 11
-  },
+  }
 };
 
 //###################
@@ -148,13 +150,34 @@ function funStartLoop() {
   {
     //iterate through the list of planet-threads stored on mars array
     for (var strPlanet in threads)
-      {    
+      {   
         //save the exact date in milliseconds
         var datNow = new Date();
         if ( (datNow.valueOf() - threads[strPlanet].numExeT.valueOf()) >= numBenchmarkSolarYear/threads[strPlanet].fractal)
   //### Reached Apointment Time ^^^
-        {
-          numExecutedInterrupt = -1;
+        {/*
+_____________________________________________________________________________
+>>> Mars Thread Renders Frame >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+*/        if (strPlanet == 'mars')
+          {
+            threads.mars.day++;
+            
+            switch (threads.mars.day)
+            {
+              case 3:threads.mars.day = 0;break;
+              case 2:{
+                for (obj = 0; obj < threads.mars.work.length; obj++)
+                {
+                  rayOO[  threads[mars].work[obj][0]  ][  threads[mars].work[obj][1]  ].funRender();
+                }threads.mars.objPlanet.render("main");
+              }break;
+            }//Draw();
+            
+            continue;
+          }/*
+<<< Mars Thread Ends <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+****************************************************************************
+          */numExecutedInterrupt = -1;
           for (var interrupt = 0; interrupt < Object.keys(threads[strPlanet].work).length+Object.keys(threads[strPlanet].work).length; interrupt++)
           //iterate through interrupts
           {
@@ -315,7 +338,7 @@ function funBenchmark() {
     threads.mercury.work.push(xLine);
     //document.getElementById("bencher").width = 0;
     //document.getElementById("bencher").height = 0;
-    numBenchmarkSolarYear = 1; //c+1;
+    numBenchmarkSolarYear = 100; //c+1;
     funStartLoop();
   }  
 }
