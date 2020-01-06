@@ -98,57 +98,44 @@ var threads = {
   "earth":new planet(),
   "venus":new planet(),
   "mercury":new planet()
- /* "earth": {
-    "work": [],
-    "numExeT": 0,
-    "fractal": 4
-  },
-  "venus": {
-    "work": [],
-    "numExeT": 0,
-    "fractal": 7
-  },
-  "mercury": {
-    "work": [],
-    "numExeT": 0,
-    "fractal": 11
-  }*/
 };
-      function planet() {
-        this.name = "planet"
-        this.type = "planet"
-        this.xco = 0;
-        this.yco = 0;
-        this.orbitRadius = 0;
-        this.orbitDegree = 9;
-        this.degree = 0;
-        this.radius = 0;
-        this.color = "white";
-        this.work = [];
-        this.numExeT = 0;
-        this.fractal = 3;
-        this.day = 0;
-        this.render = function(strCanvasId)
-        {
-          //calculate position
-          x = this.xco + (this.orbitRadius * dcos(this.orbitDegree));
-          y = this.yco + (this.orbitRadius * dsin(this.orbitDegree));
+function planet() {
+  this.name = "planet"
+  this.type = "planet"
+  this.xco = 0;
+  this.yco = 0;
+  this.orbitRadius = 0;
+  this.orbitDegree = 9;
+  this.degree = 0;
+  this.radius = 0;
+  this.color = "white";
+  this.work = [];
+  this.numExeT = 0;
+  this.fractal = 3;
+  this.day = 0;
+  this.executions = 0;
+  this.collisions = 0;
+  this.render = function(strCanvasId)
+  {
+    //calculate position
+    x = this.xco + (this.orbitRadius * dcos(this.orbitDegree));
+    y = this.yco + (this.orbitRadius * dsin(this.orbitDegree));
 
-          planetCanvas = window.document.getElementById(strCanvasId);
-          if (planetCanvas.getContext)
-          {
-            planetCanvasContext = planetCanvas.getContext('2d');
-            planetCanvasContext.beginPath();
-            planetCanvasContext.fillStyle = this.color;
-            planetCanvasContext.strokeStyle = 'black';
-            planetCanvasContext.arc(x, y, this.radius, 0, 2 * Math.PI);
-            planetCanvasContext.fill();
-            planetCanvasContext.stroke();
-            planetCanvasContext.closePath();
-          }
-          this.orbitDegree += this.degree;
-        }
-      }
+    planetCanvas = document.getElementById(strCanvasId);
+    if (planetCanvas.getContext)
+    {
+      planetCanvasContext = planetCanvas.getContext('2d');
+      planetCanvasContext.beginPath();
+      planetCanvasContext.fillStyle = this.color;
+      planetCanvasContext.strokeStyle = 'black';
+      planetCanvasContext.arc(x, y, this.radius, 0, 2 * Math.PI);
+      planetCanvasContext.fill();
+      planetCanvasContext.stroke();
+      planetCanvasContext.closePath();
+    }
+    this.orbitDegree += this.degree;
+  }
+}
 //###################
 //# DERIVED VALUES #
 //###################
@@ -201,10 +188,10 @@ _____________________________________________________________________________
                 for (obj = 0; obj < threads.mars.work.length; obj++)
                 {
                   rayOO[  threads[mars].work[obj][0]  ][  threads[mars].work[obj][1]  ].funRender();
-                }threads.mars.render("main");
+                }
+                threads.mars.render("main");
               }break;
-            }//Draw();
-            
+            }
             continue;
           }/*
 <<< Mars Thread Ends <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -242,12 +229,13 @@ _____________________________________________________________________________
                   this.funSolve();
 
                 }
-                                  threads[strPlanet].work[numExecutedInterrupt].numCycleCount = 0;
-                                  threads[strPlanet].numExeT = datNow;
+                threads[strPlanet].work[numExecutedInterrupt].numCycleCount = 0;
+                threads[strPlanet].numExeT = datNow;
                 break;
               }
             }
           }
+          threads[strPlanet].render('main');
 //### Delete or Shift State? for executed interrupt only >>>
           if (numExecutedInterrupt >= 0) 
           /* making mods to the array after all inerations are complete 
@@ -289,15 +277,26 @@ _____________________________________________________________________________
               //console.log("del no rep")
             }
           }
+_____________________________________________________________________________________________
+/*### Start Accounting >>>
+  Now do some accounting.Machines measure timing in a frequency of electon pulses in hz(Ghz, Mhz, Hz).This software measures
+  time in milliseconds.It is posible that a fast cpu could execute
+  more than one interupt per millisecond.*Determine
+  if another thread executed this millisecond
+  *add another collision.
+*/
+          for (var strFocus in threads)
+          {
+            if (datNow.valueOf() == threads[strFocus].numExeT.valueOf())
+            {
+              threads[strPlanet].collisions++;
+            }
+          } 
+/*<<< End Accounting ###
+***********************************************************************************************/
         }
       }
     }
-  /*>>> Now do some accounting.Machines measure timing in a frequency of electon pulses in hz(Ghz, Mhz, Hz).This software measures
-    time in milliseconds.It is posible that a fast cpu could execute
-    more than one interupt per millisecond.*Determine
-    if another thread executed this millisecond
-    *add another collision.
-  */
   else if (numBenchmarkSolarYear < 0) 
   {
       numBenchmarkSolarYear -= numBenchmarkSolarYear + numBenchmarkSolarYear;

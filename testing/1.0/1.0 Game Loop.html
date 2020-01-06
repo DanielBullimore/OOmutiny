@@ -13,16 +13,7 @@
       var collisions = 1;
 
 
-      function funCollisionDetect(strThisPlanet)
-      {
-        for (strPlanet in threads)
-        { 
-          if (strPlanet !== strThisPlanet && threads[strThisPlanet].numExeT.valueOf() == threads[strPlanet].numExeT.valueOf())
-          {
-          collisions++; 
-          }
-        }
-      }
+
 
 //###How Space was made>>>
 function Draw()
@@ -80,11 +71,6 @@ function Draw()
 //###Energy>>
       funBenchmark();
 //###Home-Planet>>>      
-      var oinDrawEarth = new o();
-        oinDrawEarth.booRepeat = true;
-        oinDrawEarth.numExecutions = 0;
-        oinDrawEarth.numCycles = 1;
-        oinDrawEarth.booActOrSolve = true;
         //Earth Planet as object
         threads.earth.color = "green";
         threads.earth.orbitRadius=(100/4)
@@ -94,24 +80,7 @@ function Draw()
         threads.earth.orbitDegree= 360/4;
         threads.earth.radius=4;
         threads.earth.degree=4
-      oinDrawEarth.funAct = function()
-        {
-          executions++;
-          x = window.document.getElementById("earth").innerHTML;
-          x++;
-          window.document.getElementById("earth").innerHTML = x.toPrecision(8);
-          window.document.getElementById("cearth").innerHTML = ((x/executions)*100).toPrecision(6)+"%";
-          z = 1000/(numBenchmarkSolarYear/4);
-          window.document.getElementById("tearth").innerHTML = z.toPrecision(8);
-
-                    threads.earth.render("main");
-        };
 //###Mars>>
-        /*oinDrawMars = new o();
-        oinDrawMars.booRepeat = true;
-        oinDrawMars.numCycles = 1;
-        oinDrawMars.booActOrSolve = true;
-        oinDrawMars.numExecutions = 0;*/
         //Mars Planet as object
         threads.mars.color = "Red";
         threads.mars.orbitRadius=(100/3)
@@ -121,29 +90,7 @@ function Draw()
         threads.mars.orbitDegree= 360/4;
         threads.mars.radius=3;
         threads.mars.degree=3;
-      /*oinDrawMars.funAct = function()
-       {
-          executions++;
-          x = window.document.getElementById("mars").innerHTML;
-          x++;
-          window.document.getElementById("mars").innerHTML = x.toPrecision(8);
-          window.document.getElementById("cmars").innerHTML = ((x/executions)*100).toPrecision(8)+"%";
-          z = 1000/(numBenchmarkSolarYear/3);
-          window.document.getElementById("tmars").innerHTML = z.toPrecision(8);
-          document.getElementById("exe").innerHTML = (1+executions/collisions*.001).toFixed(6)+"exe/ms";
-          document.getElementById("total").innerHTML = executions;
-
-          document.getElementById("year").innerHTML=numBenchmarkSolarYear;
-          Draw() //planets leave trails with out a reframe       
-          objMars.render("main");
-
-      };*/
 //###Mercury>>
-      var oinDrawMercury = new o();
-        oinDrawMercury.booRepeat = true;
-        oinDrawMercury.numCycles = 1;
-        oinDrawMercury.booActOrSolve = true;
-        oinDrawMercury.numExecutions = 0;
         //Mercury Planet as object
         threads.mercury.color = "brown";
         threads.mercury.orbitRadius=(100/11)
@@ -153,25 +100,7 @@ function Draw()
         threads.mercury.orbitDegree= 360/11;
         threads.mercury.radius=2;
         threads.mercury.degree=11;
-      oinDrawMercury.funAct = function()
-      {
-        executions++;
-        x = window.document.getElementById("mercury").innerHTML;
-        x++;
-        window.document.getElementById("mercury").innerHTML = x.toPrecision(8);
-        window.document.getElementById("cmercury").innerHTML = ((x/executions)*100).toPrecision(6)+"%";
-        z = 1000/(numBenchmarkSolarYear/11);
-        window.document.getElementById("tmercury").innerHTML = z.toPrecision(8);
-        //objMercury.render("main");
-        threads.mercury.render("main");
-
-      };
 //###Venus>>
-      var oinDrawVenus = new o();
-        oinDrawVenus.booRepeat = true;
-        oinDrawVenus.numCycles = 1;
-        oinDrawVenus.booActOrSolve = true;
-        oinDrawVenus.numExecutions = 0;
         //Venus Planet as object
         threads.venus.color = "purple";
         threads.venus.orbitRadius=(100/7)
@@ -181,24 +110,11 @@ function Draw()
         threads.venus.orbitDegree= 360/7;
         threads.venus.radius=3;
         threads.venus.degree=7
-      oinDrawVenus.funAct = function()
-      {
-        executions++;
-        x = window.document.getElementById("venus").innerHTML;
-        x++;
-        window.document.getElementById("venus").innerHTML = x.toPrecision(8);
-        window.document.getElementById("cvenus").innerHTML = ((x/executions)*100).toPrecision(6)+"%";
-        z = 1000/(numBenchmarkSolarYear/7);
-        window.document.getElementById("tvenus").innerHTML = z.toPrecision(8);
-        threads.venus.render("main");      
-      };
+
 //###ADD JOBS>>>      
-      funOoAppointment(0,oinDrawMercury);
-      funOoAppointment(1,oinDrawVenus);
-      funOoAppointment(2,oinDrawEarth);
-      //funOoAppointment(0,oinDrawMars);
+
 //###BOOM!>>>
-/* interval should be part of the loop function*/
+
 
       funStartLoop();
       
