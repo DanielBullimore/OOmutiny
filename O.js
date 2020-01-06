@@ -277,8 +277,8 @@ _____________________________________________________________________________
               //console.log("del no rep")
             }
           }
-_____________________________________________________________________________________________
-/*### Start Accounting >>>
+/*_____________________________________________________________________________________________
+### Start Accounting >>>
   Now do some accounting.Machines measure timing in a frequency of electon pulses in hz(Ghz, Mhz, Hz).This software measures
   time in milliseconds.It is posible that a fast cpu could execute
   more than one interupt per millisecond.*Determine
