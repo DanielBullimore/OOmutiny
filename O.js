@@ -94,13 +94,11 @@ Methods:
 
 var numBenchmarkSolarYear = 0;
 var threads = {
-  "mars": {
-    "work": [],
-    "numExeT": 0,
-    "fractal": 3,
-    "day": 0,
-  },
-  "earth": {
+  "mars": new planet(),
+  "earth":new planet(),
+  "venus":new planet(),
+  "mercury":new planet()
+ /* "earth": {
     "work": [],
     "numExeT": 0,
     "fractal": 4
@@ -114,9 +112,43 @@ var threads = {
     "work": [],
     "numExeT": 0,
     "fractal": 11
-  }
+  }*/
 };
+      function planet() {
+        this.name = "planet"
+        this.type = "planet"
+        this.xco = 0;
+        this.yco = 0;
+        this.orbitRadius = 0;
+        this.orbitDegree = 9;
+        this.degree = 0;
+        this.radius = 0;
+        this.color = "white";
+        this.work = [];
+        this.numExeT = 0;
+        this.fractal = 3;
+        this.day = 0;
+        this.render = function(strCanvasId)
+        {
+          //calculate position
+          x = this.xco + (this.orbitRadius * dcos(this.orbitDegree));
+          y = this.yco + (this.orbitRadius * dsin(this.orbitDegree));
 
+          planetCanvas = window.document.getElementById(strCanvasId);
+          if (planetCanvas.getContext)
+          {
+            planetCanvasContext = planetCanvas.getContext('2d');
+            planetCanvasContext.beginPath();
+            planetCanvasContext.fillStyle = this.color;
+            planetCanvasContext.strokeStyle = 'black';
+            planetCanvasContext.arc(x, y, this.radius, 0, 2 * Math.PI);
+            planetCanvasContext.fill();
+            planetCanvasContext.stroke();
+            planetCanvasContext.closePath();
+          }
+          this.orbitDegree += this.degree;
+        }
+      }
 //###################
 //# DERIVED VALUES #
 //###################
@@ -169,7 +201,7 @@ _____________________________________________________________________________
                 for (obj = 0; obj < threads.mars.work.length; obj++)
                 {
                   rayOO[  threads[mars].work[obj][0]  ][  threads[mars].work[obj][1]  ].funRender();
-                }threads.mars.objPlanet.render("main");
+                }threads.mars.render("main");
               }break;
             }//Draw();
             

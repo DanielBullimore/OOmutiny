@@ -11,13 +11,8 @@
       var numBenchmarkSolarYear;
       var executions = 0;
       var collisions = 1;
-       var planets = new Array();
-        {  objMercury = new planet();
-        objVenus = new planet();
-        objEarth = new planet();
-        
-        }
-        threads.mars.objPlanet = new planet();
+
+
       function funCollisionDetect(strThisPlanet)
       {
         for (strPlanet in threads)
@@ -28,40 +23,7 @@
           }
         }
       }
-      function planet() {
-        this.name="planet"
-        this.type="planet"
-        this.xco=0;
-        this.yco=0;
-        this.orbitRadius= 0;
-        this.orbitDegree= 9;
-        this.degree = 0;
-        this.radius=0;
-        this.color="white"
-        this.render = function(strCanvasId)
-        {
-          //calculate position
-          x = this.xco+(this.orbitRadius*dcos(this.orbitDegree));
-          y = this.yco+(this.orbitRadius*dsin(this.orbitDegree));
 
-          planetCanvas = document.getElementById(strCanvasId);
-          if (planetCanvas.getContext)
-          {
-            planetCanvasContext = planetCanvas.getContext('2d');
-            planetCanvasContext.beginPath();
-            planetCanvasContext.fillStyle = this.color;
-            planetCanvasContext.strokeStyle = 'black';
-            planetCanvasContext.arc(x,y,this.radius,0,2*Math.PI);
-            planetCanvasContext.fill();
-            planetCanvasContext.stroke();
-            planetCanvasContext.closePath();
-            
-            delete planetCanvasContext;
-          }
-          this.orbitDegree += this.degree;
-        }
-        
-      }
 //###How Space was made>>>
 function Draw()
 {
@@ -124,14 +86,14 @@ function Draw()
         oinDrawEarth.numCycles = 1;
         oinDrawEarth.booActOrSolve = true;
         //Earth Planet as object
-        objEarth.color = "green";
-        objEarth.orbitRadius=(100/4)
-        objEarth.name="Earth";
-        objEarth.xco=50;
-        objEarth.yco=50;
-        objEarth.orbitDegree= 360/4;
-        objEarth.radius=4;
-        objEarth.degree=4
+        threads.earth.color = "green";
+        threads.earth.orbitRadius=(100/4)
+        threads.earth.name="Earth";
+        threads.earth.xco=50;
+        threads.earth.yco=50;
+        threads.earth.orbitDegree= 360/4;
+        threads.earth.radius=4;
+        threads.earth.degree=4
       oinDrawEarth.funAct = function()
         {
           executions++;
@@ -142,7 +104,7 @@ function Draw()
           z = 1000/(numBenchmarkSolarYear/4);
           window.document.getElementById("tearth").innerHTML = z.toPrecision(8);
 
-                    objEarth.render("main");
+                    threads.earth.render("main");
         };
 //###Mars>>
         /*oinDrawMars = new o();
@@ -151,14 +113,14 @@ function Draw()
         oinDrawMars.booActOrSolve = true;
         oinDrawMars.numExecutions = 0;*/
         //Mars Planet as object
-        threads.mars.objPlanet.color = "Red";
-        threads.mars.objPlanet.orbitRadius=(100/3)
-        threads.mars.objPlanet.name="Mars"
-        threads.mars.objPlanet.xco=50;
-        threads.mars.objPlanet.yco=50;
-        threads.mars.objPlanet.orbitDegree= 360/4;
-        threads.mars.objPlanet.radius=3;
-        threads.mars.objPlanet.degree=3;
+        threads.mars.color = "Red";
+        threads.mars.orbitRadius=(100/3)
+        threads.mars.name="Mars"
+        threads.mars.xco=50;
+        threads.mars.yco=50;
+        threads.mars.orbitDegree= 360/4;
+        threads.mars.radius=3;
+        threads.mars.degree=3;
       /*oinDrawMars.funAct = function()
        {
           executions++;
@@ -183,14 +145,14 @@ function Draw()
         oinDrawMercury.booActOrSolve = true;
         oinDrawMercury.numExecutions = 0;
         //Mercury Planet as object
-        objMercury.color = "brown";
-        objMercury.orbitRadius=(100/11)
-        objMercury.name="mercury" //with two r
-        objMercury.xco=50;
-        objMercury.yco=50;
-        objMercury.orbitDegree= 360/11;
-        objMercury.radius=2;
-        objMercury.degree=11;
+        threads.mercury.color = "brown";
+        threads.mercury.orbitRadius=(100/11)
+        threads.mercury.name="mercury" //with two r
+        threads.mercury.xco=50;
+        threads.mercury.yco=50;
+        threads.mercury.orbitDegree= 360/11;
+        threads.mercury.radius=2;
+        threads.mercury.degree=11;
       oinDrawMercury.funAct = function()
       {
         executions++;
@@ -201,7 +163,7 @@ function Draw()
         z = 1000/(numBenchmarkSolarYear/11);
         window.document.getElementById("tmercury").innerHTML = z.toPrecision(8);
         //objMercury.render("main");
-        objMercury.render("main");
+        threads.mercury.render("main");
 
       };
 //###Venus>>
@@ -211,14 +173,14 @@ function Draw()
         oinDrawVenus.booActOrSolve = true;
         oinDrawVenus.numExecutions = 0;
         //Venus Planet as object
-        objVenus.color = "purple";
-        objVenus.orbitRadius=(100/7)
-        objVenus.name="venus"
-        objVenus.xco=50;
-        objVenus.yco=50;
-        objVenus.orbitDegree= 360/7;
-        objVenus.radius=3;
-        objVenus.degree=7
+        threads.venus.color = "purple";
+        threads.venus.orbitRadius=(100/7)
+        threads.venus.name="venus"
+        threads.venus.xco=50;
+        threads.venus.yco=50;
+        threads.venus.orbitDegree= 360/7;
+        threads.venus.radius=3;
+        threads.venus.degree=7
       oinDrawVenus.funAct = function()
       {
         executions++;
@@ -228,7 +190,7 @@ function Draw()
         window.document.getElementById("cvenus").innerHTML = ((x/executions)*100).toPrecision(6)+"%";
         z = 1000/(numBenchmarkSolarYear/7);
         window.document.getElementById("tvenus").innerHTML = z.toPrecision(8);
-        objVenus.render("main");      
+        threads.venus.render("main");      
       };
 //###ADD JOBS>>>      
       funOoAppointment(0,oinDrawMercury);
