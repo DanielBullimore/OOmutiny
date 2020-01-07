@@ -39,7 +39,9 @@ function OoPoint()
 //###############
 //# PROPERTIES #
 //###############
-
+var numX;
+var numY;
+var numZ;
 //###################
 //# DERIVED VALUES #
 //###################
@@ -48,15 +50,78 @@ function OoPoint()
 //#########################
 //# CONSTRUCT DESTRUCT #
 //#########################
+
+//##############
+//# FUNCTIONS #
+//##############
+	function funSetPoint(numX,numY,numZ)
+  /*
+  Description: 
+    - takes 3 numbers as the x y z index to define the point.
+  Parameters: 
+
+  Returns:
+  */
+  {
+    try
+    {
+      if (typeof(numX)+typeof(numY)+typeof(numZ) == "numbernumbernumber")
+      {
+        this.numX = numX;
+        this.numY = numY;
+        this.numZ = numZ;
+      }
+    }
+    catch (error)
+    {
+      console.log("<[O.o]> OoPoint:"+error);
+    }
+  }
+	function funGetPoint()
+		/*
+		Description: 
+	    - returns an array containing the three indexes of the point
+		Parameters: 
+
+		Returns:
+		*/
+	{
+	  return [this.numX, this.numY, this.numZ];
+	}
+	function funGetAxisX() 
 	/*
 	Description: 
-
+    - returns the index value of axis X.
 	Parameters: 
               
 
 	Returns:
 	*/
-//##############
-//# FUNCTIONS #
-//##############
+	{
+	  return this.numX;
+	}
+	function funGetAxisY()
+	/*
+	Description: 
+    - returns the index value of axis Y.
+	Parameters: 
+              
+
+	Returns:
+	*/
+	{
+	  return this.numY;
+	}
+	function funGetAxisZ()
+	/*
+	Description: 
+    - returns the index value of axis Z.
+	Parameters: 
+              
+
+	Returns:
+	*/
+	{
+	  return this.numZ;
+	}
 }
