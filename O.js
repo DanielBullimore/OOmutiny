@@ -93,6 +93,7 @@ Methods:
 //###############
 
 var numBenchmarkSolarYear = 0;
+var OoDebug = -1;
 var threads = {
   "mars": new planet(),
   "earth":new planet(),
@@ -250,21 +251,21 @@ _______________________________________________
                 }
                 threads[strPlanet].work[numExecutedInterrupt].numCycleCount = 0;
                 threads[strPlanet].numExeT = datNow;
-                threads[strPlanet].Executions++;
                 break;
               }
             }
           }
           //update OoMutiny's solar clock
-          threads[strPlanet].render('main');if (numExecutedInterrupt >= 0)
-          {/*
+          threads[strPlanet].render('main');
+          /*
 ______________________________
 ### Post Interrupt Execution >>>
 
   Delete or Shift State? for executed interrupt only.
     Making mods to the array after all iterations are complete 
     otherwise the mods affect the order of indice/keys and values
-        */
+        */if (numExecutedInterrupt >= 0) 
+          {
             //if the executed interrupt is a repeater
             if (threads[strPlanet].work[numExecutedInterrupt].booRepeat === true)
             {
@@ -300,19 +301,8 @@ ______________________________
           */}/*
 _____________________
 ### Start Accounting >>>
-  Now do some accounting.Machines measure timing in a frequency of electon pulses in hz(Ghz, Mhz, Hz).This software measures
-  time in milliseconds.It is posible that a fast cpu could execute
-  more than one interupt per millisecond.*Determine
-  if another thread executed this millisecond
-  *add another collision.
 */
-          for (var strFocus in threads)
-          {
-            if (datNow.valueOf() == threads[strFocus].numExeT.valueOf())
-            {
-              threads[strPlanet].collisions++;
-            }
-          } 
+
 /*<<< End Accounting ###
 ***********************************************************************************************/
         }
@@ -477,4 +467,32 @@ function funReturnFromMars(objMutinyObject)
   {
     console.log("<[O.o]> funReturnFromMars:" + error);
   }
+}
+function funLoopDebugInfo(datInterrupted,numInterruptExecuted,strPlanet)
+{
+/*
+    some accounting
+    for debug info.Machines measure timing in a frequency of electon pulses in hz(Ghz, Mhz, Hz).This software measures
+    time in milliseconds.It is posible that a fast cpu could execute
+    more than one interupt per millisecond.*Determine
+    if another thread executed this millisecond
+.*/
+try
+{
+    if ((OoDebug >= 0))  //todo Make this a function pass info to it OoLoopDebugInfo
+    {
+      for (var strFocus in threads)
+      {
+        if (datInterrupted.valueOf() == threads[strFocus].numExeT.valueOf())
+        {
+          threads[strPlanet].collisions++;
+        }
+      }
+      numTicks++;
+    }
+}
+catch (error)
+{
+  console.log("<[O.o]> funLoopDebugInfo:"+error)
+}
 }
