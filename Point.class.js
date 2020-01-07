@@ -54,17 +54,26 @@ var numZ;
 //#########################
 //# CONSTRUCT DESTRUCT #
 //#########################
-
+  {
+    this.Parent = OO;
+    this.Parent();
+    strType = "OoPoint" //required to overide the super class type property
+    this.Initalise(); //indexes the object in rayOO[][] and sets this instances numId
+  }
 //##############
 //# FUNCTIONS #
 //##############
 	function funSetPoint(numX,numY,numZ)
   /*
   Description: 
-    - takes 3 numbers as the x y z index to define the point.
+    Takes 3 numbers as the x y z index to define the point.
+    
   Parameters: 
+    numX - private number, x axis index value.
+    numY - private number, y axis index value.
+    numZ - private number, z axis index value.
 
-  Returns:
+  Returns: -
   */
   {
     try
@@ -81,49 +90,48 @@ var numZ;
       console.log("<[O.o]> OoPoint:"+error);
     }
   }
-	function funGetPoint()
+	function funRay_GetPoint()
 		/*
 		Description: 
 	    - returns an array containing the three indexes of the point
 		Parameters: 
 
-		Returns:
+		Returns: array
 		*/
 	{
 	  return [this.numX, this.numY, this.numZ];
 	}
-	function funGetAxisX() 
+	function funNum_GetAxisX() 
 	/*
 	Description: 
     - returns the index value of axis X.
 	Parameters: 
               
 
-	Returns:
+	Returns: number
 	*/
 	{
 	  return this.numX;
 	}
-	function funGetAxisY()
+	function funNum_GetAxisY()
 	/*
 	Description: 
     - returns the index value of axis Y.
 	Parameters: 
               
-
-	Returns:
+	Returns: number
 	*/
 	{
 	  return this.numY;
 	}
-	function funGetAxisZ()
+	function funNum_GetAxisZ()
 	/*
 	Description: 
     - returns the index value of axis Z.
 	Parameters: 
               
 
-	Returns:
+	Returns: number
 	*/
 	{
 	  return this.numZ;
