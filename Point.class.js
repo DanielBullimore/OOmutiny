@@ -1,4 +1,6 @@
 //Javascript Document
+//Copyright(c) 2019, Daniel Bullimore
+//All rights reserved.
 //* File Name: OoPoint.class.js
 //* System: OOmutiny
 //* Dependencies: OO.class.js
@@ -33,6 +35,8 @@ Methods:
 */
 // [Describe any other usefull stuff]
 //
+//# OOmutiny is licensed under the BSD 3-Clause "New" or "Revised" License
+//# To view a copy of this license, visit https://github.com/DanielBullimore/OOmutiny/blob/master/LICENSE
 //****************************************************************************************************** 
 function OoPoint() 
 {
