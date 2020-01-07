@@ -167,7 +167,7 @@ function funStartLoop() {
    */
   if (numBenchmarkSolarYear > 0)
   {
-    //iterate through the list of planet-threads stored on mars array
+    //iterate through the each planet-thread defined in threads array
     for (var strPlanet in threads)
       {   
         //save the exact date in milliseconds
@@ -175,9 +175,9 @@ function funStartLoop() {
         if ( (datNow.valueOf() - threads[strPlanet].numExeT.valueOf()) >= numBenchmarkSolarYear/threads[strPlanet].fractal)
   //### Reached Apointment Time ^^^
         {/*
-_____________________________________________________________________________
->>> Mars Thread Renders Frame >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-*/        if (strPlanet == 'mars')
+_______________________________
+>>> Mars Thread Renders Frame >>>
+        */if (strPlanet == 'mars')
           {
             threads.mars.day++;
             
@@ -196,18 +196,33 @@ _____________________________________________________________________________
           }/*
 <<< Mars Thread Ends <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 ****************************************************************************
-          */numExecutedInterrupt = -1;
-          for (var interrupt = 0; interrupt < Object.keys(threads[strPlanet].work).length+Object.keys(threads[strPlanet].work).length; interrupt++)
-          //iterate through interrupts
+          */
+          //variable used to track what interrupt is executed in the following loop
+          var numExecutedInterrupt = -1;
+          for (var interrupt = 0; interrupt < Object.keys(threads[strPlanet].work).length+Object.keys(threads[strPlanet].work).length; interrupt++)/*
+_______________________________________________
+### Execute Earth or Venus or Mercury threads >>>
+          Iterate through this planets interrupt array
+            this loop actually goes through the array twice
+            first time to increment numCycleCount for all
+            its interrupts. The second time to find the
+            first interrupt with a due apointment time
+            CycleCount higher than Cycles actualized.
+          */
           {
             if ( interrupt < Object.keys(threads[strPlanet].work).length)
-      //### Pre Interrupt Accounting>>>
+          //### Pre Interrupt Accounting>>>
             {
+              //increment every interrupt numCycleCount, another cycle pased
               threads[strPlanet].work[interrupt].numCycleCount++;
             }
-            else //if  (numExecutedInterrupt >= 0)
-      //### Interrupt >>>
+            else
+          //### Interrupt Execution>>>
             {
+              /*loop through array again by off setting the count by
+                length of array (back to zero). Determine the first
+                due interrupt and execute its interface function.
+              */
               numExecutedInterrupt = interrupt - Object.keys(threads[strPlanet].work).length;
               if ( 
                 ( numExecutedInterrupt < Object.keys(threads[strPlanet].work).length)
@@ -215,50 +230,55 @@ _____________________________________________________________________________
                 (threads[strPlanet].work[numExecutedInterrupt].numCycleCount >= threads[strPlanet].work[numExecutedInterrupt].numCycles) 
                 )
               {
-                //Fun Act
+                //when funAct interface defined
                 if (threads[strPlanet].work[numExecutedInterrupt].booActOrSolve === true)
                 {
+                  //grab the interface function and execute it
                   this.funAct = threads[strPlanet].work[numExecutedInterrupt].funAct;
                   this.funAct();
 
                 }
-                //Fun Solve
+                //when funSolve interface defined
                 else
                 {
+                  //build a webworker and execute the interface function.
+                  /*
+                      !TO BE Implemented!
                   this.funSolve = threads[strPlanet].work[numExecutedInterrupt].funSolve;
                   this.funSolve();
-
+                  */
                 }
                 threads[strPlanet].work[numExecutedInterrupt].numCycleCount = 0;
                 threads[strPlanet].numExeT = datNow;
+                threads[strPlanet].Executions++;
                 break;
               }
             }
           }
-          threads[strPlanet].render('main');
-//### Delete or Shift State? for executed interrupt only >>>
-          if (numExecutedInterrupt >= 0) 
-          /* making mods to the array after all inerations are complete 
-          * otherwise the mods affect the order of indice/keys
-          */
-          {
-            
-          //if the executed interrupt is a repeater
+          //update OoMutiny's solar clock
+          threads[strPlanet].render('main');if (numExecutedInterrupt >= 0)
+          {/*
+______________________________
+### Post Interrupt Execution >>>
+
+  Delete or Shift State? for executed interrupt only.
+    Making mods to the array after all iterations are complete 
+    otherwise the mods affect the order of indice/keys and values
+        */
+            //if the executed interrupt is a repeater
             if (threads[strPlanet].work[numExecutedInterrupt].booRepeat === true)
             {
               numExecutions = threads[strPlanet].work[numExecutedInterrupt].numExecutions;
               // push infinite repeating interrupts to the end of the appointment book
               if (numExecutions === 0 )
               {
-                //Unlimited repeating appointment, Shift interrupt to the end of array
+                //Unlimited repeating appointment, move interrupt to the end of planet array
                 threads[strPlanet].work.push(threads[strPlanet].work[numExecutedInterrupt]);
                 threads[strPlanet].work.splice(numExecutedInterrupt,1);
-                //console.log("repeat shift")
-                //alert(""+strPlanet);
               }
               else if (numExecutions > 1)
               {
-                //Interrupt has more appointments booked decrease numExecutions & shift it to end of array
+                //Interrupt has more appointments booked decrease numExecutions & move it to end of array
                 threads[strPlanet].work[numExecutedInterrupt].numExecutions--;
                 threads[strPlanet].work.push(threads[strPlanet].work[numExecutedInterrupt]);
                 threads[strPlanet].work.splice(numExecutedInterrupt, 1);
@@ -269,15 +289,16 @@ _____________________________________________________________________________
                 threads[strPlanet].work.splice(numExecutedInterrupt, 1);
               }
             }
-          //for single executing interrupts
+            //for single executing interrupts
             else
             {
               // Appointment complete, delete it
               threads[strPlanet].work.splice(numExecutedInterrupt, 1);
-              //console.log("del no rep")
-            }
-          }
-/*_____________________________________________________________________________________________
+            }/*
+<<< End Post Interrupt <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+***********************************************************************************************
+          */}/*
+_____________________
 ### Start Accounting >>>
   Now do some accounting.Machines measure timing in a frequency of electon pulses in hz(Ghz, Mhz, Hz).This software measures
   time in milliseconds.It is posible that a fast cpu could execute
@@ -296,13 +317,18 @@ _____________________________________________________________________________
 ***********************************************************************************************/
         }
       }
-    }
-  else if (numBenchmarkSolarYear < 0) 
+    }/*
+___________________
+### Loop Is Paused >>>
+*/else if (numBenchmarkSolarYear < 0) 
   {
+      // unpause that loop, this is the start loop function. dah
       numBenchmarkSolarYear -= numBenchmarkSolarYear + numBenchmarkSolarYear;
   }
-  window.setTimeout(funStartLoop , 1);
-  //console.log("LOOP!");
+/***********************************************************************************************
+________________________________________________
+//### Call this function again in a millisecond >>>
+*/window.setTimeout(funStartLoop , 1);
 }
 
 function funStopLoop()
