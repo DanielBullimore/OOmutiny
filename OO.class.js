@@ -83,7 +83,7 @@ function OO()
 
             strType = "NewOOSubclass"   //required to overide the super class type property
             
-            this.Initalise(); //indexes the object in rayOO[][] and sets this instances numId
+            //this.Initialise(); //indexes the object in rayOO[][] and sets this instances numId
         }
 
         NewOOSubClass now exists in rayOO['NewOOSubClass'][0] and has all the methods that OO has such as funInitialise() which was used to index the new instance above.
@@ -207,7 +207,7 @@ function OO()
     //###########
     //# METHODS #
     //###########
-    this.Initialise = function ()
+    this.Initialize //= function ()
     /*
     Description: This function adds a new OO object to the rayOO[] multi-dimensional array. This is the minimum constructor for all subclasses of OO.
 
@@ -301,6 +301,7 @@ this.funGetId = function ()
 	{
 		return numId
 	};
+
 this.Test = function ()
     /*
     Description: This function is an internal testing method used to test the class functions as designed

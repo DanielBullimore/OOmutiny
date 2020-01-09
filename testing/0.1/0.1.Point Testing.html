@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="../../OO.class.js"></script>
+    <script type="text/javascript" src="../../OoPoint.class.js"></script>
+    <title></title>
+</head>
+
+<body>
+<script type="text/javascript">
+function DW(stuff) { document.write(stuff+"<br>") }
+
+DW("Checking for OoPoint Class:"+typeof(OoPoint));
+DW("Pass")
+DW("Checking For Test Instance:")
+var objTestPoint = new OoPoint();
+objTestPoint.funSetNameOnce("Tester");
+objTestPoint.Initialize();
+var x = objTestPoint.funGetObjectByName('Point',"Tester");
+if (typeof(x) == "object")
+{
+  DW("Pass");
+}
+else
+{
+  DW("Fail");
+}
+DW("Testing instance and rayOO Tester are identical:")
+
+if(objTestPoint === x)
+{
+    DW("Pass");
+    }
+    else
+    {
+    DW("Fail");
+}
+  
+</script>
+</body>
+
+</html>
