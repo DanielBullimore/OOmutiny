@@ -122,7 +122,11 @@ function OO()
     this.domOO = function()
     {
         //short cut for javascript DOM operations
-	return document.getElementById(strType+numId);
+	      return document.getElementById(strType+numId);
+    }
+    this.funStr_GetName = function ()
+    {
+      return strName;
     }
     //#########################
     //# CONSTRUCT DESTRUCT #
