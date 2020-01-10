@@ -124,10 +124,6 @@ function OO()
         //short cut for javascript DOM operations
 	      return document.getElementById(strType+numId);
     }
-    this.funStr_GetName = function ()
-    {
-      return strName;
-    }
     //#########################
     //# CONSTRUCT DESTRUCT #
     //#########################
@@ -211,7 +207,7 @@ function OO()
     //###########
     //# METHODS #
     //###########
-    this.Initialize //= function ()
+    this.Initialise = function ()
     /*
     Description: This function adds a new OO object to the rayOO[] multi-dimensional array. This is the minimum constructor for all subclasses of OO.
 
@@ -238,7 +234,7 @@ function OO()
         rayOOi[strType]++;
       
     };
-this.funGetObjectByName = function(strType,strFindName)
+this.funObj_GetObjectByName = function(strType,strFindName)
     /*
     Description: This function searches the global multidimensional GuiObjects array for a object using its type and name
 
@@ -252,7 +248,7 @@ this.funGetObjectByName = function(strType,strFindName)
         for (var x=0; x < rayOO[strType].length; x++)
         {
                 //when the name of the current looped object matches the search for name return the found object
-            if(rayOO[strType][x].strName == strFindName)
+            if(rayOO[strType][x].funStr_GetName() == strFindName)
             {   
                 return rayOO[strType][x];
             }
@@ -272,7 +268,7 @@ this.funSetNameOnce = function (strNewName)
 			strName = strNewName;
 		}
 	};
-this.funGetName = function ()
+this.funStr_GetName = function ()
     /*
     Description: Allows read only access to property strName
 
@@ -283,7 +279,7 @@ this.funGetName = function ()
 	{
 		return strName;
 	};
-this.funGetType = function () 
+this.funStr_GetType = function () 
     /*
     Description: Allows read only access to property strType
 
@@ -294,7 +290,7 @@ this.funGetType = function ()
 	{
 		return strType;
 	};
-this.funGetId = function () 
+this.funNum_GetId = function () 
     /*
     Description: Allows read only access to property numId
 
@@ -364,12 +360,12 @@ this.Test = function ()
 			/* 3.1.2.6 - Methods exist*/
 			strMethodTypes = 'Destroy():'+typeof(this.Destroy)+'<br>'+
 								'Initialise():'+typeof(this.Initialise)+'<br>'+
-								'funGetObjectByName():'+typeof(this.funGetObjectByName)+'<br>'+
+								'funObj_GetObjectByName():'+typeof(this.funObj_GetObjectByName)+'<br>'+
 								'funSetNameOnce():'+typeof(this.funSetNameOnce)+'<br>'+
-								'funGetId():'+typeof(this.funGetId)+'<br>'+
-								'funGetName():'+typeof(this.funGetName)+'<br>'+
-								'funGetType():'+typeof(this.funGetType)+'<br>';
-			if (strMethodTypes === 'Destroy():function<br>Initialise():function<br>funGetObjectByName():function<br>funSetNameOnce():function<br>funGetId():function<br>funGetName():function<br>funGetType():function<br>') { strResult = "...Pass<br>"; }
+								'funNum_GetId():'+typeof(this.funNum_GetId)+'<br>'+
+								'funStr_GetName():'+typeof(this.funStr_GetName)+'<br>'+
+								'funStr_GetType():'+typeof(this.funStr_GetType)+'<br>';
+			if (strMethodTypes === 'Destroy():function<br>Initialise():function<br>funObj_GetObjectByName():function<br>funSetNameOnce():function<br>funNum_GetId():function<br>funStr_GetName():function<br>funStr_GetType():function<br>') { strResult = "...Pass<br>"; }
 			else { strResult = "...Fail<br>"; }
 			document.write("<p>* 3.1.2.6 Testing required methods exist:<br>...<br>"+strMethodTypes+"<br>"+strResult+"</p>");
 			
@@ -394,7 +390,7 @@ this.Test = function ()
 				document.write("<p>* 3.2.1.3 Testing type and value of strName<br>...strName is: "+ strTypeOfVar +"<br>...strName value: "+ strName +"<br>"+ strResult+ "</p>");
 				/* 3.2.1.4 */
 				strTypeOfVar = typeof(window.rayOO[strType][0]);
-				if (strTypeOfVar === "object" && window.rayOO[strType][numId].funGetId() == numId) { strResult = "...Pass"; }
+				if (strTypeOfVar === "object" && window.rayOO[strType][numId].funNum_GetId() == numId) { strResult = "...Pass"; }
 				else { strResult = "!Fail..."; }
 				document.write("<p>* 3.2.1.4 Testing type and value of rayOO['oomutiny]<br>...Type is: "+ strTypeOfVar +"<br>...value: "+ rayOO[strType][numId] +"<br>"+ strResult+ "</p>");
 				/* 3.2.1.5 */
@@ -414,9 +410,9 @@ this.Test = function ()
 				document.write("<p>* 3.2.1.7 Testing derived DOM node strOO():<br>...Class names are equal<br>"+strResult+"</p>");
 			}
 		/* 3.2.2 */
-			if(this.funGetObjectByName("oomutiny","") == this) { strResult = "...Pass" }
+			if(this.funObj_GetObjectByName("oomutiny","") == this) { strResult = "...Pass" }
 			else { strResult = "!..Fail"; }
-			document.write("<hr><h2>3.2.2</h2><br>* Testing funGetObjectByName() returns this instance:<br>"+strResult);
+			document.write("<hr><h2>3.2.2</h2><br>* Testing funObj_GetObjectByName() returns this instance:<br>"+strResult);
 			
 			
 		}

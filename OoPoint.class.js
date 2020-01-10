@@ -58,7 +58,7 @@ var numZ;
     this.Parent = OO;
     this.Parent();
     strType = "OoPoint" //required to overide the super class type property
-    this.Initalise(); //indexes the object in rayOO[][] and sets this instances numId
+    this.Initialise(); //indexes the object in rayOO[][] and sets this instances numId
   }
 //##############
 //# FUNCTIONS #
