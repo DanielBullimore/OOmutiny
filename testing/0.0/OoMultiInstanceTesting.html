@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="../../OO.class.js"></script>
+    <title>OOmutiny -0.0 Multiinstance testing</title>
+</head>
+
+<body>
+<script type="text/javascript">
+  function DW(str) { document.write(str+"<br>"); }
+  DW("<h1>b. Multi Instance Testing</h1><br><h2>b.a. Pretest Setup:<br>b.a.1</h2>.<br>Testing OO class exists:")
+  if(typeof(OO) == "function")
+  {
+    DW("Pass")
+  }
+  else
+  {
+    DW("fail")
+  }
+  DW("<h2>b.a.3</h2>.<br>Testing instances are decared:");
+  var objOne = new OO();
+  var objTwo = new OO();
+  var objThree = new OO();
+  if (typeof objOne + typeof objTwo + typeof objThree == "objectobjectobject")
+  {
+    DW("Pass")
+  }
+  else
+  {
+    DW("Fail");
+  }
+  
+  DW("<hr><br><h2>b.b Testing:</h2>");
+  objOne.Initialise();
+  objTwo.Initialise();
+  objThree.Initialise();
+  
+  objOne.funSetNameOnce("one");
+  objTwo.funSetNameOnce("two");
+  objOne.funSetNameOnce('oneone'); 
+  objThree.funSetNameOnce('two');
+  
+  DW("<h2>b.b.4.</h2>")
+  if (objOne.funStr_GetName()+objTwo.funStr_GetName()+objThree.funStr_GetName() == "onetwo")
+  {
+    DW(objOne.funStr_GetName()+objTwo.funStr_GetName()+objThree.funStr_GetName()+"<br>Pass")
+  }
+  else
+  {
+    DW(objOne.funStr_GetName()+objTwo.funStr_GetName()+objThree.funStr_GetName()+"<br>Fail")
+  }
+
+  
+  objOne.Destroy();
+  DW("<h2>b.b.6</h2><br> Checking instance was destroyed:")
+  if (typeof objOne.funStr_GetName == "undefined")
+  {
+    DW("Pass");
+  }
+  else
+  {
+    DW("Fail");
+  }
+  DW("<h2>b.b.7</h2> <br> Checking rayOO still exists:")
+  if ((typeof(rayOO) == "object") && (typeof(rayOOi) == "object"))
+  {
+    DW("Pass")
+  }
+  else 
+  {
+    DW("Fail")
+  }
+  
+  DW("<h2>b.b.9</h2><br> Checking rayOO has been destroyed:")
+  objTwo.Destroy();
+  objThree.Destroy();
+    if ((typeof(rayOO) == "undefined") && (typeof(rayOOi) == "undefined"))
+    {
+    DW("Pass")
+    }
+    else
+    {
+    DW("Fail")
+    }
+    
+    DW("<h2>b.b.10:</h2>")
+  if (typeof(OO) == "function")
+  {
+    DW("pass")
+  }
+  else
+  {
+    DW(" failed");
+  }
+</script>
+</body>
+
+</html>
