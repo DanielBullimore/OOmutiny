@@ -84,7 +84,7 @@ else
 objTestPoint.funSetPoint(7,-1,9);
 DW("<hr><h2>2.3.5.</h2>Setting with funSetPoint X,Y,Z = 7,-1,9")
 var rayTest = objTestPoint.funRay_GetPoint();
-DW("<h2>2.3.6.</h2>Getting using funRay_GetPoint() X,Y,Z:"+rayTest[0]+","+rayTest[1]+","+rayTest[2]+"<hr>");
+DW("<h2>2.3.6.</h2>Getting using funRay_GetPoint() X,Y,Z:"+rayTest['x']+","+rayTest['y']+","+rayTest['z']+"<hr>");
 
 DW("<h2>2.3.7.</h2> Getting individual axis values:");
 DW("X:"+objTestPoint.funNum_GetAxisX());

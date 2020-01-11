@@ -4,9 +4,10 @@
 //* File Name: OoPoint.class.js
 //* System: OOmutiny
 //* Dependencies: OO.class.js
-//****************************************************************************************************** 	//* Author:           <Your name>
+//****************************************************************************************************** 	
+//* Author:        Daniel Bullimore
 //* Authors email: daniel.k.bullimore@gmail.com
-//* Written:          07/01/20
+//* Written:       07/01/20
 //******************************************************************************************************
 //* !---If you modify this file, add your name to this then update the Last Modified date---!
 //* Modifications By: <name1>, <name2>, … , <Your Name>
@@ -28,15 +29,25 @@ Properties:
 
 Methods:
  funSetPoint() - takes 3 numbers as the x y z index to define the point.
- funGetPoint() - returns an array containing the three indexes of the point
- funGetAxisX() - returns the index value of axis X.
- funGetAxisY() - returns the index value of axis Y.
- funGetAxisZ() - returns the index value of axis Z.
+ funRay_GetPoint() - returns an array containing the three indexes of the point
+ funNum_GetAxisX() - returns the index value of axis X.
+ funNum_GetAxisY() - returns the index value of axis Y.
+ funNum_GetGetAxisZ() - returns the index value of axis Z.
 */
-// [Describe any other usefull stuff]
-//
 //# OOmutiny is licensed under the BSD 3-Clause "New" or "Revised" License
 //# To view a copy of this license, visit https://github.com/DanielBullimore/OOmutiny/blob/master/LICENSE
+//******************************************************************************************************
+//* EXAMPLE
+//******************************************************************************************************
+/*
+  objExamplePoint = new OoPoint();
+  objExamplePoint.funSetNameOnce("StartPoint");
+  objExamplePoint.funSetPoint(1,4,0)
+  numExampleAxisX = objExamplePoint.funNum_GetX();
+  alert("Start point X axis index is:"+numExampleAxisX);
+  rayPoint = objExamplePoint.funRay_GetPoint();
+  alert("Value of z axis is"+rayPoint['z'])
+*/
 //****************************************************************************************************** 
 function OoPoint() 
 {
@@ -75,10 +86,15 @@ var numZ;
   Returns: -
   */
   {
+    //Always use try catch when working with implemtation developers parameters
     try
     {
+      /* only set the axis values when
+        all three parameters a numbers
+      */
       if (typeof(numX)+typeof(numY)+typeof(numZ) == "numbernumbernumber")
       {
+        //set the axis values
         this.numX = numX;
         this.numY = numY;
         this.numZ = numZ;
@@ -86,19 +102,20 @@ var numZ;
     }
     catch (error)
     {
+      //log any errors to JS console
       console.log("<[O.o]> OoPoint:"+error);
     }
   }
 	this.funRay_GetPoint = function()
-		/*
+	/*
 		Description: 
 	    - returns an array containing the three indexes of the point
 		Parameters: 
 
-		Returns: array
-		*/
+		Returns: array { z:Number,y:Number,z:Number }
+	*/
 	{
-	  return [this.numX, this.numY, this.numZ];
+	  return { x:this.numX, y:this.numY, z:this.numZ };
 	}
 	this.funNum_GetAxisX = function() 
 	/*
@@ -106,7 +123,6 @@ var numZ;
     - returns the index value of axis X.
 	Parameters: 
               
-
 	Returns: number
 	*/
 	{
@@ -129,7 +145,6 @@ var numZ;
     - returns the index value of axis Z.
 	Parameters: 
               
-
 	Returns: number
 	*/
 	{
