@@ -13,14 +13,22 @@
 <script type="text/javascript">
 function DW(stuff) { document.write(stuff+"<br>") }
 
-DW("Checking for OoPoint Class:"+typeof(OoPoint));
-DW("Pass")
-DW("Checking For Test Instance:")
+DW("<h2>2.3.1.</h2> Checking for OoPoint Class:");
+if (typeof(OoPoint) == "function")
+{
+DW("Pass");
+}
+else
+DW("Fail");
+DW("<h2>2.3.2.</h2>  Checking For Test Instance:")
 var objTestPoint = new OoPoint();
-objTestPoint.funSetNameOnce("Tester");
 objTestPoint.Initialise();
-var x = objTestPoint.funObj_GetObjectByName('Point',"Tester");
-if (x !== false)
+objTestPoint.funSetNameOnce("Tester");
+
+//console.log(rayOO['OoPoint'][0].funStr_GetName()+":"+objTestPoint.funStr_GetName())
+
+var x = objTestPoint.funObj_GetObjectByName("OoPoint","Tester");
+if (x !== false || typeof objTestPoint !== "object")
 {
   DW("Pass");
 }
@@ -28,9 +36,12 @@ else
 {
   DW("Fail");
 }
-DW("Testing instance and rayOO Tester are identical:")
+DW("2.3.3. Testing visibility of axis vars:")
 
-if(objTestPoint === x)
+
+DW("2.3.4. Testing instance and rayOO Tester are identical:")
+
+if(objTestPoint == x)
 {
     DW("Pass");
     }

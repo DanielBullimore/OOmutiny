@@ -25,7 +25,7 @@
   //#
 //################################################################################################################################################
 /*<<JS CLASS>>*/
-function OO()
+function OO(strDecendantType)
 /*
 *Overview:
 	This is the Master Class for OOmutiny framework. Its sole purpose is to contain and control all
@@ -131,15 +131,22 @@ function OO()
     if (typeof rayOO === "undefined") 
     { 
         //because the array hasn't been defined, define it globally
-        window.rayOO = Array();
-        window.rayOOi = Array();
+        window.rayOO = [];
+        window.rayOOi = [];
     }
-	{
-		numId = 0;
-		strType = "oomutiny";
-		strName = "";
-	}
-    
+	  {
+  		numId = 0;
+  	  
+  		if (typeof strDecendantType === "undefined")
+  		{
+  		  strType = "oomutiny";
+  		}
+  		else
+  		{
+  		  strType = strDecendantType;
+  		}
+  		strName = "";
+	  }
     this.Destroy = function(strInstanceName)
     /*
     *Description:
@@ -151,7 +158,7 @@ function OO()
     */
     {
   /*remove any html from document
-  */
+  */  
 	    if (this.domOO() !== null)
 	    {
 	      elmParent = this.domOO().parentNode;
@@ -195,17 +202,19 @@ function OO()
         //check if a multilevel array has been defined to store this type of objects
         if (typeof rayOO[strType] === "undefined") 
         {
+          
             //Because this type of  Object array is undefined, define it
-            rayOO[strType] = Array();
+            rayOO[strType] = [];
             //this is used to keep track of the next numId of object being added to this types rayOO[]
             rayOOi[strType] = 0;
         }
+        
+        //console.log(strType);
 	//Auto generate an id number for new object
         numId = rayOOi[strType];
 
 	//add the object to the objectas array
         rayOO[strType][numId] = this;
-
 	//and increase the value of this types next gui index
         rayOOi[strType]++;
       
@@ -221,6 +230,7 @@ this.funObj_GetObjectByName = function(strType,strFindName)
     */
     {
         //loop through the array
+        console.log(strType);
         for (var x=0; x < rayOO[strType].length; x++)
         {
                 //when the name of the current looped object matches the search for name return the found object
@@ -304,7 +314,8 @@ this.Test = function ()
 	
 			document.write("<p>* 3.1.2.1 Testing instance decleration:<br>...Typeof is: "+strTypeOfTestObject+"<br>..."+strResult+"</p>");	
 			/* 3.1.2.2 */		
-			 strPropertyTestType = typeof(strType)
+			alert(typeof this.funStr_GetType());
+			 strPropertyTestType = typeof(strType);
 			if (strPropertyTestType == "string")
 			{
 				strResult = "pass";

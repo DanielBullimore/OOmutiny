@@ -46,6 +46,7 @@ function OoPoint()
 var numX;
 var numY;
 var numZ;
+this.strType;
 //###################
 //# DERIVED VALUES #
 //###################
@@ -56,10 +57,9 @@ var numZ;
 //#########################
   {
     this.Parent = OO;
-    this.Parent();
-    strType = "OoPoint"; //required to overide the super class type property
-    alert(strType);
-    this.Initialise(); //indexes the object in rayOO[][] and sets this instances numId
+    this.Parent('OoPoint');
+    //this.strType = "OoPoint"; //required to overide the super class type property
+    //this.Initialise(); //indexes the object in rayOO[][] and sets this instances numId
   }
 //##############
 //# FUNCTIONS #
