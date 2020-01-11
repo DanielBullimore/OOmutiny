@@ -46,7 +46,6 @@ function OoPoint()
 var numX;
 var numY;
 var numZ;
-this.strType;
 //###################
 //# DERIVED VALUES #
 //###################
@@ -64,7 +63,7 @@ this.strType;
 //##############
 //# FUNCTIONS #
 //##############
-	function funSetPoint(numX,numY,numZ)
+	this.funSetPoint = function(numX,numY,numZ)
   /*
   Description: 
     Takes 3 numbers as the x y z index to define the point.
@@ -91,7 +90,7 @@ this.strType;
       console.log("<[O.o]> OoPoint:"+error);
     }
   }
-	function funRay_GetPoint()
+	this.funRay_GetPoint = function()
 		/*
 		Description: 
 	    - returns an array containing the three indexes of the point
@@ -102,7 +101,7 @@ this.strType;
 	{
 	  return [this.numX, this.numY, this.numZ];
 	}
-	function funNum_GetAxisX() 
+	this.funNum_GetAxisX = function() 
 	/*
 	Description: 
     - returns the index value of axis X.
@@ -114,7 +113,7 @@ this.strType;
 	{
 	  return this.numX;
 	}
-	function funNum_GetAxisY()
+	this.funNum_GetAxisY = function()
 	/*
 	Description: 
     - returns the index value of axis Y.
@@ -125,7 +124,7 @@ this.strType;
 	{
 	  return this.numY;
 	}
-	function funNum_GetAxisZ()
+	this.funNum_GetAxisZ = function()
 	/*
 	Description: 
     - returns the index value of axis Z.

@@ -21,14 +21,12 @@ DW("Pass");
 else
 DW("Fail");
 DW("<h2>2.3.2.</h2>  Checking For Test Instance:")
-var objTestPoint = new OoPoint();
+objTestPoint = new OoPoint();
 objTestPoint.Initialise();
 objTestPoint.funSetNameOnce("Tester");
 
-//console.log(rayOO['OoPoint'][0].funStr_GetName()+":"+objTestPoint.funStr_GetName())
-
 var x = objTestPoint.funObj_GetObjectByName("OoPoint","Tester");
-if (x !== false || typeof objTestPoint !== "object")
+if (x !== false)
 {
   DW("Pass");
 }
@@ -36,20 +34,95 @@ else
 {
   DW("Fail");
 }
-DW("2.3.3. Testing visibility of axis vars:")
 
+DW("<h2>2.3.3.</h2> Testing visibility of axis vars:")
+if (typeof(objTestPoint.numX) == "undefined" || typeof(objTestPoint.numY) == "undefined" || typeof(objTestPoint.numZ) == "undefined")
+{
+  DW("Pass");
+}
+else
+{
+  DW("Fail");
+}
 
-DW("2.3.4. Testing instance and rayOO Tester are identical:")
+DW("<h2>2.3.4.</h2> Testing instance and rayOO Tester are identical:")
 
 if(objTestPoint == x)
 {
-    DW("Pass");
-    }
-    else
-    {
-    DW("Fail");
+  if (x.funStr_GetName() === "Tester" && objTestPoint.funStr_GetName() === "Tester")
+  {
+    DW("Are the Same instance")
+  }
+  DW("Pass");
 }
+else
+{
+  DW("Fail");
+}
+DW("<h2>2.1.2.</h2> Attempting to get private vars:");
+try 
+{
+  DW(objTestPoint.numX);
+  DW(objTestPoint.numZ);
+  DW(objTestPoint.numY);
+
+DW("2.1.3. Checking for public functions:")
+if ( 
+  (typeof objTestPoint.funSetPoint ==="function") &&
+  (typeof objTestPoint.funRay_GetPoint ==="function") &&
+  (typeof objTestPoint.funNum_GetAxisX ==="function") &&
+  (typeof objTestPoint.funNum_GetAxisY ==="function") &&
+  (typeof objTestPoint.funNum_GetAxisZ ==="function")
+  )
+{
+  DW("Pass");
+}
+else
+{
+  DW("Fail");
+}
+objTestPoint.funSetPoint(7,-1,9);
+DW("<hr><h2>2.3.5.</h2>Setting with funSetPoint X,Y,Z = 7,-1,9")
+var rayTest = objTestPoint.funRay_GetPoint();
+DW("<h2>2.3.6.</h2>Getting using funRay_GetPoint() X,Y,Z:"+rayTest[0]+","+rayTest[1]+","+rayTest[2]+"<hr>");
+
+DW("<h2>2.3.7.</h2> Getting individual axis values:");
+DW("X:"+objTestPoint.funNum_GetAxisX());
+DW("Y:"+objTestPoint.funNum_GetAxisY());
+DW("Z:"+objTestPoint.funNum_GetAxisZ());
+
+DW("<h2>2.4.1.</h2> All three properties of OoPoint must accept number type values only.") 
+objTestPoint.funSetPoint("df",5,0);
+if (objTestPoint.funNum_GetAxisX() == "df")  
+{
+  DW("Fail");
+}
+else
+{
+  DW("Pass");
+}
+
+
+DW("<h2>2.3.8.</h2> Testingg the instance can be deleted");
+objTestPoint.Destroy("objTestPoint");
+if (typeof objTestPoint === 'undefined')
+{
+  DW("Pass");
+}
+else
+{
+  DW("Fail");
+}
+
   
+  
+  
+  
+}
+catch (error)
+{
+  DW("An handled error occured testing OoPoint:<br>"+error);
+}
 </script>
 </body>
 
