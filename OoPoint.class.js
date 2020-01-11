@@ -105,7 +105,7 @@ var numZ;
       //log any errors to JS console
       console.log("<[O.o]> OoPoint:"+error);
     }
-  }
+  };
 	this.funRay_GetPoint = function()
 	/*
 		Description: 
@@ -116,7 +116,7 @@ var numZ;
 	*/
 	{
 	  return { x:this.numX, y:this.numY, z:this.numZ };
-	}
+	};
 	this.funNum_GetAxisX = function() 
 	/*
 	Description: 
@@ -127,7 +127,7 @@ var numZ;
 	*/
 	{
 	  return this.numX;
-	}
+	};
 	this.funNum_GetAxisY = function()
 	/*
 	Description: 
@@ -138,7 +138,7 @@ var numZ;
 	*/
 	{
 	  return this.numY;
-	}
+	};
 	this.funNum_GetAxisZ = function()
 	/*
 	Description: 
@@ -149,5 +149,5 @@ var numZ;
 	*/
 	{
 	  return this.numZ;
-	}
+	};
 }
