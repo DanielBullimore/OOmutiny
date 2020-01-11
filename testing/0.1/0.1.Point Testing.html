@@ -19,8 +19,8 @@ DW("Checking For Test Instance:")
 var objTestPoint = new OoPoint();
 objTestPoint.funSetNameOnce("Tester");
 objTestPoint.Initialise();
-var x = objTestPoint.funGetObjectByName('Point',"Tester");
-if (typeof(x) == "object")
+var x = objTestPoint.funObj_GetObjectByName('Point',"Tester");
+if (x !== false)
 {
   DW("Pass");
 }

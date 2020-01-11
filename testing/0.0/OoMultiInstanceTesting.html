@@ -21,9 +21,9 @@
     DW("fail")
   }
   DW("<h2>b.a.3</h2>.<br>Testing instances are decared:");
-  var objOne = new OO();
-  var objTwo = new OO();
-  var objThree = new OO();
+  objOne = new OO();
+  objTwo = new OO();
+  objThree = new OO();
   if (typeof objOne + typeof objTwo + typeof objThree == "objectobjectobject")
   {
     DW("Pass")
@@ -44,6 +44,7 @@
   objThree.funSetNameOnce('two');
   
   DW("<h2>b.b.4.</h2>")
+  alert(objOne.funStr_GetName());
   if (objOne.funStr_GetName()+objTwo.funStr_GetName()+objThree.funStr_GetName() == "onetwo")
   {
     DW(objOne.funStr_GetName()+objTwo.funStr_GetName()+objThree.funStr_GetName()+"<br>Pass")
@@ -54,9 +55,10 @@
   }
 
   
-  objOne.Destroy();
+  objOne.Destroy("objOne");
+  alert(typeof ( objOne ));
   DW("<h2>b.b.6</h2><br> Checking instance was destroyed:")
-  if (typeof objOne.funStr_GetName == "undefined")
+  if (typeof ( objOne ) == "undefined")
   {
     DW("Pass");
   }
@@ -75,18 +77,19 @@
   }
   
   DW("<h2>b.b.9</h2><br> Checking rayOO has been destroyed:")
+  
   objTwo.Destroy();
   objThree.Destroy();
-    if ((typeof(rayOO) == "undefined") && (typeof(rayOOi) == "undefined"))
-    {
-    DW("Pass")
-    }
-    else
-    {
-    DW("Fail")
-    }
+  if ((typeof(rayOO) === "undefined") && (typeof(rayOOi) === "undefined"))
+  {
+  DW("Pass")
+  }
+  else
+  {
+  DW("Fail")
+  }
     
-    DW("<h2>b.b.10:</h2>")
+  DW("<h2>b.b.10:</h2>")
   if (typeof(OO) == "function")
   {
     DW("pass")

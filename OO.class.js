@@ -150,59 +150,35 @@ function OO()
     *Returns: true if fully destroyed or false.
     */
     {
-	/*When this function is called from an instance of the super class 
-	* delete the global arrays
-	*/
-	    if ( strType === "oomutiny")
+  /*remove any html from document
+  */
+	    if (this.domOO() !== null)
 	    {
-			delete window.rayOO;
-			delete window.rayOOi;
-
+	      elmParent = this.domOO().parentNode;
+	      for (var nodX in elmParent.childNodes)
+	      {
+	        if (elmParent.childNodes.item(nodX).isSameNode(this.domOO()))
+	        {
+	          elmParent.removeChild(elmParent.childNodes[nodX]);
+	          break;
+	        }
+	      }
 	    }
-    //When this function is called from a subclass remove the instance from global array and remove the html from document
-	    else
+	    //remove this instance from global array
+	    rayOO[strType].splice(rayOO[strType].lastIndexOf(this),1);
+  /*When this function is called from an instance of the super class 
+  * delete the global arrays. But Not if other super instances exist 
+  */
+	    //if ( strType === "oomutiny") failed 0.0Master Test#4 https://github.com/DanielBullimore/OOmutiny/issues/38
+	    if ( (strType === "oomutiny") && (rayOO['oomutiny'].length === 0) )
 	    {
-    /* When this function is called from a subclass remove the instance from global array and remove the html from document
-    * dEFINe some variables, an array to replace the current rayOO without the current instances object entry.
-    * store the current instance's type and id just incase
-    * seek and destroy \m/
-    */
-			var rayNewArray = Array();
-	/*Go through the global array of OO objects
-	* add all the objects in the array to a new array except the object whos calling this function 
-	*/
-			if (rayOO[strType]) 
-			{  
-				for (var objEachObject in rayOO[strType])
-				{
-					if (typeof(objEachObject) === "object" && objEachObject.numId !== numId) //*** Failed test 1 -3.2.11
-					{
-						rayNewArray[objEachObject.numId] = objEachObject;
-					}
-	/*When we find the object being removed and it has rendered HTML on the page
-	* get the parent that contains the HTML and store it for later. 
-	* loop through the child nodes of the parent looking for this instances HTML element
-	* Remove the rendered HTML from the saved parent nodes child node list. (delete from page)
-	*/
-				   else if (objEachObject.domOO())
-					{
-						elmParent = objEachObject.domNode().parentNode;
-						for (var nodX in elmParent.childNodes)
-						{
-							if (elmParent.childNodes.item(nodX).isSameNode(objEachObject.domNode()) )
-							{
-								elmParent.removeChild(elmParent.childNodes[nodX]);
-								break;
-							}
-						}
-					}
-				}
-			}
-	//Overwrite the global array with the new array which doesnt contain this instances object entry.	
-			rayOO[strType] = rayNewArray;
-		}
-		for (var objEverything in this) { delete this[objEverything]; }
-		delete window[strInstanceName];
+			  delete window.rayOO;
+			  delete window.rayOOi;
+	    }
+
+		  for (var objEverything in this) { 
+		  delete this[objEverything]; }
+	    delete window[strInstanceName];
     };
     //###########
     //# METHODS #
@@ -241,7 +217,7 @@ this.funObj_GetObjectByName = function(strType,strFindName)
     Parameters: strType - String type of the object being searched for.
                 strFindName - String the name of the object to find.
 
-    Returns:  Object
+    Returns:  Object or false
     */
     {
         //loop through the array
@@ -253,6 +229,8 @@ this.funObj_GetObjectByName = function(strType,strFindName)
                 return rayOO[strType][x];
             }
         }
+        //added 0.0.Master Test#4 https://github.com/DanielBullimore/OOmutiny/issues/38
+        return false;
     };
 this.funSetNameOnce = function (strNewName)
     /*
@@ -263,7 +241,8 @@ this.funSetNameOnce = function (strNewName)
     Returns:  void
     */
 	{
-		if (strName === "")
+	  //if ((strName === "") failed 0.0Master Test#4 https://github.com/DanielBullimore/OOmutiny/issues/38 
+		if ((strName === "") && (this.funObj_GetObjectByName(strType,strNewName) === false))
 		{
 			strName = strNewName;
 		}
@@ -277,7 +256,7 @@ this.funStr_GetName = function ()
     Returns:  string
     */
 	{
-		return strName;
+	  return strName;
 	};
 this.funStr_GetType = function () 
     /*
