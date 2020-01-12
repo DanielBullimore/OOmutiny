@@ -22,24 +22,28 @@
 
 An x,y,z axis triangulation point.
 
+# OOmutiny is licensed under the BSD 3 - Clause "New" or "Revised" License
+# To view a copy of this license, visit https: //github.com/DanielBullimore/OOmutiny/blob/master/LICENSE
+*******************************************************************************************************/
+function OoPoint() 
+/*Description: Object class controls x,y,z axis triangulation point.
+
 Properties:
- numX - private number, x axis index value.
- numY - private number, y axis index value.
- numZ - private number, z axis index value.
+  numX - private number, x axis index value.
+  numY - private number, y axis index value.
+  numZ - private number, z axis index value.
 
 Methods:
- funSetPoint() - takes 3 numbers as the x y z index to define the point.
- funRay_GetPoint() - returns an array containing the three indexes of the point
- funNum_GetAxisX() - returns the index value of axis X.
- funNum_GetAxisY() - returns the index value of axis Y.
- funNum_GetGetAxisZ() - returns the index value of axis Z.
-*/
-//# OOmutiny is licensed under the BSD 3-Clause "New" or "Revised" License
-//# To view a copy of this license, visit https://github.com/DanielBullimore/OOmutiny/blob/master/LICENSE
-//******************************************************************************************************
-//* EXAMPLE
-//******************************************************************************************************
-/*
+  funSetPoint() - takes 3 numbers as the x y z index to define the point.
+  funRay_GetPoint() - returns an array containing the three indexes of the point
+  funNum_GetAxisX() - returns the index value of axis X.
+  funNum_GetAxisY() - returns the index value of axis Y.
+  funNum_GetGetAxisZ() - returns the index value of axis Z.
+
+******************************************************************************************************
+* EXAMPLE
+******************************************************************************************************
+*
   objExamplePoint = new OoPoint();
   objExamplePoint.funSetNameOnce("StartPoint");
   objExamplePoint.funSetPoint(1,4,0)
@@ -47,9 +51,8 @@ Methods:
   alert("Start point X axis index is:"+numExampleAxisX);
   rayPoint = objExamplePoint.funRay_GetPoint();
   alert("Value of z axis is"+rayPoint['z'])
-*/
-//****************************************************************************************************** 
-function OoPoint() 
+*
+*******************************************************************************************************/
 {
 //###############
 //# PROPERTIES #

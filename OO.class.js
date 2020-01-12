@@ -1,5 +1,6 @@
-//JavaScript Document
-//Copyright 2019 Daniel Bullimore
+//Javascript Document
+//Copyright(c) 2019, Daniel Bullimore
+//All rights reserved.
  //################################################################################################################################################ 
    //# File Name       :OO.class.js
     //# System          :OOmutiny
@@ -34,15 +35,15 @@ function OO(strDecendantType)
 	Methods:
 		Initialise - This function adds a new object to the rayOO multi-dimensional array. This is the minimum constructor for all subclasses of _OO.
 		
-		funGetObjectByName - This function searches the global multi-dimensional rayOO array for a object using its type and name.
+		funObj_GetObjectByName - This function searches the global multi-dimensional rayOO array for a object using its type and name.
 		
 		funSetNameOnce - This function allows an instance to be named so long as its name is currently unset or null.
 		
-		funGetName - This function returns the name given to an instance.
+		funStr_GetName - This function returns the name given to an instance.
 		
-		funGetType - Returns an instance class name.
+		funStr_GetType - Returns an instance class name.
 		
-		funGetId - returns an instances unique id used to index it rayOO[strType][numID]
+		funNum_GetId - returns an instances unique id used to index it rayOO[strType][numID]
 
 		Destroy - Removes a OO object from rayOO multi-dimensional array.
 
@@ -52,14 +53,14 @@ function OO(strDecendantType)
 		domOO() - returns the DOM node of an instance's HTML element.
 		
 	Properties 
-		numId - protected number
-		strType - protected string
+		numId - Private number
+		strType - Protected string
 		strName - protected string
-		rayOO - public array 
-		rayOOi - public array
+		window.rayOO - public array 
+		window.rayOOi - public array
 		
 
-*Parameters: -
+*Parameters: strDecendantType - string, allows decendant classes to overwrite strType when calling OO as parent.
 
 *Example:
 		To start with a new instance of this class should be declared globally like so:
@@ -68,31 +69,30 @@ function OO(strDecendantType)
         Now you have 2 global arrays available: rayOO[] - Multidimensional which stores all objects that inherit this classes form. 
                                                 rayOOi[] - which tracks the initial id number for new objects.
                                                 
-        all subclasses are required to have these 2 properties: numId, and strType, strName is optional but helpful;
+        all subclasses are required to have these 3 properties: numId, strName and strType; 
+        Instances can be named with funSetNameOnce("Name"),
         numId is used to give the object a unique identity like so rayOO[<type>][<numId>]
-        a subclasses strType should really be the name of the class and numId is automatically assigned on construct (using Initialise()).
-        This all means that after a  object has rendered you can access objects using rayOO[<type>][<numId] then access their properties or methods
+        A subclasses strType should really be the name of the class and numId is automatically assigned on construct (using Initialise()).
+        This all means that after an object has Initialised you can access objects using rayOO[<type>][<numId] then access their properties or methods
         like this rayOO['List'][1].funRender() and var x = rayOO['List'][1].strName;
+        Another OO decendant can be looked up in the object library using any OO instance or decendant instance using funObj_GetObjectByName()
         
         Initialising Subclasses
         To initialise the absolute minimum subclass of OO requires the following;
         function NewOOSubClass()
         {
             this.Parent = OO;
-            this.Parent();
-
-            strType = "NewOOSubclass"   //required to overide the super class type property
-            
-            //this.Initialise(); //indexes the object in rayOO[][] and sets this instances numId
+            this.Parent("NewOOSubclass");//required to overide the super class type property
+            this.Initialise(); //indexes the object in rayOO[][] and sets this instances numId
         }
 
-        NewOOSubClass now exists in rayOO['NewOOSubClass'][0] and has all the methods that OO has such as funInitialise() which was used to index the new instance above.
+        NewOOSubClass now exists in rayOO['NewOOSubClass'][0] and has all the methods that OO has such as Initialise() which was used to index the new instance above.
         New methods and properties can now be added to NewOOSubClass but if they have the same name as a method or property in a ancestor class the ancestors will be overridden.
 
         If you have another class that inherits from NewOOSubClass it will have OO and NewOOSubClass's methods and properties. These can be called in the same manner as the constructor
         or with in the subclasses own methods.
 	
-	Subclasses that produce HTML elements should use a method called funRender for uniformity. funRender should implement DOM to create and append the HTML elements
+	Subclasses that produce HTML/Canvas elements should use a method called funRender for uniformity. funRender should implement DOM to create and append the HTML elements
 	to the document within a parent element. Giving developers the ability to select a target parent note will make sub classes more diverse.
 */
 {
@@ -251,11 +251,18 @@ this.funSetNameOnce = function (strNewName)
     Returns:  void
     */
 	{
-	  //if ((strName === "") failed 0.0Master Test#4 https://github.com/DanielBullimore/OOmutiny/issues/38 
-		if ((strName === "") && (this.funObj_GetObjectByName(strType,strNewName) === false))
-		{
-			strName = strNewName;
-		}
+	  try
+	  {
+  	  //if ((strName === "") failed 0.0Master Test#4 https://github.com/DanielBullimore/OOmutiny/issues/38 
+  		if ((strName === "") && (this.funObj_GetObjectByName(strType,strNewName) === false))
+  		{
+  			strName = strNewName;
+  		}
+	  }
+	  catch (error)
+	  {
+	    console.log("<[O.o]> OO: "+error);
+	  }
 	};
 this.funStr_GetName = function ()
     /*
@@ -301,7 +308,7 @@ this.Test = function ()
     */
 	{
 	/* 3.1.2 */
-		document.write("<hr><h2>3.1.2</h2><br>");
+		window.document.write("<hr><h2>3.1.2</h2><br>");
 		try
 		{
 			/* 3.1.2.1 */
@@ -312,7 +319,7 @@ this.Test = function ()
 			}
 			else strResult = "fail";
 	
-			document.write("<p>* 3.1.2.1 Testing instance decleration:<br>...Typeof is: "+strTypeOfTestObject+"<br>..."+strResult+"</p>");	
+			window.document.write("<p>* 3.1.2.1 Testing instance decleration:<br>...Typeof is: "+strTypeOfTestObject+"<br>..."+strResult+"</p>");	
 			/* 3.1.2.2 */		
 			alert(typeof this.funStr_GetType());
 			 strPropertyTestType = typeof(strType);
@@ -321,23 +328,23 @@ this.Test = function ()
 				strResult = "pass";
 			}
 			else strResult = "fail";
-			document.write("<p>* 3.1.2.2 Testing strType Exists:<br>...Typeof is: "+strPropertyTestType+"<br>..."+strResult+"</p>");
+			window.document.write("<p>* 3.1.2.2 Testing strType Exists:<br>...Typeof is: "+strPropertyTestType+"<br>..."+strResult+"</p>");
 			/* 3.1.2.3 */
-			 strPropertyTestId = typeof(numId)
+			 strPropertyTestId = typeof(numId);
 			if (strPropertyTestId == "number")
 			{
 				strResult = "pass";
 			}
 			else strResult = "fail";
-			document.write("<p>* 3.1.2.3 Testing numId Exists:<br>...Typeof is: "+strPropertyTestId+"<br>..."+strResult+"</p>");
+			window.document.write("<p>* 3.1.2.3 Testing numId Exists:<br>...Typeof is: "+strPropertyTestId+"<br>..."+strResult+"</p>");
 			/* 3.1.2.4 */
-			 strPropertyTestName = typeof(strName)
+			 strPropertyTestName = typeof(strName);
 			if (strPropertyTestName == "string")
 			{
 				strResult = "pass";
 			}
 			else strResult = "fail";
-			document.write("<p>* 3.1.2.4 Testing numName Exists:<br>...Typeof is: "+strPropertyTestName+"<br>..."+strResult+"</p>");
+			window.document.write("<p>* 3.1.2.4 Testing numName Exists:<br>...Typeof is: "+strPropertyTestName+"<br>..."+strResult+"</p>");
 			/* 3.1.2.5 */
 			 strPropertyTestIndex = typeof(window.rayOO);
 			 strPropertyTestIndexNumber = typeof(window.rayOOi);
@@ -346,7 +353,7 @@ this.Test = function ()
 				strResult = "pass";
 			}
 			else strResult = "fail";
-			document.write("<p>* 3.1.2.5 Testing rayOO and rayOOi Exists:<br>...Typeof is: "+strPropertyTestIndex+" "+strPropertyTestIndexNumber+"<br>..."+strResult+"</p>");
+			window.document.write("<p>* 3.1.2.5 Testing rayOO and rayOOi Exists:<br>...Typeof is: "+strPropertyTestIndex+" "+strPropertyTestIndexNumber+"<br>..."+strResult+"</p>");
 			/* 3.1.2.6 - Methods exist*/
 			strMethodTypes = 'Destroy():'+typeof(this.Destroy)+'<br>'+
 								'Initialise():'+typeof(this.Initialise)+'<br>'+
@@ -357,58 +364,58 @@ this.Test = function ()
 								'funStr_GetType():'+typeof(this.funStr_GetType)+'<br>';
 			if (strMethodTypes === 'Destroy():function<br>Initialise():function<br>funObj_GetObjectByName():function<br>funSetNameOnce():function<br>funNum_GetId():function<br>funStr_GetName():function<br>funStr_GetType():function<br>') { strResult = "...Pass<br>"; }
 			else { strResult = "...Fail<br>"; }
-			document.write("<p>* 3.1.2.6 Testing required methods exist:<br>...<br>"+strMethodTypes+"<br>"+strResult+"</p>");
+			window.document.write("<p>* 3.1.2.6 Testing required methods exist:<br>...<br>"+strMethodTypes+"<br>"+strResult+"</p>");
 			
 		/* 3.2.1 Post initialise() */
-			document.write("<hr><h2>3.2.1</h2><br>");
+			window.document.write("<hr><h2>3.2.1</h2><br>");
 			this.Initialise();
 			{
 				/* 3.2.1.1 */
 				strTypeOfVar = typeof(numId);
 				if (strTypeOfVar === "number") { strResult = "...Pass"; }
 				else { strResult = "!Fail..."; }
-				document.write("<p>* 3.2.1.1 Testing type and value of numId<br>...numId is: "+ strTypeOfVar +"<br>...numId value: "+ numId +"<br>"+ strResult+ "</p>");
+				window.document.write("<p>* 3.2.1.1 Testing type and value of numId<br>...numId is: "+ strTypeOfVar +"<br>...numId value: "+ numId +"<br>"+ strResult + "</p>");
 				/* 3.2.1.2 */
 				strTypeOfVar = typeof(strType);
 				if (strTypeOfVar === "string" && strType === "oomutiny") { strResult = "...Pass"; }
 				else { strResult = "!Fail..."; }
-				document.write("<p>* 3.2.1.2 Testing type and value of strType<br>...strType is: "+ strTypeOfVar +"<br>...strType value: "+ strType +"<br>"+ strResult+ "</p>");
+				window.document.write("<p>* 3.2.1.2 Testing type and value of strType<br>...strType is: "+ strTypeOfVar +"<br>...strType value: "+ strType +"<br>"+ strResult+ "</p>");
 				/* 3.2.1.3 */
 				strTypeOfVar = typeof(strName);
 				if (strTypeOfVar === "string" && strName ==="") { strResult = "...Pass"; }
 				else { strResult = "!Fail..."; }
-				document.write("<p>* 3.2.1.3 Testing type and value of strName<br>...strName is: "+ strTypeOfVar +"<br>...strName value: "+ strName +"<br>"+ strResult+ "</p>");
+				window.document.write("<p>* 3.2.1.3 Testing type and value of strName<br>...strName is: "+ strTypeOfVar +"<br>...strName value: "+ strName +"<br>"+ strResult+ "</p>");
 				/* 3.2.1.4 */
 				strTypeOfVar = typeof(window.rayOO[strType][0]);
 				if (strTypeOfVar === "object" && window.rayOO[strType][numId].funNum_GetId() == numId) { strResult = "...Pass"; }
 				else { strResult = "!Fail..."; }
-				document.write("<p>* 3.2.1.4 Testing type and value of rayOO['oomutiny]<br>...Type is: "+ strTypeOfVar +"<br>...value: "+ rayOO[strType][numId] +"<br>"+ strResult+ "</p>");
+				window.document.write("<p>* 3.2.1.4 Testing type and value of rayOO['oomutiny]<br>...Type is: "+ strTypeOfVar +"<br>...value: "+ rayOO[strType][numId] +"<br>"+ strResult+ "</p>");
 				/* 3.2.1.5 */
 				strDerivedString = this.strOO();
 				if (typeof(strDerivedString) === "string" && strDerivedString == "rayOO['oomutiny']['0']") { strResult = "...Pass"; }
 				else { strResult = "!..Fail"; }
-				document.write("<p>* 3.2.1.5 Testing derived string strOO():<br>...Retured value is: "+strDerivedString+"<br>"+strResult+"</p>");
+				window.document.write("<p>* 3.2.1.5 Testing derived string strOO():<br>...Retured value is: "+strDerivedString+"<br>"+strResult+"</p>");
 			/* 3.2.1.6 */
 				strDerivedObject = this.objOO();
 				if (typeof(strDerivedObject) === "object" && strDerivedObject === this) { strResult = "...Test object and returned object are equal<br>...Pass"; }
 				else { strResult = "!..Fail"; }
-				document.write("<p>* 3.2.1.6 Testing derived object objOO():<br>...Retured value is: "+strDerivedObject+"<br>"+strResult+"</p>");
+				window.document.write("<p>* 3.2.1.6 Testing derived object objOO():<br>...Retured value is: "+strDerivedObject+"<br>"+strResult+"</p>");
 			/* 3.2.1.7 */
 
 				if (this.domOO().className === "pass" ) { strResult = "...Pass"; }
 				else { strResult = "!..Fail"; }
-				document.write("<p>* 3.2.1.7 Testing derived DOM node strOO():<br>...Class names are equal<br>"+strResult+"</p>");
+				window.document.write("<p>* 3.2.1.7 Testing derived DOM node strOO():<br>...Class names are equal<br>"+strResult+"</p>");
 			}
 		/* 3.2.2 */
 			if(this.funObj_GetObjectByName("oomutiny","") == this) { strResult = "...Pass" }
 			else { strResult = "!..Fail"; }
-			document.write("<hr><h2>3.2.2</h2><br>* Testing funObj_GetObjectByName() returns this instance:<br>"+strResult);
+			window.document.write("<hr><h2>3.2.2</h2><br>* Testing funObj_GetObjectByName() returns this instance:<br>"+strResult);
 			
 			
 		}
 		catch (strError)
 		{
-			document.write("Unexpected error prevented the test from executing:<br>"+strError);
+			window.document.write("Unexpected error prevented the test from executing:<br>"+strError);
 		}
 	};
 

@@ -1,5 +1,6 @@
-// JavaScript Document
-// Copyright 2019 Daniel Bullimore
+//Javascript Document
+//Copyright(c) 2019, Daniel Bullimore
+//All rights reserved.
 //* File Name: o.class.js
 //* System: OoMutiny
 //* Dependencies: <Name any files this one requires to operate correctly>

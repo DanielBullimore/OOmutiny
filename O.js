@@ -72,10 +72,10 @@ This one system quickly provides:
 Properties:
   numBenchmarkSolarYear - Protected number, interval in milliseconds between drawing each frame.(one solar year)
   numCyclesPerSecond - private number, derived value, effectively frames per second.Used to calculate realtime.
-  rayMecury - public array, highest priority appointment slot for interrupts.11: 1 solar year
-  rayVenus - public array, medium priority appointment slot for interrupts.7: 1 solar year
-  rayEarth - public array, lowest priority appointment slot for interrupts.4: 1 solar year
-  rayMars - public array, list of all the objects to render in the next frame.
+  threads.mecury - public array, highest priority appointment slot for interrupts.11: 1 solar year
+  threads.venus - public array, medium priority appointment slot for interrupts.7: 1 solar year
+  threads.earth - public array, lowest priority appointment slot for interrupts.4: 1 solar year
+  threads.mars - public array, list of all the objects to render in the next frame.
 
 Methods:
   funBenchmark() - determines a stable interval in milliseconds
@@ -100,9 +100,31 @@ var threads = {
   "venus":new planet(),
   "mercury":new planet()
 };
-function planet() {
-  this.name = "planet"
-  this.type = "planet"
+function planet()
+  /*
+  Description: Object for thread planet in solar system loop.
+  Properties:
+      this.name = "planet"
+      this.type = "planet"
+      this.xco         - Public number, center of planets orbit x coordinate
+      this.yco         - Public number, center of planets orbit y coordinate
+      this.orbitRadius - Public number, distance from the center of the sun
+      this.orbitDegree - Public number, how far around the sun in degrees / orbit progress
+      this.degree      - Public number, degrees travelled around sun each day
+      this.radius      - Public number, size of planet 
+      this.color       - Public string, color of planet /hex/rbg/english
+      this.work        - Public array, list of interrupts
+      this.numExeT     - Public date, time in milliseconds when thread last executed
+      this.fractal     - Public number, magic maths pattern also number of days per year on thread planet
+      this.day         - Public number, current day of thread planets year
+      this.executions  - Public number, used in debug mode to track number of executions for thread.
+      this.collisions  - Public number, used in debug mode to track number threads executed in a millisecond.
+  Parameters:  -
+  Returns: -
+  */
+{
+  this.name = "planet";
+  this.type = "planet";
   this.xco = 0;
   this.yco = 0;
   this.orbitRadius = 0;
@@ -186,6 +208,7 @@ _______________________________
             {
               case 3:threads.mars.day = 0;break;
               case 2:{
+                //Only render a frame on day 2 becuase 3/3(mars) = 4/4(earth) but 2/3 does not = 1/4 or 2/4 or 3/4
                 for (obj = 0; obj < threads.mars.work.length; obj++)
                 {
                   rayOO[  threads[mars].work[obj][0]  ][  threads[mars].work[obj][1]  ].funRender();
