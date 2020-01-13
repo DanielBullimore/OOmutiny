@@ -4,10 +4,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="../../OoColor.class.js"></script>
     <title></title>
 </head>
 
 <body>
+<script type="text/javascript">
+  function DW(stuff) { document.write(stuff+"<br>"); }
+  DW("starting test");
+  try
+  {
+  DW("2.1.1.Checking OoColor is a class withing namespace:")
+  if (typeof OoColor === "function")
+  {
+    DW("Pass")
+  }
+  else DW("Fail");
+  objTestOoColor = new OoColor();
+  DW("2.3.1 Checking test instances of OoColor Exists:");
+  if (typeof objTextOoColor == "object")
+  {
+    DW("Pass");
+  } else DW("Fail");
+  DW("2.3.2 Checking strColor is private:");
+  if (typeof objTestOoColor.strColor == 'undefined')
+  {
+    DW("Pass");
+  } else DW("Fail");
+  DW("2.3.3. Checking public functions:");
+  if ((typeof objTestOoColor.funSetColor == 'function') && (typeof objTestOoColor.funStr_GetColor == 'function'))
+  {
+    DW("Pass");
+  } else DW("Fail");
+  DW("2.3.4. Testing public boolean booValidated:");
+  if (objTestOoColor.booValidated === false)
+  {
+    DW("Pass");
+  } else DW("Fail");
+  DW("2.3.5. Testing Color validation:");
+  objTestOoColor.funSetColor("BltWithMustard");
+  if (objTestOoColor.funStr_GetColor() == "#000000")
+  {
+    DW("pass");
+  } else DW("fail");
+  DW("2.3.6. Testing get and set colors function correctly:");
+  objOne = new OoColor();
+  objTwo = new OoColor();
+  objThree = new OoColor();
+  objOne.funSetColor("#cfcfcf");
+  objTwo.funSetColor("rgb(70,0,40)");
+  objThree.finSetColor("green");
+  if (objOne.funStr_GetColor()+objTwo.funStr_GetColor()+objThree.funStr_GetColor() == "#cfcfcfrgb(70,0,40)green")
+  {
+    DW("Pass");
+  } else DW("Fail");
+
+  }
+catch (error)
+{
+  DW("Testing OoColor unhandled error:")+error;
+}
+DW("Test Complete");
+</script>
+
 
 </body>
 

@@ -3,7 +3,7 @@
 //All rights reserved.
 //* File Name: OoColor.class.js
 //* System: OOmutiny
-//* Dependencies: OO.class.js
+//* Dependencies: -
 //****************************************************************************************************** 	
 //* Author:        Daniel Bullimore
 //* Authors email: daniel.k.bullimore@gmail.com
