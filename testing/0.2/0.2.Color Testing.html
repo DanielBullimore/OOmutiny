@@ -14,12 +14,18 @@
   DW("starting test");
   try
   {
-  DW("2.1.1.Checking OoColor is a class withing namespace:")
+  DW("2.1.1.Checking OoColor is a class within  namespace:")
   if (typeof OoColor === "function")
   {
     DW("Pass")
   }
   else DW("Fail");
+    DW("2.1.2.Checking OO is a class within namespace:")
+    if (typeof OO === "function")
+    {
+    DW("Pass")
+    }
+    else DW("Fail");
   objTestOoColor = new OoColor();
   DW("2.3.1 Checking test instances of OoColor Exists:");
   if (typeof objTextOoColor == "object")
@@ -60,6 +66,17 @@
   } else DW("Fail");
 
   }
+  DW("2.3.7. Checking inheritance:")
+  if (objTestOoColor.funStr_GetType() == "OoColor")
+  {
+    DW("Pass");
+  } else DW("Fail");
+  DW("2.1.3.Checking OoColor & OO are classes withing namespace:")
+  if ((typeof OoColor === "function") && typeof OO === "function"))
+  {
+  DW("Pass")
+  }
+  else DW("Fail");
 catch (error)
 {
   DW("Testing OoColor unhandled error:")+error;
