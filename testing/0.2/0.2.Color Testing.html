@@ -66,19 +66,20 @@
     DW("Pass");
   } else DW("Fail");
 
-  }
+
   DW("2.3.7. Checking inheritance:")
   if (objTestOoColor.funStr_GetType() == "OoColor")
   {
     DW("Pass");
   } else DW("Fail");
   DW("2.1.3.Checking OoColor & OO are classes withing namespace:")
-  if ((typeof OoColor === "function") && typeof OO === "function"))
+  if ((typeof OoColor === "function") && (typeof OO === "function"))
   {
   DW("Pass")
   }
   else DW("Fail");
-catch (error)
+  }
+  catch (error)
 {
   DW("Testing OoColor unhandled error:")+error;
 }

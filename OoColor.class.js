@@ -193,10 +193,23 @@ function OoColor()
     "WhiteSmoke",
     "Yellow",
     "YellowGreen" ];
+    
+    var rexTestHex = new RegExp(/^#[0-9a-f]){6}/i);
+    var rexTestRbg = new RegExp(/^rgb\u0028([0-2][0-9][0-9]|[0-9][0-9]),([0-2][0-9][0-9]|[0-9][0-9]),([0-2][0-9][0-9]|[0-9][0-9])\u0029$/i);
+    
+
+    if (rayEnglishColors.indexOf(strColor) >= 0)
+    {
+      this.booValidated = true;
+    }
+    
+
   };
+
   this.funStr_GetColor = function()
   {
       return strColor;
   };
+
 }
-  
+
