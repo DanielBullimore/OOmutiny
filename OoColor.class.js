@@ -69,6 +69,7 @@ Example:
   //#############
   this.Parent = OO;
   this.Parent('OoColor');
+  this.Initialise();
   //###########
   //# METHODS #
   //###########
