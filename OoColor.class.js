@@ -3,7 +3,7 @@
 //All rights reserved.
 //* File Name: OoColor.class.js
 //* System: OOmutiny
-//* Dependencies: -
+//* Dependencies: OO.class.js
 //****************************************************************************************************** 	
 //* Author:        Daniel Bullimore
 //* Authors email: daniel.k.bullimore@gmail.com
@@ -268,7 +268,6 @@ Example:
     Returns: -
   */
   { 
-    //console.log(strColor)
       return strColor;
   };
 
