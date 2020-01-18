@@ -64,9 +64,9 @@ Methods:
 Returns: -
 */
 {
-    //###############
+    //##############
    //# PROPERTIES #
-  //#############
+  //##############
   var numWidth;
   var numHeight;
   var booFilled;
@@ -75,22 +75,22 @@ Returns: -
   var objBorderColor;
   var numBorderWidth;
   
-    //###################
+    //##################
    //# DERIVED VALUES #
-  //#################
+  //##################
   this.funNum_GetWidth = function() { };
   this.funNum_GetHeight = function() { };
   
-    //########################
+    //#######################
    //# CONSTRUCT DESTRUCT  #
-  //######################
+  //#######################
   this.Parent = OoPoint;
   this.Parent();
-  
-    //##############
+  this.Initialise();
+    //#############
    //# FUNCTIONS #
-  //############
-  this.funSetDimension = function(numWidth,numHeight)
+  //#############
+  this.funSetDimension = function(numNewWidth,numNewHeight)
   /*
   Description: Used to define width and height of a region.
   
@@ -100,7 +100,20 @@ Returns: -
   
   Returns:-
   */
-  {};
+  {
+    try
+    {
+      if (typeof(numNewWidth)+typeof(numNewHeight) === "numbernumber")
+      {
+        numWidth = numNewWidth;
+        numHeight = numNewHeight;
+      }
+    }
+    catch (error)
+    {
+      console.log("<[O.o]> OoPointRegion=>funSetDimension: "+error);
+    }
+  };
   this.funSetBorder = function(objColor,numPixelWidth)
   /*
   Description: Accepts OoColor object and number 
@@ -113,7 +126,21 @@ Returns: -
     
   Returns:
   */
-  {};
+  {
+    try
+    {
+      if ((typeOf(objColor)+typeOf(numPixelWidth) === "objectnumber") && (objColor.funStr_GetType() == "OoColor"))
+      {
+        booBorder = true;
+        objBorderColor = objColor;
+        numBorderWidth = numPixelWidth;
+      }
+    }
+    catch (error)
+    {
+      console.log("<[O.o]> OoPointRegion=>funSetBorder: "+error);
+    }
+  };
   this.funUnsetBorder = function()
   /*
   Description: Removes a regions boarder definitions.
@@ -122,7 +149,9 @@ Returns: -
     
   Returns: -
   */
-  {};
+  {
+    booBorder = false;
+  };
   this.funSetFill = function(objColor)
   /*
   Description: Accepts an OoColor object parameter as
@@ -133,7 +162,20 @@ Returns: -
   
   Returns:-
   */
-  {};
+  {
+    try
+    {
+      if ((objColor.funStr_GetType() === "OoColor") && (objColor.booValidated === true))
+      {
+        booFilled = true;
+        objFillColor = objColor;
+      }
+    }
+    catch (error)
+    {
+      console.log("<[O.o]> OoPointRegion=>funSetFill: "+ error);
+    }
+  };
   this.funUnsetFill = function()
   /*
   Description: Removes a regions fill definition.
@@ -142,7 +184,9 @@ Returns: -
   
   Returns: -
   */
-  {};
+  {
+    booFilled = false;
+  };
   this.funMove = function(objNewPoint,numPixelsPerMillisecond)
   /*
   Description: Accepts OoPoint object and a number as parameters
@@ -155,7 +199,22 @@ Returns: -
 
   Returns: -
   */
-  {};
+  {
+    try
+    {
+      if ((objNewPoint.funStr_GetType() === "OoPoint") && (typeof(numPixelsPerMillisecond) === "number"))
+      {
+        //calculate the vector
+        //calculate number of moves
+        //generate interrupt
+        //push interrupt
+      }
+    }
+    catch (error)
+    {
+      console.log("<[O.o]> OoPointRegion=>funMove: "+error);
+    }
+  };
   this.funTeleport = function(objNewPoint)
   /*
   Description:  Accepts OoPoint as location to redraw region on GUI.
@@ -165,7 +224,19 @@ Returns: -
 
   Returns: -
   */
-  {};
+  {
+    try
+    {
+      if (objNewPoint.funStr_GetType() === "OoPoint")
+      {
+        this.funSetPoint(objNewPoint.funNum_GetAxisX(),objNewPoint.funNum_GetAxisY(),objNewPoint.funNum_GetAxisZ());
+      }
+    }
+    catch (error)
+    {
+      console.log("<[O.o]> OoPointRegion=>funTeleport "+error);
+    }
+  };
   this.funRender = function()
   /*
   Description: Derives a visual representation of
