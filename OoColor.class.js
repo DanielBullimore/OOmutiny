@@ -28,186 +28,247 @@ accept an instance of OoColor as that color.
 # To view a copy of this license, visit https://github.com/DanielBullimore/OOmutiny/blob/master/LICENSE
 *******************************************************************************************************/
 function OoColor()
-/*
+/*Overview: A small object class to set/validate/get a color
+
+Parameters: -
+
+Properties:
+  strColor - Private string, color stored in instance.
+  booValidated - public boolean, set to true when color passed to funSetColor() is indeed a valid color.
+
+Methods:
+  funSetColor(color) - Sets the color, expects rbg, hex or english color as string.
+  funStr_GetColor - returns the color.
+
+Example: 
+  - declear instance 
+  objNewColor = new OoColor();
+  
+  - set color rgb
+  objNewColor.funSetColor("rgb(7,8,245)");
+    or english
+  objNewColor.funSetColor("lightgreen");
+    or hex
+  objNewColor.funSetColor("#cf00ff");
+  
+  - get color 
+  objNewColor.funStr_GetColor();
+  
+  - Inherits OO so .Destroy, .funSetNameOnce, .funStrGetType()... are all part of this class.
+  objNewColor.funSetNameOnce("HeadOneTextColor");
+
 */
 {
   //##############
   //# PROPERTIES #
   //##############
   var strColor = "#000000";
-  this.booValidated = true;
+  this.booValidated = false;
+  //#############
+  //# CONSTRUCT #
+  //#############
+  this.Parent = OO;
+  this.Parent('OoColor');
   //###########
   //# METHODS #
   //###########
-  this.funSetColor = function(strColor)
-  /* Description:
+  this.funSetColor = function(strNewColor)
+  /* Description: Use to set color for OoColor instance
     
-    Parapeters: strColor - Private string, ether hex rgb or english color value
+    Parapeters: strNewColor - Private string, ether hex rgb or english color value
       
     Returns: -
   */
   {
     //Define an tiresome list of all the html colors in engish
     rayEnglishColors = [
-    "AliceBlue",
-    "AntiqueWhite",
-    "Aqua",
-    "Aquamarine",
-    "Azure",
-    "Beige",
-    "Bisque",
-    "Black",
-    "BlanchedAlmond",
-    "Blue",
-    "BlueViolet",
-    "Brown",
-    "BurlyWood",
-    "CadetBlue",
-    "Chartreuse",
-    "Chocolate",
-    "Coral",
-    "CornflowerBlue",
-    "Cornsilk",
-    "Crimson",
-    "Cyan",
-    "DarkBlue",
-    "DarkCyan",
-    "DarkGoldenRod",
-    "DarkGray",
-    "DarkGrey",
-    "DarkGreen",
-    "DarkKhaki",
-    "DarkMagenta",
-    "DarkOliveGreen",
-    "DarkOrange",
-    "DarkOrchid",
-    "DarkRed",
-    "DarkSalmon",
-    "DarkSeaGreen",
-    "DarkSlateBlue",
-    "DarkSlateGray",
-    "DarkSlateGrey",
-    "DarkTurquoise",
-    "DarkViolet",
-    "DeepPink",
-    "DeepSkyBlue",
-    "DimGray",
-    "DodgerBlue",
-    "FireBrick",
-    "FloralWhite",
-    "ForestGreen",
-    "Fuchsia",
-    "Gainsboro",
-    "GhostWhite",
-    "Gold",
-    "GoldenRod",
-    "Gray",
-    "Green",
-    "GreenYellow",
-    "HoneyDew",
-    "HotPink",
-    "IndianRed",
-    "Indigo",
-    "Ivory",
-    "Khaki",
-    "Lavender",
-    "LavenderBlush",
-    "LawnGreen",
-    "LemonChiffon",
-    "LightBlue",
-    "LightCoral",
-    "LightCyan",
-    "LightGoldenRodYellow",
-    "LightGray",
-    "LightGrey",
-    "LightGreen",
-    "LightPink",
-    "LightSalmon",
-    "LightSeaGreen",
-    "LightSkyBlue",
-    "LightSlateGray",
-    "LightSteelBlue",
-    "LightYellow",
-    "Lime",
-    "LimeGreen",
-    "Linen",
-    "Magenta",
-    "Maroon",
-    "MediumAquaMarine",
-    "MediumBlue",
-    "MediumOrchid",
-    "MediumPurple",
-    "MediumSeaGreen",
-    "MediumSlateBlue",
-    "MediumSpringGreen",
-    "MediumTurquoise",
-    "MediumVioletRed",
-    "MidnightBlue",
-    "MintCream",
-    "MistyRose",
-    "Moccasin",
-    "NavajoWhite",
-    "Navy",
-    "OldLace",
-    "Olive",
-    "OliveDrab",
-    "Orange",
-    "OrangeRed",
-    "Orchid",
-    "PaleGoldenRod",
-    "PaleGreen",
-    "PaleTurquoise",
-    "PaleVioletRed",
-    "PapayaWhip",
-    "PeachPuff",
-    "Peru",
-    "Pink",
-    "Plum",
-    "PowderBlue",
-    "Purple",
-    "RebeccaPurple",
-    "Red",
-    "RosyBrown",
-    "RoyalBlue",
-    "SaddleBrown",
-    "Salmon",
-    "SandyBrown",
-    "SeaGreen",
-    "SeaShell",
-    "Sienna",
-    "Silver",
-    "SkyBlue",
-    "SlateBlue",
-    "SlateGray",
-    "Snow",
-    "SpringGreen",
-    "SteelBlue",
-    "Tan",
-    "Teal",
-    "Thistle",
-    "Tomato",
-    "Turquoise",
-    "Violet",
-    "Wheat",
-    "White",
-    "WhiteSmoke",
-    "Yellow",
-    "YellowGreen" ];
-    
-    var rexTestHex = new RegExp(/^#[0-9a-f]){6}/i);
-    var rexTestRbg = new RegExp(/^rgb\u0028([0-2][0-9][0-9]|[0-9][0-9]),([0-2][0-9][0-9]|[0-9][0-9]),([0-2][0-9][0-9]|[0-9][0-9])\u0029$/i);
-    
+    "aliceblue",
+    "antiquewhite",
+    "aqua",
+    "aquamarine",
+    "azure",
+    "beige",
+    "bisque",
+    "black",
+    "blanchedalmond",
+    "blue",
+    "blueviolet",
+    "brown",
+    "burlywood",
+    "cadetblue",
+    "chartreuse",
+    "chocolate",
+    "coral",
+    "cornflowerblue",
+    "cornsilk",
+    "crimson",
+    "cyan",
+    "darkblue",
+    "darkcyan",
+    "darkgoldenrod",
+    "darkgray",
+    "darkgrey",
+    "darkgreen",
+    "darkkhaki",
+    "darkmagenta",
+    "darkolivegreen",
+    "darkorange",
+    "darkorchid",
+    "darkred",
+    "darksalmon",
+    "darkseaGreen",
+    "darkslateBlue",
+    "darkslateGray",
+    "darkslateGrey",
+    "darkturquoise",
+    "darkviolet",
+    "deeppink",
+    "deepskyblue",
+    "dimgray",
+    "dodgerblue",
+    "direbrick",
+    "floralwhite",
+    "forestgreen",
+    "fuchsia",
+    "gainsboro",
+    "ghostwhite",
+    "gold",
+    "goldenrod",
+    "gray",
+    "green",
+    "greenyellow",
+    "honeydew",
+    "hotpink",
+    "indianred",
+    "indigo",
+    "ivory",
+    "khaki",
+    "lavender",
+    "lavenderblush",
+    "lawngreen",
+    "lemonchiffon",
+    "lightblue",
+    "lightcoral",
+    "lightcyan",
+    "lightgoldenrodyellow",
+    "lightgray",
+    "lightgrey",
+    "lightgreen",
+    "lightpink",
+    "lightsalmon",
+    "lightseagreen",
+    "lightskyblue",
+    "lightslategray",
+    "lightsteelblue",
+    "lightyellow",
+    "lime",
+    "limegreen",
+    "linen",
+    "magenta",
+    "maroon",
+    "mediumaquamarine",
+    "mediumblue",
+    "mediumorchid",
+    "mediumpurple",
+    "mediumseagreen",
+    "mediumslateblue",
+    "mediumspringgreen",
+    "mediumturquoise",
+    "mediumvioletred",
+    "midnightblue",
+    "mintcream",
+    "mistyrose",
+    "moccasin",
+    "navajowhite",
+    "navy",
+    "oldlace",
+    "olive",
+    "olivedrab",
+    "orange",
+    "orangered",
+    "orchid",
+    "palegoldenrod",
+    "palegreen",
+    "paleturquoise",
+    "palevioletred",
+    "papayawhip",
+    "peachpuff",
+    "peru",
+    "pink",
+    "plum",
+    "powderblue",
+    "purple",
+    "rebeccapurple",
+    "red",
+    "rosybrown",
+    "royalblue",
+    "saddlebrown",
+    "salmon",
+    "sandybrown",
+    "seagreen",
+    "seashell",
+    "sienna",
+    "silver",
+    "skyblue",
+    "slateblue",
+    "slategray",
+    "snow",
+    "springgreen",
+    "steelblue",
+    "tan",
+    "teal",
+    "thistle",
+    "tomato",
+    "turquoise",
+    "violet",
+    "wheat",
+    "white",
+    "whitesmoke",
+    "yellow",
+    "yellowgreen" ];
 
-    if (rayEnglishColors.indexOf(strColor) >= 0)
+    //define regular expresions to validate colors
+    var rexTestHex = new RegExp(/^#[0-9a-f]{6}/i);
+    //slightly lose regex, allows values over 255 (oversat)
+    var rexTestRgb = new RegExp(/^rgb\u0028([0-9]{1,3}\,)([0-9]{1,3}\,)([0-9]{1,3})\u0029/i);
+    //if else to work out if strNewColor is valid
+    if (rayEnglishColors.indexOf(strNewColor.toLowerCase()) >= 0)
     {
+      //english color name is valid
       this.booValidated = true;
     }
-    
-
+    else if (rexTestHex.test(strNewColor) === true) 
+    { 
+      //hex color value is valid
+      this.booValidated = true;
+    }
+    else if (rexTestRgb.test(strNewColor) === true)
+    {
+      //rbg color value is valid
+      this.booValidated = true;
+    }
+    else
+    {
+      //given color value is invalid
+      console.log("<[O.o]> OoColor: Not a color");
+      this.booValidated = false;
+    }
+    if (this.booValidated === true)
+    {
+      //only set strColor if its valid (use lowercase for comparision sake)
+      strColor = strNewColor.toLowerCase();
+    }
   };
 
   this.funStr_GetColor = function()
-  {
+  /* Description: Use to retrive color of OoColor instance
+    
+    Parapeters: -
+      
+    Returns: -
+  */
+  { 
+    //console.log(strColor)
       return strColor;
   };
 

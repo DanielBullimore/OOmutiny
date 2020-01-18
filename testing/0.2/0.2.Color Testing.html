@@ -12,6 +12,8 @@
 <body>
 <script type="text/javascript">
   function DW(stuff) { document.write(stuff+"<br>"); }
+  
+  
   DW("starting test");
   try
   {
@@ -29,7 +31,7 @@
     else DW("Fail");
   objTestOoColor = new OoColor();
   DW("2.3.1 Checking test instances of OoColor Exists:");
-  if (typeof objTextOoColor == "object")
+  if (typeof objTestOoColor == "object")
   {
     DW("Pass");
   } else DW("Fail");
@@ -44,12 +46,14 @@
     DW("Pass");
   } else DW("Fail");
   DW("2.3.4. Testing public boolean booValidated:");
-  if (objTestOoColor.booValidated === false)
+  if (objTestOoColor.booValidated == false)
   {
     DW("Pass");
   } else DW("Fail");
   DW("2.3.5. Testing Color validation:");
+
   objTestOoColor.funSetColor("BltWithMustard");
+    
   if (objTestOoColor.funStr_GetColor() == "#000000")
   {
     DW("pass");
@@ -58,10 +62,10 @@
   objOne = new OoColor();
   objTwo = new OoColor();
   objThree = new OoColor();
-  objOne.funSetColor("#cfcfcf");
-  objTwo.funSetColor("rgb(70,0,40)");
-  objThree.finSetColor("green");
-  if (objOne.funStr_GetColor()+objTwo.funStr_GetColor()+objThree.funStr_GetColor() == "#cfcfcfrgb(70,0,40)green")
+  objOne.funSetColor("#cfcfcf");console.log("ok");
+  objTwo.funSetColor("rgb(256,50,6)");
+  objThree.funSetColor("green");
+  if (objOne.funStr_GetColor()+objTwo.funStr_GetColor()+objThree.funStr_GetColor() == "#cfcfcfrgb(256,50,6)green")
   {
     DW("Pass");
   } else DW("Fail");
@@ -79,7 +83,7 @@
   }
   else DW("Fail");
   }
-  catch (error)
+catch (error)
 {
   DW("Testing OoColor unhandled error:")+error;
 }
