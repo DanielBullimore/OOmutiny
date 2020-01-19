@@ -26,7 +26,7 @@
   //#
 //################################################################################################################################################
 /*<<JS CLASS>>*/
-function OO(strDecendantType)
+function OO()
 /*
 *Overview:
 	This is the Master Class for OOmutiny framework. Its sole purpose is to contain and control all
@@ -82,8 +82,8 @@ function OO(strDecendantType)
         function NewOOSubClass()
         {
             this.Parent = OO;
-            this.Parent("NewOOSubclass");//required to overide the super class type property
-            this.Initialise(); //indexes the object in rayOO[][] and sets this instances numId
+            this.Parent();//
+            this.Initialise("NewOOSubclass"); //required to overide the super class type property also indexes the object in rayOO[][] and sets this instances numId
         }
 
         NewOOSubClass now exists in rayOO['NewOOSubClass'][0] and has all the methods that OO has such as Initialise() which was used to index the new instance above.
@@ -134,19 +134,6 @@ function OO(strDecendantType)
         window.rayOO = [];
         window.rayOOi = [];
     }
-	  {
-  		numId = 0;
-  	  
-  		if (typeof strDecendantType === "undefined")
-  		{
-  		  strType = "oomutiny";
-  		}
-  		else
-  		{
-  		  strType = strDecendantType;
-  		}
-  		strName = "";
-	  }
     this.Destroy = function(strInstanceName)
     /*
     *Description:
@@ -187,38 +174,49 @@ function OO(strDecendantType)
 		  delete this[objEverything]; }
 	    delete window[strInstanceName];
     };
-    //###########
-    //# METHODS #
-    //###########
-    this.Initialise = function ()
+
+    this.Initialise = function (strDecendantType)
     /*
     Description: This function adds a new OO object to the rayOO[] multi-dimensional array. This is the minimum constructor for all subclasses of OO.
 
-    Parameters:-
+    Parameters: strDecendant - Optional string, type of class to initialise as. Overwrites inherited strType.
 
     Returns: void
     */
-    {    
-        //check if a multilevel array has been defined to store this type of objects
-        if (typeof rayOO[strType] === "undefined") 
+    {           
+      {
+        if (typeof strDecendantType === "undefined")
         {
-          
-            //Because this type of  Object array is undefined, define it
-            rayOO[strType] = [];
-            //this is used to keep track of the next numId of object being added to this types rayOO[]
-            rayOOi[strType] = 0;
+          strType = "oomutiny";
         }
-        
-        //console.log(strType);
-	//Auto generate an id number for new object
+        else
+        {
+          strType = strDecendantType;
+        }
+        strName = "";
+      } 
+      //check if a multilevel array has been defined to store this type of objects
+      if (typeof rayOO[strType] === "undefined") 
+      {
+          //Because this type of  Object array is undefined, define it
+          rayOO[strType] = [];
+          //this is used to keep track of the next numId of object being added to this types rayOO[]
+          rayOOi[strType] = 0;
+      }
+      if (typeof numId == "undefined")
+      {
+  //Auto generate an id number for new object
         numId = rayOOi[strType];
-
-	//add the object to the objectas array
+  
+  //add the object to the objectas array
         rayOO[strType][numId] = this;
-	//and increase the value of this types next gui index
+  //and increase the value of this types next gui index
         rayOOi[strType]++;
-      
+      }
     };
+  //###########
+ //# METHODS #
+//###########
 this.funObj_GetObjectByName = function(strType,strFindName)
     /*
     Description: This function searches the global multidimensional GuiObjects array for a object using its type and name
@@ -321,7 +319,6 @@ this.Test = function ()
 	
 			window.document.write("<p>* 3.1.2.1 Testing instance decleration:<br>...Typeof is: "+strTypeOfTestObject+"<br>..."+strResult+"</p>");	
 			/* 3.1.2.2 */		
-			alert(typeof this.funStr_GetType());
 			 strPropertyTestType = typeof(strType);
 			if (strPropertyTestType == "string")
 			{
@@ -368,7 +365,6 @@ this.Test = function ()
 			
 		/* 3.2.1 Post initialise() */
 			window.document.write("<hr><h2>3.2.1</h2><br>");
-			this.Initialise();
 			{
 				/* 3.2.1.1 */
 				strTypeOfVar = typeof(numId);

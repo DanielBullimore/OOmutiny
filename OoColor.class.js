@@ -68,8 +68,8 @@ Example:
   //# CONSTRUCT #
   //#############
   this.Parent = OO;
-  this.Parent('OoColor');
-  this.Initialise();
+  this.Parent();
+  this.Initialise("OoColor");
   //###########
   //# METHODS #
   //###########

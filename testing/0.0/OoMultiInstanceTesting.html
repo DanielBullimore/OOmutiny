@@ -44,7 +44,6 @@
   objThree.funSetNameOnce('two');
   
   DW("<h2>b.b.4.</h2>")
-  alert(objOne.funStr_GetName());
   if (objOne.funStr_GetName()+objTwo.funStr_GetName()+objThree.funStr_GetName() == "onetwo")
   {
     DW(objOne.funStr_GetName()+objTwo.funStr_GetName()+objThree.funStr_GetName()+"<br>Pass")
@@ -56,7 +55,6 @@
 
   
   objOne.Destroy("objOne");
-  alert(typeof ( objOne ));
   DW("<h2>b.b.6</h2><br> Checking instance was destroyed:")
   if (typeof ( objOne ) == "undefined")
   {

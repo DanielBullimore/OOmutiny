@@ -70,8 +70,8 @@ var numZ;
 //#########################
   {
     this.Parent = OO;
-    this.Parent('OoPoint');// "OoPoint"; //required to overide the super class type property
-    this.Initialise(); //indexes the object in rayOO[][] and sets this instances numId
+    this.Parent();// "OoPoint"; //required to overide the super class type property
+    this.Initialise('OoPoint'); //indexes the object in rayOO[][] and sets this instances numId
   }
 //##############
 //# FUNCTIONS #
