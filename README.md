@@ -16,3 +16,4 @@ I've assigned 5 hours per week at one hour per day out side my normal 50 hour wo
 
 06/11/2019 - Stage One=[ CORE Feature high level design]-( https://github.com/DanielBullimore/OOmutiny/projects/1 ) finally complete, developemt enters Test Planing stage. 
 
+25/3/2020 - Project now a verified Brave Content Provider https://brave.com/bku581
