@@ -211,14 +211,43 @@ Returns: -
 		 move from A=(0,0,0)
 		-Use pythagoras again to calculate length of 3D vector using 2D XZ vector
 		 length and y-axis. again subtract point of origin y from end point y.
-		-Use inverse tangent, the oposite length (y) and ajacent XZ vector to 
+		-Use inverse sine, the oposite length (z) and hypot vector to 
 		 calculate the vector angle.
+		O=(0,0,0)
+		A=(3 4 4)
+		B=(6 6 6)
+		C=(1 2 3)
+
+		(6 6 6) - (3 4 4) = (3 2 2)
+		sqrt(3^2+2^2) = 3.6
+		sqry(3.6^2+2^2) =  4.1
+		asin(2/4.1) = 29.1 deg
+			prove: A=29.1 B=90 C=180-(90+29.1)
+					   C=180-119.1
+					   C=60.9 deg
+				ab=3.6 ac=4.1 bc=2
+				A acos(ab/ac) = 28.59 X
+				A atan(bc/ab) = 29.05 X
+				A asin(bc/ac) = 29.19 /
+				C acos(bc/ac) = 60.80 X
+				C atan(ab/bc) = 60.94 /
+				C asin(ab/ac) = 61.40 X
+				
+				* inacurate rounding
+
+
+
+		(1 2 3) - (6 6 6) = (-5 -4 -3)
+		sqrt(-5^2+-4^2) = 6.4
+		sqrt(6.4^2+-3^2) =  7.1
+		asin(-3/7.1) = -24.9 
+			prove:
 	*/
-	rayPointOfOrigin = this.funRay_GetPoint();
+	rayPointOfOrigin  = this.funRay_GetPoint();
 	rayVectorEndPoint = objNewPoint.funRay_GetPoint();
-	numXzPlane = Math.sqrt( Math.pow(rayVectorEndPoint[x]-rayPointOfOrigin[x],2) + Math.pow(rayVectorEndPoint[z]-rayPointOfOrigin[z],2) );
-	numVectorLength = Math.sqrt( Math.pow(rayVectorEndPoint[y]-rayPointOfOrigin[y],2) + Math.pow(numXzPlane,2) );
-	numVectorAngle = Math.atan( Math.pow(rayVectorEndPoint[y]-rayPointOfOrigin[y],2) / numXzPlane );
+	numAjacentLength       = Math.sqrt( Math.pow(rayVectorEndPoint[x]-rayPointOfOrigin[x],2) + Math.pow(rayVectorEndPoint[y]-rayPointOfOrigin[y],2) );
+	numVectorLength   = Math.sqrt( Math.pow(rayVectorEndPoint[z]-rayPointOfOrigin[z],2) + Math.pow(numAjacentLength,2) );
+	numVectorAngle    = Math.asin( Math.pow(rayVectorEndPoint[z]-rayPointOfOrigin[z],2) / numXzPlane );
 
 
 
