@@ -204,8 +204,25 @@ Returns: -
     {
       if ((objNewPoint.funStr_GetType() === "OoPoint") && (typeof(numPixelsPerMillisecond) === "number"))
       {
-        //calculate the vector
-        //calculate number of moves
+        /* Calculate the vector:
+		-Pull both point arrays from the two OoPoint instances
+		-Use pythagoras calculate 2D vector on XZ plane, subtract the point of
+		 origin axis values from end point values becuase not all object will
+		 move from A=(0,0,0)
+		-Use pythagoras again to calculate length of 3D vector using 2D XZ vector
+		 length and y-axis. again subtract point of origin y from end point y.
+		-Use inverse tangent, the oposite length (y) and ajacent XZ vector to 
+		 calculate the vector angle.
+	*/
+	rayPointOfOrigin = this.funRay_GetPoint();
+	rayVectorEndPoint = objNewPoint.funRay_GetPoint();
+	numXzPlane = Math.sqrt( Math.pow(rayVectorEndPoint[x]-rayPointOfOrigin[x],2) + Math.pow(rayVectorEndPoint[z]-rayPointOfOrigin[z],2) );
+	numVectorLength = Math.sqrt( Math.pow(rayVectorEndPoint[y]-rayPointOfOrigin[y],2) + Math.pow(numXzPlane,2) );
+	numVectorAngle = Math.atan( Math.pow(rayVectorEndPoint[y]-rayPointOfOrigin[y],2) / numXzPlane );
+
+
+
+        //calculate number of moves this involves geting the cycle info and deviding the vector by it.:w
         //generate interrupt
         //push interrupt
       }
