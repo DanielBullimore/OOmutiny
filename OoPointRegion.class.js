@@ -292,14 +292,33 @@ Returns: -
 	*/ 
 	rayPointOfOrigin  = this.funRay_GetPoint();
 	rayVectorEndPoint = objNewPoint.funRay_GetPoint();
-	numAjacentLength       = Math.sqrt( Math.pow(rayVectorEndPoint[x]-rayPointOfOrigin[x],2) + Math.pow(rayVectorEndPoint[y]-rayPointOfOrigin[y],2) );
+	numAjacentLength  = Math.sqrt( Math.pow(rayVectorEndPoint[x]-rayPointOfOrigin[x],2) + Math.pow(rayVectorEndPoint[y]-rayPointOfOrigin[y],2) );
 	numVectorLength   = Math.sqrt( Math.pow(rayVectorEndPoint[z]-rayPointOfOrigin[z],2) + Math.pow(numAjacentLength,2) );
-	numVectorAngle    = Math.asin( Math.pow(rayVectorEndPoint[z]-rayPointOfOrigin[z],2) / numXzPlane );
-
-
+	numVectorAngle    = Math.asin( Math.pow(rayVectorEndPoint[z]-rayPointOfOrigin[z],2) / numVectorLength );
 
         //calculate number of moves this involves geting the cycle info and deviding the vector by it.:w
-        //generate interrupt
+	numAnimationTime = numVectorLength / numPixelsPerMillisecond;
+	
+        /*
+	 Generate interupt
+	 what thread suits the speed and number of increments?
+	 Q: The interupt only updates the objects parameters and waits for mars to rnder it
+	 or does the interupt call render after updating the parameters?
+
+		say i want to animate a object from point A to B 1000px away at 10px/ms
+		-mars renders once every solar year, it more for drawing the world which changes slower
+		-im currently using 100ms solar year, so mars would skip 9 frames of the animation each year.
+		-mercury renders 11times per solar year around 9ms per exe.
+		-there are 100 frames to render (1000px/10px/ms)
+		if px/ms < 10 mercury |  > 10 <  14 venus | > 14 < 25 earth | > 25px/ms mars
+			
+			1000px / 10pxpms = 100ms
+			100 / 9ms(mercury) = 11.1111 interrupts hmmm how to round... do eleven + 1 extra
+			1000px / 11.1111 interrupts = 90px per interrupt
+
+	 A: it will depend on the speed at which the object moves, as sown above0
+	*/
+
         //push interrupt
       }
     }
