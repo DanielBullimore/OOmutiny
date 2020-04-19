@@ -318,7 +318,23 @@ Returns: -
 
 	 A: it will depend on the speed at which the object moves, as sown above0
 	*/
+	if ( numAnimationTime <=  ( numBenchmarkSolarYear / threads.mercury.fractal ) )
+	{
+		objNewMercuryInterupt = new o();
+		objNewMercuryInterupt.booRepeat = true;
+		objNewMercuryInterupt.numExecutions = ( numAnimationTime / ( numBenchmarkSolarYear/ threads.mercury.fractal ) ); //still needs rounding
+		objNewMercuryInterupt.booActOrSolve = true;
+		objNewMercuryInterupt.funAct = function()
+		{/*
+			damn how pass the path/frames to this function 
+			this.value will return funAct?
+			Need to make animations rayOO object?
+			--Sleeping on
 
+		*/}
+		
+
+	}
         //push interrupt
       }
     }
