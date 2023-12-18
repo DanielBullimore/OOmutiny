@@ -316,7 +316,7 @@ Returns: -
 			100 / 9ms(mercury) = 11.1111 interrupts hmmm how to round... do eleven + 1 extra
 			1000px / 11.1111 interrupts = 90px per interrupt
 
-	 A: it will depend on the speed at which the object moves, as sown above0
+	 A: it will depend on the speed at which the object moves, as shown above0
 	*/
 	if ( numAnimationTime <=  ( numBenchmarkSolarYear / threads.mercury.fractal ) )
 	{
@@ -324,15 +324,33 @@ Returns: -
 		objNewMercuryInterupt.booRepeat = true;
 		objNewMercuryInterupt.numExecutions = ( numAnimationTime / ( numBenchmarkSolarYear/ threads.mercury.fractal ) ); //still needs rounding
 		objNewMercuryInterupt.booActOrSolve = true;
-		objNewMercuryInterupt.funAct = function()
-		{/*
+        //attach rayOO keys to the interupt
+		objNewMecuryInterupt.objSubject = this.objOO();
+		objNewMecuryInterupt.rayPointOfOrigin = rayPointOfOrigin;
+		objNewMecuryInterupt.rayVectorEndPoint = rayVectorEndPoint;
+		objNewMecuryInterupt.numAjacentLength = numAjacentLength;
+		objNewMecuryInterupt.numVectorLength = numVectorLength;
+		objNewMecuryInterupt.numVectorAngle = numVectorAngle;
+
+	// function to execute
+		objNewMercuryInterupt.funAct = function(objInterupt)
+		{
+			objInterupt	
+		/*
 			damn how pass the path/frames to this function 
 			this.value will return funAct?
 			Need to make animations rayOO object?
 			--Sleeping on
 
-		*/}
+			Dude you slept 4 years on this!
+
+			this is easy when the game loop iterates through the work ques it has the objects
+			handle when it executes funAct()  so it can pass prams at exe time.
+
+		*/
+		}
 		
+
 
 	}
         //push interrupt
